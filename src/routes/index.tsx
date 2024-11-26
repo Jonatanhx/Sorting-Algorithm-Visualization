@@ -1,12 +1,13 @@
 import { useAuth } from "@solid-mediakit/auth/client";
 import { type VoidComponent, Match, Switch } from "solid-js";
+import BubbleSort from "~/env/components/BubbleSort";
 import Header from "~/env/components/Header";
 
 const Home: VoidComponent = () => {
   return (
     <main class="flex min-h-screen flex-col bg-black">
       <Header />
-
+      <BubbleSort />
       <AuthShowcase />
     </main>
   );

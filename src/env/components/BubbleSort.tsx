@@ -1,6 +1,6 @@
 import { createSignal, For } from "solid-js";
 
-export default function BubbleSortVisualization() {
+export default function BubbleSort() {
   const originalArray = [
     507, 228, 877, 1231, 155, 633, 2201, 249, 741, 112, 1505,
   ];
@@ -74,10 +74,10 @@ export default function BubbleSortVisualization() {
           disabled={isSorting()}
           class="bg-blue-500 text-white px-4 py-2"
         >
-          Start Sorting
+          Start
         </button>
         <button onClick={resetArray} class="bg-gray-500 text-white px-4 py-2">
-          Reset Array
+          Reset
         </button>
         {isSorted() && <div class="text-green-500">Sorted!</div>}
       </div>
