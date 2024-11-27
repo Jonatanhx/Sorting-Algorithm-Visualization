@@ -53,7 +53,8 @@ model VerificationToken {
 }
 
 model Countries {
-  id             String @id @default(cuid())
+  id             String  @id @default(cuid())
+  name           String? @unique
   populationSize Int
   landArea       Int
 }
