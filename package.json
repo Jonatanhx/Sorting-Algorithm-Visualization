@@ -6,7 +6,10 @@
     "start": "vinxi start",
     "lint": "eslint --fix \"**/*.{ts,tsx,js,jsx}\"",
     "push": "prisma db push",
-    "postinstall": "prisma generate"
+    "seed": "ts-node prisma/seed.ts",
+    "studio": "prisma studio",
+    "migrate": "prisma migrate dev",
+    "generate": "prisma generate"
   },
   "type": "module",
   "devDependencies": {
