@@ -1,4 +1,3 @@
-// @refresh reload
 import { SessionProvider } from "@solid-mediakit/auth/client";
 import { MetaProvider, Title } from "@solidjs/meta";
 import { Router } from "@solidjs/router";
