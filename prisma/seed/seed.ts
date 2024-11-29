@@ -1,8 +1,10 @@
-import { db } from "../db";
+import { db } from "~/server/db";
 import { seedCountries } from "./countries";
+import { seedAdmins } from "./users";
 
 async function main() {
   seedCountries();
+  seedAdmins();
 }
 
 main()
