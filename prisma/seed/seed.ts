@@ -1,4 +1,4 @@
-import { db } from "~/prismaClient";
+import { db } from "../db";
 import { seedCountries } from "./countries";
 import { seedAdmins } from "./users";
 

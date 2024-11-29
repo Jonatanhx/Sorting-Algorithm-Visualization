@@ -1,5 +1,5 @@
 import { createEffect, createResource, createSignal, For } from "solid-js";
-import { db } from "~/prismaClient";
+import { db } from "../../prisma/db";
 
 export default function BubbleSort() {
   const [countries] = createResource(async () => {

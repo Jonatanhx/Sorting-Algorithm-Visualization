@@ -1,4 +1,4 @@
-import { db } from "~/prismaClient";
+import { db } from "prisma/db";
 
 export async function seedAdmins() {
   const email = process.env.OWNER_IDENTIFIER;

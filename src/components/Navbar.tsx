@@ -1,6 +1,6 @@
 import { useAuth } from "@solid-mediakit/auth/client";
 import { createResource, Match, Show, Switch } from "solid-js";
-import { db } from "~/prismaClient";
+import { db } from "../../prisma/db";
 import LoginButton from "./LoginButton";
 
 export function Navbar() {
