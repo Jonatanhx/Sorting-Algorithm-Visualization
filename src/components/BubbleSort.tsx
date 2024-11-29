@@ -1,17 +1,33 @@
-import { createSignal, For } from "solid-js";
+import { createEffect, createResource, createSignal, For } from "solid-js";
+import { db } from "../../prisma/db";
 
 export default function BubbleSort() {
-  const originalArray = [
-    507, 228, 877, 1231, 155, 633, 2201, 249, 741, 112, 1505,
-  ];
-  const [array, setArray] = createSignal(originalArray);
+  const [countries] = createResource(async () => {
+    const populationData = await db.countries.findMany({
+      select: { populationSize: true },
+    });
+
+    return populationData.map((country) => country.populationSize);
+  });
+
+  const [array, setArray] = createSignal<number[]>([]);
   const [currentI, setCurrentI] = createSignal(0);
   const [currentJ, setCurrentJ] = createSignal(0);
   const [isSorting, setIsSorting] = createSignal(false);
   const [isSorted, setIsSorted] = createSignal(false);
 
+  createEffect(() => {
+    const populationSizes = countries();
+    if (populationSizes && populationSizes.length > 0) {
+      setArray(populationSizes);
+    }
+  });
+
   function calculateHeight(value: number) {
-    const maxValue = Math.max(...array());
+    const currentArray = array();
+    if (currentArray.length === 0) return "20%";
+
+    const maxValue = Math.max(...currentArray);
     const normalizedHeight = Math.max(
       20,
       Math.min(80, (value / maxValue) * 80)
@@ -20,12 +36,14 @@ export default function BubbleSort() {
   }
 
   function startSorting() {
-    if (isSorting()) return;
+    const currentArray = array();
+    if (isSorting() || currentArray.length === 0) return;
+
     setIsSorting(true);
     setIsSorted(false);
 
     const sortInterval = setInterval(() => {
-      const arr = [...array()];
+      const arr = [...currentArray];
       let swapped = false;
 
       if (currentI() < arr.length) {
@@ -59,7 +77,10 @@ export default function BubbleSort() {
   }
 
   function resetArray() {
-    setArray(originalArray);
+    const populationSizes = countries();
+    if (populationSizes && populationSizes.length > 0) {
+      setArray(populationSizes);
+    }
     setCurrentI(0);
     setCurrentJ(0);
     setIsSorting(false);
@@ -71,15 +92,20 @@ export default function BubbleSort() {
       <div class="flex p-4">
         <button
           onClick={startSorting}
-          disabled={isSorting()}
-          class="bg-blue-500 text-white px-4 py-2"
+          disabled={isSorting() || array().length === 0}
+          class="bg-blue-500 text-white px-4 py-2 mr-2"
         >
           Start
         </button>
-        <button onClick={resetArray} class="bg-gray-500 text-white px-4 py-2">
+        <button
+          onClick={resetArray}
+          disabled={array().length === 0}
+          class="bg-gray-500 text-white px-4 py-2"
+        >
           Reset
         </button>
-        {isSorted() && <div class="text-green-500">Sorted!</div>}
+        {countries.loading && <div class="text-white ml-2">Loading...</div>}
+        {isSorted() && <div class="text-green-500 ml-2">Sorted!</div>}
       </div>
       <div class="flex gap-2 p-4 h-64">
         <For each={array()}>
