@@ -1,4 +1,4 @@
-import { db } from "~/server/db";
+import { db } from "~/prismaClient";
 
 export async function seedCountries() {
   await db.countries.upsert({

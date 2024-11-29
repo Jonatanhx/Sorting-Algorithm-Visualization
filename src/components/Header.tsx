@@ -6,7 +6,7 @@ export default function Header() {
       <div class="text-white flex-1 text-6xl">
         Sorting Algorithm Visualization
       </div>
-      <Navbar></Navbar>
+      <Navbar />
     </header>
   );
 }

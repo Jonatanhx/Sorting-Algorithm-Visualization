@@ -2,7 +2,7 @@ import Github from "@auth/core/providers/github";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { type SolidAuthConfig } from "@solid-mediakit/auth";
 import { serverEnv } from "~/env/server";
-import { db } from "./db";
+import { db } from "~/prismaClient";
 
 declare module "@auth/core/types" {
   export interface Session {
