@@ -13,7 +13,7 @@ import {
 } from "./ui/table";
 
 export default function AdminDatatable() {
-  const { dataTable, setDataTable } = useContext(AdminDataContext);
+  const { dataTable } = useContext(AdminDataContext);
   const [countries] = createResource(async () => {
     "use server";
     const populationData = await db.countries.findMany({});

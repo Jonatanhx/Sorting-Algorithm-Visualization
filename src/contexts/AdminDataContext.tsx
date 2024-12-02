@@ -1,7 +1,14 @@
-import type { ParentProps } from "solid-js";
+import type { Accessor, ParentProps, Setter } from "solid-js";
 import { createContext, createSignal } from "solid-js";
 
-export const AdminDataContext = createContext();
+interface AdminDataContextValue {
+  dataTable: Accessor<string>;
+  setDataTable: Setter<string>;
+}
+
+export const AdminDataContext = createContext<AdminDataContextValue>(
+  {} as AdminDataContextValue
+);
 
 export function AdminDataProvider(props: ParentProps) {
   const [dataTable, setDataTable] = createSignal("countries");
