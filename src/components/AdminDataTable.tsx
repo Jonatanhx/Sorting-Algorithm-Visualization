@@ -1,3 +1,7 @@
+import { createResource, Match, Switch, useContext } from "solid-js";
+import { AdminDataContext } from "~/contexts/AdminDataContext";
+import { db } from "../../prisma/db";
+import DataTableDropDown from "./DataTableDropDown";
 import {
   Table,
   TableBody,
@@ -6,30 +10,47 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../../@/components/ui/table";
+} from "./ui/table";
 
 export default function AdminDatatable() {
+  const { dataTable, setDataTable } = useContext(AdminDataContext);
+  const [countries] = createResource(async () => {
+    "use server";
+    const populationData = await db.countries.findMany({});
+    return populationData;
+  });
   return (
-    <div class="text-white flex justify-center">
-      <Table>
-        <TableCaption>Data table 1.</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead class="w-[100px]">Invoice</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Method</TableHead>
-            <TableHead class="text-right">Amount</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          <TableRow>
-            <TableCell class="font-medium">INV001</TableCell>
-            <TableCell>Paid</TableCell>
-            <TableCell>Credit Card</TableCell>
-            <TableCell class="text-right">$250.00</TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
+    <div class="text-white flex justify-center border-8 border-purple-600 border-[radial-gradient(169.40%_89.55%_at_94.76%_6.29%,rgba(0,0,0,0.40)_0%,rgba(255,255,255,0.00)_100%)] flex-col">
+      <DataTableDropDown />
+      <Switch>
+        <Match when={dataTable() == "countries"}>
+          <Table class="w-96 m-12">
+            <TableCaption>Data table 1.</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Name</TableHead>
+                <TableHead>Population Size</TableHead>
+                <TableHead>Land Area in km2</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {countries.loading ? (
+                <TableRow>
+                  <TableCell colSpan={2}>Loading...</TableCell>
+                </TableRow>
+              ) : (
+                countries()?.map((country) => (
+                  <TableRow>
+                    <TableCell>{country.name}</TableCell>
+                    <TableCell>{country.populationSize}</TableCell>
+                    <TableCell>{country.landArea}</TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </Match>
+      </Switch>
     </div>
   );
 }

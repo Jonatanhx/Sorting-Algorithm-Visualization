@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.4",
+    "@kobalte/core": "^0.13.7",
     "@prisma/client": "^5.20.0",
     "@solid-mediakit/auth": "^3.1.2",
     "@solidjs/meta": "^0.29.4",
