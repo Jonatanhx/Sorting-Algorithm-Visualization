@@ -19,7 +19,9 @@ export function Navbar() {
               (admin) => admin.id === auth.session()?.user.id && admin.isAdmin
             )}
           >
-            <div class="text-white mr-3">Admin</div>
+            <a href="/Admin">
+              <div class="text-white mr-3">Admin</div>
+            </a>
           </Show>
           <div class="flex flex-row">
             <span class="text-xl text-white mr-3 flex items-center">
