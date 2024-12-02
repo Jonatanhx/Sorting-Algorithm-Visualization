@@ -5,6 +5,7 @@ import LoginButton from "./LoginButton";
 
 export function Navbar() {
   const [admins] = createResource(async () => {
+    "use server";
     const adminData = await db.user.findMany({});
     return adminData;
   });

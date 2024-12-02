@@ -3,6 +3,7 @@ import { db } from "../../prisma/db";
 
 export default function BubbleSort() {
   const [countries] = createResource(async () => {
+    "use server";
     const populationData = await db.countries.findMany({
       select: { populationSize: true },
     });
