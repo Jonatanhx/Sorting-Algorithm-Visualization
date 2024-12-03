@@ -16,3 +16,15 @@ export async function addCountry(country: country) {
     throw new Error("Failed to add country");
   }
 }
+
+export async function removeCountry(country: country) {
+  try {
+    await db.countries.delete({
+      where: {
+        name: country.name,
+      },
+    });
+  } catch (error) {
+    throw new Error("Failed to remove country");
+  }
+}

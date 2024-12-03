@@ -26,6 +26,7 @@ export const authOptions: SolidAuthConfig = {
     Github({
       clientId: serverEnv.GITHUB_ID,
       clientSecret: serverEnv.GITHUB_SECRET,
+      allowDangerousEmailAccountLinking: true,
     }),
   ],
   debug: false,

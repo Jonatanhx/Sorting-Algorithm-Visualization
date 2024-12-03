@@ -30,9 +30,10 @@ export default function AdminDatatable() {
     return populationData;
   });
 
-  function ToggleEditingMode() {
+  function toggleEditingMode() {
     setIsEditing(!isEditing());
   }
+  function handleDeleteCountry(index: number) {}
   return (
     <div class="flex flex-row ">
       <div class="flex flex-1" id="empty-div" />
@@ -58,11 +59,19 @@ export default function AdminDatatable() {
                     <TableCell colSpan={2}>Loading...</TableCell>
                   </TableRow>
                 ) : (
-                  countries()?.map((country) => (
+                  countries()?.map((country, index) => (
                     <TableRow>
                       <TableCell>{country.name}</TableCell>
                       <TableCell>{country.populationSize}</TableCell>
                       <TableCell>{country.landArea}</TableCell>
+                      {isEditing() == true && (
+                        <Button
+                          variant={"destructive"}
+                          onClick={() => handleDeleteCountry(index)}
+                        >
+                          X
+                        </Button>
+                      )}
                     </TableRow>
                   ))
                 )}
@@ -70,7 +79,7 @@ export default function AdminDatatable() {
             </Table>
           </Match>
         </Switch>
-        <Button variant="default" onclick={ToggleEditingMode}>
+        <Button variant="default" onclick={toggleEditingMode}>
           Edit
         </Button>
         {isEditing() == true && <AddDataDialog />}
