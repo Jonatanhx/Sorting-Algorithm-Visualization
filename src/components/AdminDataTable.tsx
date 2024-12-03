@@ -20,37 +20,41 @@ export default function AdminDatatable() {
     return populationData;
   });
   return (
-    <div class="text-white flex justify-center border-8 border-purple-600 border-[radial-gradient(169.40%_89.55%_at_94.76%_6.29%,rgba(0,0,0,0.40)_0%,rgba(255,255,255,0.00)_100%)] flex-col">
-      <DataTableDropDown />
-      <Switch>
-        <Match when={dataTable() == "countries"}>
-          <Table class="w-96 m-12">
-            <TableCaption>Data table 1.</TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Population Size</TableHead>
-                <TableHead>Land Area in km2</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {countries.loading ? (
+    <div class="flex flex-row">
+      <div class="flex flex-1" />
+      <div class="text-white flex justify-center border-8 border-purple-600 border-[radial-gradient(169.40%_89.55%_at_94.76%_6.29%,rgba(0,0,0,0.40)_0%,rgba(255,255,255,0.00)_100%)] flex-col">
+        <DataTableDropDown />
+        <Switch>
+          <Match when={dataTable() == "countries"}>
+            <Table class="w-96 m-12">
+              <TableCaption>Data table 1.</TableCaption>
+              <TableHeader>
                 <TableRow>
-                  <TableCell colSpan={2}>Loading...</TableCell>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Population Size</TableHead>
+                  <TableHead>Land Area in km2</TableHead>
                 </TableRow>
-              ) : (
-                countries()?.map((country) => (
+              </TableHeader>
+              <TableBody>
+                {countries.loading ? (
                   <TableRow>
-                    <TableCell>{country.name}</TableCell>
-                    <TableCell>{country.populationSize}</TableCell>
-                    <TableCell>{country.landArea}</TableCell>
+                    <TableCell colSpan={2}>Loading...</TableCell>
                   </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
-        </Match>
-      </Switch>
+                ) : (
+                  countries()?.map((country) => (
+                    <TableRow>
+                      <TableCell>{country.name}</TableCell>
+                      <TableCell>{country.populationSize}</TableCell>
+                      <TableCell>{country.landArea}</TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </Match>
+        </Switch>
+      </div>
+      <div class="flex flex-1" />
     </div>
   );
 }
