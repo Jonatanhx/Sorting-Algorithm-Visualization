@@ -46,7 +46,7 @@ export default function AddDataForm() {
           />
         </TextFieldRoot>
 
-        <NumberField>
+        <NumberField minValue={0}>
           <NumberFieldLabel>Population size</NumberFieldLabel>
           <NumberFieldGroup>
             <NumberFieldDecrementTrigger aria-label="Decrement" />
