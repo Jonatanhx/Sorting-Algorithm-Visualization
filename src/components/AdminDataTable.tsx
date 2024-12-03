@@ -8,6 +8,7 @@ import {
 import { AdminDataContext } from "~/contexts/AdminDataContext";
 import { db } from "../../prisma/db";
 import { Button } from "../components/ui/button";
+import AddDataDialog from "./dialogs/AddDataDialog";
 import DataTableDropDown from "./OpenDataTableDropDown";
 import {
   Table,
@@ -22,7 +23,6 @@ import {
 export default function AdminDatatable() {
   const { dataTable } = useContext(AdminDataContext);
   const [isEditing, setIsEditing] = createSignal<boolean>(false);
-  const [isFormVisible, setIsFormVisible] = createSignal<boolean>(false);
 
   const [countries] = createResource(async () => {
     "use server";
@@ -30,14 +30,9 @@ export default function AdminDatatable() {
     return populationData;
   });
 
-  function handleSetEditing() {
+  function ToggleEditingMode() {
     setIsEditing(!isEditing());
   }
-
-  function toggleAddForm() {
-    setIsFormVisible(!isFormVisible());
-  }
-
   return (
     <div class="flex flex-row ">
       <div class="flex flex-1" id="empty-div" />
@@ -46,14 +41,6 @@ export default function AdminDatatable() {
         id="center-div"
       >
         <DataTableDropDown />
-        <Button variant="default" onclick={handleSetEditing}>
-          Edit
-        </Button>
-
-        {isEditing() == true && (
-          <p class="text-white">Editing mode is enabled</p>
-        )}
-
         <Switch>
           <Match when={dataTable() == "countries"}>
             <Table class="w-96 m-12">
@@ -79,18 +66,14 @@ export default function AdminDatatable() {
                     </TableRow>
                   ))
                 )}
-
-                {isEditing() == true && (
-                  <Button variant="default" onclick={toggleAddForm}>
-                    +
-                  </Button>
-                )}
-
-                {isFormVisible() && <div class="text-white">Test</div>}
               </TableBody>
             </Table>
           </Match>
         </Switch>
+        <Button variant="default" onclick={ToggleEditingMode}>
+          Edit
+        </Button>
+        {isEditing() == true && <AddDataDialog />}
       </div>
       <div class="flex flex-1" id="empty-div" />
     </div>
