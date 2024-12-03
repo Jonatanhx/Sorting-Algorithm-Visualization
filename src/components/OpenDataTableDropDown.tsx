@@ -2,6 +2,7 @@ import type { DropdownMenuSubTriggerProps } from "@kobalte/core/dropdown-menu";
 import { DropdownMenu } from "@kobalte/core/dropdown-menu";
 import { useContext } from "solid-js";
 import { AdminDataContext } from "~/contexts/AdminDataContext";
+import { Button } from "./ui/button";
 import {
   DropdownMenuContent,
   DropdownMenuGroup,
@@ -10,10 +11,9 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../components/ui/dropdown-menu";
-import { Button } from "./ui/button";
+} from "./ui/dropdown-menu";
 
-export default function DataTableDropDown() {
+export default function OpenDataTableDropDown() {
   const { dataTable, setDataTable } = useContext(AdminDataContext);
   return (
     <div>

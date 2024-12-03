@@ -1,7 +1,7 @@
 import { createResource, Match, Switch, useContext } from "solid-js";
 import { AdminDataContext } from "~/contexts/AdminDataContext";
 import { db } from "../../prisma/db";
-import DataTableDropDown from "./DataTableDropDown";
+import DataTableDropDown from "./OpenDataTableDropDown";
 import {
   Table,
   TableBody,
