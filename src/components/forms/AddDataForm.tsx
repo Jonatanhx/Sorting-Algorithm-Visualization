@@ -31,7 +31,7 @@ export default function AddDataForm() {
   return (
     <div>
       <form class="flex gap-1 flex-col" onSubmit={handleSubmit}>
-        <TextFieldRoot>
+        <TextFieldRoot class="mb-4">
           <TextFieldLabel>Name</TextFieldLabel>
           <TextField
             required
@@ -46,7 +46,7 @@ export default function AddDataForm() {
           />
         </TextFieldRoot>
 
-        <NumberField minValue={0}>
+        <NumberField minValue={0} class="mb-4">
           <NumberFieldLabel>Population size</NumberFieldLabel>
           <NumberFieldGroup>
             <NumberFieldDecrementTrigger aria-label="Decrement" />
@@ -62,7 +62,7 @@ export default function AddDataForm() {
           </NumberFieldGroup>
         </NumberField>
 
-        <NumberField minValue={0}>
+        <NumberField minValue={0} class="mb-4">
           <NumberFieldLabel>Land area in km2</NumberFieldLabel>
           <NumberFieldGroup>
             <NumberFieldDecrementTrigger aria-label="Decrement" />

@@ -17,7 +17,7 @@ export default function AddDataDialog() {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add a new entry to database</DialogTitle>
+          <DialogTitle class="mb-8">Add a new entry to database</DialogTitle>
           <DialogDescription>
             <AddDataForm />
           </DialogDescription>
