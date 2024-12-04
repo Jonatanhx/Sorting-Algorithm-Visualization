@@ -1,12 +1,7 @@
-import {
-  createResource,
-  createSignal,
-  Match,
-  Switch,
-  useContext,
-} from "solid-js";
-import { AdminDataContext } from "~/contexts/AdminDataContext";
-import { db } from "../../prisma/db";
+import { createSignal, Match, Switch, useContext } from "solid-js";
+import { CountryDatacontext } from "~/contexts/CountryDataContext";
+import { SelectedDataTableContext } from "~/contexts/SelectedDataTableContext";
+import { deleteCountry } from "~/server/endpoints/country-endpoints";
 import { Button } from "../components/ui/button";
 import AddDataDialog from "./dialogs/AddDataDialog";
 import DataTableDropDown from "./OpenDataTableDropDown";
@@ -21,19 +16,26 @@ import {
 } from "./ui/table";
 
 export default function AdminDatatable() {
-  const { dataTable } = useContext(AdminDataContext);
+  const { selectedDataTable } = useContext(SelectedDataTableContext);
+  const { countries, refetch } = useContext(CountryDatacontext);
   const [isEditing, setIsEditing] = createSignal<boolean>(false);
-
-  const [countries] = createResource(async () => {
-    "use server";
-    const populationData = await db.countries.findMany({});
-    return populationData;
-  });
 
   function toggleEditingMode() {
     setIsEditing(!isEditing());
   }
-  function handleDeleteCountry(index: number) {}
+
+  function handleDeleteCountry(index: number) {
+    const countryData = countries();
+    if (countryData && countryData[index]) {
+      const countryAtIndex = countryData[index];
+
+      deleteCountry(countryAtIndex);
+      refetch();
+    } else {
+      console.error(`countryData object: ${countryData} threw exception`);
+    }
+  }
+
   return (
     <div class="flex flex-row ">
       <div class="flex flex-1" id="empty-div" />
@@ -43,7 +45,7 @@ export default function AdminDatatable() {
       >
         <DataTableDropDown />
         <Switch>
-          <Match when={dataTable() == "countries"}>
+          <Match when={selectedDataTable() == "countries"}>
             <Table class="w-96 m-12">
               <TableCaption>Data table 1.</TableCaption>
               <TableHeader>
