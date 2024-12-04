@@ -20,7 +20,7 @@ import {
 } from "../ui/textfield";
 
 export default function AddDataForm() {
-  const { refetch } = useContext(CountryDatacontext);
+  const { countries, refetch } = useContext(CountryDatacontext);
   const [name, setName] = createSignal<string>("Name");
   const [populationSize, setPopulationSize] = createSignal<number>(0);
   const [landArea, setLandArea] = createSignal<number>(0);
@@ -28,8 +28,19 @@ export default function AddDataForm() {
   const minTextLength = 4;
   const maxNumberValue = 1429000000;
 
+  const isNameUnique = () => {
+    const currentCountries = countries();
+    if (!currentCountries || !Array.isArray(currentCountries)) return true;
+
+    return !currentCountries.some(
+      (country) =>
+        country.name && country.name.toLowerCase() === name().toLowerCase()
+    );
+  };
+
   const isFormValid = createMemo(() => {
     return (
+      isNameUnique() &&
       name().length >= minTextLength &&
       populationSize() > 0 &&
       populationSize() <= maxNumberValue &&
@@ -57,14 +68,18 @@ export default function AddDataForm() {
         <TextFieldRoot
           class="mb-4"
           defaultValue="Name"
-          validationState={name().length >= minTextLength ? "valid" : "invalid"}
+          validationState={
+            name().length >= minTextLength && isNameUnique()
+              ? "valid"
+              : "invalid"
+          }
           value={name()}
           onChange={setName}
         >
           <TextFieldLabel>Name</TextFieldLabel>
           <TextField required type="text" />
           <TextFieldErrorMessage>
-            Minimum four characters required.
+            Minimum four characters and a unique name is required.
           </TextFieldErrorMessage>
         </TextFieldRoot>
 
