@@ -3,7 +3,7 @@ import { createContext, createResource } from "solid-js";
 import type { CountryDataContextValue } from "~/interfaces";
 import { db } from "../../prisma/db";
 
-export const CountryDatacontext = createContext<CountryDataContextValue>(
+export const CountryDataContext = createContext<CountryDataContextValue>(
   {} as CountryDataContextValue
 );
 
@@ -15,8 +15,8 @@ export function CountryDataProvider(props: ParentProps) {
     return populationData;
   });
   return (
-    <CountryDatacontext.Provider value={{ countries, refetch }}>
+    <CountryDataContext.Provider value={{ countries, refetch }}>
       {props.children}
-    </CountryDatacontext.Provider>
+    </CountryDataContext.Provider>
   );
 }
