@@ -35,13 +35,13 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
+  id       String    @id @default(cuid())
+  name     String?
+  email    String?   @unique
+  image    String?
+  isAdmin  Boolean   @default(false)
+  accounts Account[]
+  sessions Session[]
 }
 
 model VerificationToken {
@@ -53,7 +53,7 @@ model VerificationToken {
 }
 
 model Countries {
-  id             String  @id @default(cuid())
+  id             Int     @id @default(autoincrement())
   name           String? @unique
   populationSize Int
   landArea       Int

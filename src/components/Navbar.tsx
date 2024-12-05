@@ -1,13 +1,29 @@
 import { useAuth } from "@solid-mediakit/auth/client";
-import { Match, Switch } from "solid-js";
+import { createResource, Match, Show, Switch } from "solid-js";
+import { db } from "../../prisma/db";
 import LoginButton from "./LoginButton";
 
 export function Navbar() {
+  const [admins] = createResource(async () => {
+    "use server";
+    const adminData = await db.user.findMany({});
+    return adminData;
+  });
+
   const auth = useAuth();
   return (
     <nav class="flex-1 flex justify-end items-center">
       <Switch>
         <Match when={auth.status() === "authenticated"}>
+          <Show
+            when={admins()?.some(
+              (admin) => admin.id === auth.session()?.user.id && admin.isAdmin
+            )}
+          >
+            <a href="/Admin">
+              <div class="text-white mr-3">Admin</div>
+            </a>
+          </Show>
           <div class="flex flex-row">
             <span class="text-xl text-white mr-3 flex items-center">
               Welcome {auth.session()?.user?.name}

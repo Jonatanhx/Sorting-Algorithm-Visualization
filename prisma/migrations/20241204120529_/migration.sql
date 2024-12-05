@@ -30,8 +30,8 @@ CREATE TABLE "User" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "name" TEXT,
     "email" TEXT,
-    "emailVerified" DATETIME,
-    "image" TEXT
+    "image" TEXT,
+    "isAdmin" BOOLEAN NOT NULL DEFAULT false
 );
 
 -- CreateTable
@@ -43,8 +43,8 @@ CREATE TABLE "VerificationToken" (
 
 -- CreateTable
 CREATE TABLE "Countries" (
-    "id" TEXT NOT NULL PRIMARY KEY,
-    "name" TEXT NOT NULL,
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "name" TEXT,
     "populationSize" INTEGER NOT NULL,
     "landArea" INTEGER NOT NULL
 );
