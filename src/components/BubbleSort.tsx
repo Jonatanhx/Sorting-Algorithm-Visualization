@@ -82,7 +82,7 @@ export default function BubbleSort() {
   }
 
   return (
-    <div class="p-4 mx-72 my-12 flex flex-col bg-black items-center">
+    <div class="p-4 mx-72 my-12 flex flex-col items-center">
       <div class="flex p-4">
         <h1 class="text-white text-4xl">Bubble sort</h1>
 
