@@ -2,6 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
+@property --a {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* CUSTOM STYLES */
+.gradient-border {
+  position: absolute;
+  inset: 1px;
+  background-image: conic-gradient(
+    from var(--a),
+    #00008b,
+    /* Dark Blue */ #0000cd,
+    /* Medium Blue */ #1e90ff,
+    /* Dodger Blue */ #4169e1,
+    /* Royal Blue */ #6495ed,
+    /* Cornflower Blue */ #87cefa,
+    /* Light Sky Blue */ #87ceeb,
+    /* Powder Blue */ #00008b /* Back to Dark Blue to complete the gradient */
+  );
+}
+
+.animation-snake {
+  animation: rotate-gradient 4s linear infinite;
+}
+
+@keyframes rotate-gradient {
+  from {
+    --a: 0deg;
+  }
+  to {
+    --a: 360deg;
+  }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

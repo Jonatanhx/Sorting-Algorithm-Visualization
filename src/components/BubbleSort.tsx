@@ -9,6 +9,7 @@ export default function BubbleSort() {
   const [currentI, setCurrentI] = createSignal(0);
   const [currentJ, setCurrentJ] = createSignal(0);
   const [isSorting, setIsSorting] = createSignal(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isSorted, setIsSorted] = createSignal(false);
 
   createEffect(() => {
@@ -66,7 +67,7 @@ export default function BubbleSort() {
         setCurrentJ(0);
         setCurrentI((i) => i + 1);
       }
-    }, 50);
+    }, 100);
   }
 
   function resetArray() {
@@ -87,27 +88,34 @@ export default function BubbleSort() {
 
         {countries.loading && <div class="text-white ml-2">Loading...</div>}
       </div>
-      <div
-        class={`flex gap-2 p-4 h-64 border border-${
-          isSorting() ? "green-500" : "red-500"
-        }`}
-      >
-        <For each={array()}>
-          {(country, index) => (
-            <div
-              class={`w-16
-                ${
-                  index() === currentJ() || index() === currentJ() + 1
-                    ? "bg-yellow-300"
-                    : "bg-white p-2"
-                }`}
-              style={{
-                height: calculateHeight(country.populationSize),
-              }}
-            />
-          )}
-        </For>
+
+      <div class="relative border-black overflow-hidden">
+        <div>
+          <div class="m-1 relative flex h-64 bg-black border-black border-2 gap-1 z-10 rotate-180 flex-row-reverse">
+            <For each={array()}>
+              {(country, index) => (
+                <div
+                  class={`w-16 relative z-10
+                  ${
+                    index() === currentJ() || index() === currentJ() + 1
+                      ? "bg-yellow-300"
+                      : "bg-white p-2"
+                  }`}
+                  style={{
+                    height: calculateHeight(country.populationSize),
+                  }}
+                />
+              )}
+            </For>
+          </div>
+          <div
+            class={`gradient-border blur-sm ${
+              isSorting() ? "animation-snake" : ""
+            }`}
+          />
+        </div>
       </div>
+
       <div>
         <button
           onClick={startSorting}
