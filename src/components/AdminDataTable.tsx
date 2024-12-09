@@ -8,7 +8,6 @@ import DataTableDropDown from "./OpenDataTableDropDown";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -47,7 +46,6 @@ export default function AdminDatatable() {
         <Switch>
           <Match when={selectedDataTable() == "countries"}>
             <Table class="w-96 m-12">
-              <TableCaption>Data table 1.</TableCaption>
               <TableHeader>
                 <TableRow>
                   <TableHead>Name</TableHead>
