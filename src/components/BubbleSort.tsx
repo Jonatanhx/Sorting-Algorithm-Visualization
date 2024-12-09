@@ -82,55 +82,57 @@ export default function BubbleSort() {
   }
 
   return (
-    <div class="p-4 mx-72 my-12 flex flex-col items-center">
-      <div class="flex p-4">
-        <h1 class="text-white text-4xl">Bubble sort</h1>
+    <div class="border border-black rounded-lg bg-neutral-900">
+      <div class="m-1 flex flex-col items-center">
+        <div class="flex p-4">
+          <h1 class="text-white text-4xl">Bubble sort</h1>
 
-        {countries.loading && <div class="text-white ml-2">Loading...</div>}
-      </div>
+          {countries.loading && <div class="text-white ml-2">Loading...</div>}
+        </div>
 
-      <div class="relative border-black overflow-hidden">
-        <div>
-          <div class="m-1 relative flex h-64 bg-black border-black border-2 gap-1 z-10 rotate-180 flex-row-reverse">
-            <For each={array()}>
-              {(country, index) => (
-                <div
-                  class={`w-16 relative z-10
+        <div class="relative border-black overflow-hidden">
+          <div>
+            <div class="m-1 relative flex h-64 bg-black border-black border-2 gap-1 z-10 rotate-180 flex-row-reverse">
+              <For each={array()}>
+                {(country, index) => (
+                  <div
+                    class={`w-16 relative z-10
                   ${
                     index() === currentJ() || index() === currentJ() + 1
                       ? "bg-yellow-300"
                       : "bg-white p-2"
                   }`}
-                  style={{
-                    height: calculateHeight(country.populationSize),
-                  }}
-                />
-              )}
-            </For>
+                    style={{
+                      height: calculateHeight(country.populationSize),
+                    }}
+                  />
+                )}
+              </For>
+            </div>
+            <div
+              class={`gradient-border blur-sm ${
+                isSorting() ? "animation-snake" : ""
+              }`}
+            />
           </div>
-          <div
-            class={`gradient-border blur-sm ${
-              isSorting() ? "animation-snake" : ""
-            }`}
-          />
         </div>
-      </div>
 
-      <div>
-        <button
-          onClick={startSorting}
-          disabled={isSorting() || array().length === 0}
-          class="bg-blue-500 text-white px-4 py-2 mr-2"
-        >
-          Start
-        </button>
-        <button
-          onClick={resetArray}
-          disabled={array().length === 0}
-          class="bg-gray-500 text-white px-4 py-2"
-        >
-          Reset
-        </button>
+        <div>
+          <button
+            onClick={startSorting}
+            disabled={isSorting() || array().length === 0}
+            class="bg-blue-500 text-white px-4 py-2 mr-2"
+          >
+            Start
+          </button>
+          <button
+            onClick={resetArray}
+            disabled={array().length === 0}
+            class="bg-gray-500 text-white px-4 py-2"
+          >
+            Reset
+          </button>
+        </div>
       </div>
     </div>
   );
