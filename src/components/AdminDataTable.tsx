@@ -1,5 +1,5 @@
 import { createSignal, Match, Switch, useContext } from "solid-js";
-import { CountryDatacontext } from "~/contexts/CountryDataContext";
+import { CountryDataContext } from "~/contexts/CountryDataContext";
 import { SelectedDataTableContext } from "~/contexts/SelectedDataTableContext";
 import { deleteCountry } from "~/server/endpoints/country-endpoints";
 import { Button } from "../components/ui/button";
@@ -8,7 +8,6 @@ import DataTableDropDown from "./OpenDataTableDropDown";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -17,7 +16,7 @@ import {
 
 export default function AdminDatatable() {
   const { selectedDataTable } = useContext(SelectedDataTableContext);
-  const { countries, refetch } = useContext(CountryDatacontext);
+  const { countries, refetch } = useContext(CountryDataContext);
   const [isEditing, setIsEditing] = createSignal<boolean>(false);
 
   function toggleEditingMode() {
@@ -47,7 +46,6 @@ export default function AdminDatatable() {
         <Switch>
           <Match when={selectedDataTable() == "countries"}>
             <Table class="w-96 m-12">
-              <TableCaption>Data table 1.</TableCaption>
               <TableHeader>
                 <TableRow>
                   <TableHead>Name</TableHead>

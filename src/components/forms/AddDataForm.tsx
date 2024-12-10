@@ -1,5 +1,5 @@
 import { createMemo, createSignal, useContext } from "solid-js";
-import { CountryDatacontext } from "~/contexts/CountryDataContext";
+import { CountryDataContext } from "~/contexts/CountryDataContext";
 import type { country } from "~/interfaces";
 import { addCountry } from "~/server/endpoints/country-endpoints";
 import { Button } from "../ui/button";
@@ -20,7 +20,7 @@ import {
 } from "../ui/textfield";
 
 export default function AddDataForm() {
-  const { countries, refetch } = useContext(CountryDatacontext);
+  const { countries, refetch } = useContext(CountryDataContext);
   const [name, setName] = createSignal<string>("Name");
   const [populationSize, setPopulationSize] = createSignal<number>(0);
   const [landArea, setLandArea] = createSignal<number>(0);
