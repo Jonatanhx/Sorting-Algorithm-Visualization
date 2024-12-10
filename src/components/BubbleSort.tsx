@@ -1,14 +1,16 @@
 import { createEffect, createSignal, For, useContext } from "solid-js";
 import { CountryDataContext } from "~/contexts/CountryDataContext";
+import { IsSortingContext } from "~/contexts/IsSortingContext";
 import type { country } from "~/interfaces";
+import SortingTimer from "./SortingTimer";
 
 export default function BubbleSort() {
   const { countries } = useContext(CountryDataContext);
-
+  const { isSorting, setIsSorting } = useContext(IsSortingContext);
   const [array, setArray] = createSignal<country[]>([]);
   const [currentI, setCurrentI] = createSignal(0);
   const [currentJ, setCurrentJ] = createSignal(0);
-  const [isSorting, setIsSorting] = createSignal(false);
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isSorted, setIsSorted] = createSignal(false);
 
@@ -32,6 +34,8 @@ export default function BubbleSort() {
   }
 
   function startSorting() {
+    resetArray();
+
     const currentArray = array();
     if (isSorting() || currentArray.length === 0) return;
 
@@ -125,13 +129,8 @@ export default function BubbleSort() {
           >
             Start
           </button>
-          <button
-            onClick={resetArray}
-            disabled={array().length === 0}
-            class="bg-gray-500 text-white px-4 py-2"
-          >
-            Reset
-          </button>
+
+          <SortingTimer />
         </div>
       </div>
     </div>
