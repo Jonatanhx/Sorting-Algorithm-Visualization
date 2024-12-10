@@ -5,7 +5,7 @@ import { IsSortingContext } from "~/contexts/IsSortingContext";
 import type { country } from "~/interfaces";
 import SortingAlgorithmWrapper from "./SortingAlgorithmWrapper";
 
-export default function BubbleSort() {
+export default function InsertionSort() {
   const { countries } = useContext(CountryDataContext);
   const { isSorting, setIsSorting } = useContext(IsSortingContext);
   const { setIsSorted } = useContext(IsSortedContext);
@@ -20,6 +20,41 @@ export default function BubbleSort() {
       setArray(countryData as country[]);
     }
   });
+
+  function startSorting() {
+    resetArray();
+
+    setIsSorting(true);
+    setIsSorted(false);
+    setCurrentI(0);
+    setCurrentJ(0);
+
+    const sortInterval = setInterval(() => {
+      const arr = [...array()];
+      if (currentI() >= arr.length) {
+        setIsSorted(true);
+        clearInterval(sortInterval);
+        setIsSorting(false);
+        return;
+      }
+
+      const key = arr[currentI()];
+
+      for (
+        setCurrentI(1);
+        currentI() < arr.length;
+        setCurrentI(currentI() + 1)
+      ) {
+        setCurrentJ(currentI() - 1);
+
+        while (currentJ() >= 0 && arr[currentJ()] > key) {
+          arr[currentJ() + 1] = arr[currentJ()];
+          setCurrentJ(currentJ() - 1);
+        }
+        arr[currentJ() + 1] = key;
+      }
+    }, 100);
+  }
 
   function calculateHeight(value: number) {
     const currentArray = array();
@@ -44,53 +79,10 @@ export default function BubbleSort() {
     setIsSorted(false);
   }
 
-  function startSorting() {
-    resetArray();
-
-    const currentArray = array();
-    if (isSorting() || currentArray.length === 0) {
-      return;
-    }
-
-    setIsSorting(true);
-    setIsSorted(false);
-    setCurrentI(0);
-    setCurrentJ(0);
-
-    const sortInterval = setInterval(() => {
-      const arr = [...array()];
-
-      if (currentI() >= arr.length - 1) {
-        setIsSorted(true);
-        clearInterval(sortInterval);
-        setIsSorting(false);
-        return;
-      }
-
-      if (currentJ() < arr.length - currentI() - 1) {
-        if (
-          arr[currentJ()].populationSize > arr[currentJ() + 1].populationSize
-        ) {
-          const newArr = [...arr];
-          [newArr[currentJ()], newArr[currentJ() + 1]] = [
-            newArr[currentJ() + 1],
-            newArr[currentJ()],
-          ];
-          setArray(newArr);
-        }
-
-        setCurrentJ((j) => j + 1);
-      } else {
-        setCurrentJ(0);
-        setCurrentI((i) => i + 1);
-      }
-    }, 100);
-  }
-
   return (
     <SortingAlgorithmWrapper>
       <div class="flex p-4">
-        <h1 class="text-white text-4xl">Bubble sort</h1>
+        <h1 class="text-white text-4xl">Insertion sort</h1>
       </div>
       <div class="relative border-black overflow-hidden">
         <div>
@@ -118,7 +110,6 @@ export default function BubbleSort() {
           />
         </div>
       </div>
-
       <div>
         <button
           onClick={startSorting}

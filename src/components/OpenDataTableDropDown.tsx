@@ -23,7 +23,7 @@ export default function OpenDataTableDropDown() {
         <DropdownMenuTrigger
           as={(props: DropdownMenuSubTriggerProps) => (
             <Button variant="default" {...props}>
-              Open
+              Select dataset
             </Button>
           )}
         />
