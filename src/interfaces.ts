@@ -11,6 +11,11 @@ export interface SelectedDataTableContextValue {
   setSelectedDataTable: Setter<string>;
 }
 
+export interface IsSortingContextValue {
+  isSorting: Accessor<boolean>;
+  setIsSorting: Setter<boolean>;
+}
+
 export interface CountryDataContextValue {
   countries: Resource<
     {
