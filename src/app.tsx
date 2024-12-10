@@ -5,6 +5,7 @@ import { FileRoutes } from "@solidjs/start/router";
 import { Suspense } from "solid-js";
 import "./app.css";
 import { CountryDataProvider } from "./contexts/CountryDataContext";
+import { IsSortingProvider } from "./contexts/IsSortingContext";
 import { SelectedDataTableProvider } from "./contexts/SelectedDataTableContext";
 import Admin from "./routes/admin";
 
@@ -13,14 +14,16 @@ export default function App() {
     <Router
       root={(props) => (
         <SelectedDataTableProvider>
-          <CountryDataProvider>
-            <MetaProvider>
-              <Title>Sorting Algorithm Visualization</Title>
-              <Suspense>
-                <SessionProvider>{props.children}</SessionProvider>
-              </Suspense>
-            </MetaProvider>
-          </CountryDataProvider>
+          <IsSortingProvider>
+            <CountryDataProvider>
+              <MetaProvider>
+                <Title>Sorting Algorithm Visualization</Title>
+                <Suspense>
+                  <SessionProvider>{props.children}</SessionProvider>
+                </Suspense>
+              </MetaProvider>
+            </CountryDataProvider>
+          </IsSortingProvider>
         </SelectedDataTableProvider>
       )}
     >
