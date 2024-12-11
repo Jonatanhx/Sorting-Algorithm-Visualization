@@ -18,9 +18,15 @@ export default function Admin() {
       >
         <AdminDatatable />
       </Show>
-      <p class="text-white">
-        You do not have the required credentials to view this
-      </p>
+      <Show
+        when={admins()?.some(
+          (admin) => admin.id !== auth.session()?.user.id && admin.isAdmin
+        )}
+      >
+        <p class="text-white">
+          You do not have the required credentials to view this
+        </p>
+      </Show>
       <Footer />
     </main>
   );

@@ -94,7 +94,7 @@ export default function InsertionSort() {
       </div>
       <div class="relative border-black overflow-hidden">
         <div>
-          <div class="m-1 relative flex h-64 bg-black border-black border-2 z-10 rotate-180 flex-row-reverse">
+          <div class="m-2 relative flex h-64 bg-black border-black border-2 z-10 rotate-180 flex-row-reverse">
             <For each={array()}>
               {(country, index) => (
                 <div
@@ -113,7 +113,7 @@ export default function InsertionSort() {
           </div>
           <div
             class={`gradient-border blur-sm ${
-              isSorting() ? "animation-snake" : ""
+              isRunning() ? "animation-snake" : ""
             }`}
           />
         </div>
