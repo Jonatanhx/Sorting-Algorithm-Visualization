@@ -26,14 +26,20 @@ export default function BubbleSort() {
 
   function calculateHeight(value: number) {
     const currentArray = array();
-    if (currentArray.length === 0) return "0%";
-
+    const minValue = Math.min(
+      ...currentArray.map((country) => country.populationSize)
+    );
     const maxValue = Math.max(
       ...currentArray.map((country) => country.populationSize)
     );
-    const percentHeight = (value / maxValue) * 100;
+    const minLog = Math.log(minValue);
+    const maxLog = Math.log(maxValue);
+    const scale = (maxLog - minLog) / 99;
 
-    return `${percentHeight}%`;
+    const logValue = Math.log(value);
+    const percentage = Math.floor((logValue - minLog) / scale) + 1;
+
+    return `${Math.min(Math.max(percentage, 1), 100)}%`;
   }
 
   function startSorting() {
