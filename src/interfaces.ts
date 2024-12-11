@@ -6,6 +6,10 @@ export interface country {
   landArea: number;
 }
 
+export interface SortingTimerProps {
+  isRunning: boolean;
+}
+
 export interface SelectedDataTableContextValue {
   selectedDataTable: Accessor<string>;
   setSelectedDataTable: Setter<string>;

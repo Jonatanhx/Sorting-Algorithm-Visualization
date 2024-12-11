@@ -4,11 +4,14 @@ import { IsSortedContext } from "~/contexts/IsSortedContext";
 import { IsSortingContext } from "~/contexts/IsSortingContext";
 import type { country } from "~/interfaces";
 import SortingAlgorithmWrapper from "./SortingAlgorithmWrapper";
+import SortingTimer from "./SortingTimer";
 
 export default function BubbleSort() {
   const { countries } = useContext(CountryDataContext);
   const { isSorting, setIsSorting } = useContext(IsSortingContext);
   const { setIsSorted } = useContext(IsSortedContext);
+
+  const [isRunning, setIsRunning] = createSignal(false);
 
   const [array, setArray] = createSignal<country[]>([]);
   const [currentI, setCurrentI] = createSignal(0);
@@ -33,17 +36,6 @@ export default function BubbleSort() {
     return `${percentHeight}%`;
   }
 
-  function resetArray() {
-    const countryData = countries();
-    if (countryData && countryData.length > 0) {
-      setArray(countryData as country[]);
-    }
-    setCurrentI(0);
-    setCurrentJ(0);
-    setIsSorting(false);
-    setIsSorted(false);
-  }
-
   function startSorting() {
     resetArray();
 
@@ -52,6 +44,7 @@ export default function BubbleSort() {
       return;
     }
 
+    setIsRunning(true);
     setIsSorting(true);
     setIsSorted(false);
     setCurrentI(0);
@@ -85,6 +78,17 @@ export default function BubbleSort() {
         setCurrentI((i) => i + 1);
       }
     }, 100);
+  }
+
+  function resetArray() {
+    const countryData = countries();
+    if (countryData && countryData.length > 0) {
+      setArray(countryData as country[]);
+    }
+    setCurrentI(0);
+    setCurrentJ(0);
+    setIsSorting(false);
+    setIsSorted(false);
   }
 
   return (
@@ -127,6 +131,7 @@ export default function BubbleSort() {
         >
           Start
         </button>
+        <SortingTimer isRunning={isRunning()} />
       </div>
     </SortingAlgorithmWrapper>
   );

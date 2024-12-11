@@ -21,7 +21,7 @@ export default function App() {
               <CountryDataProvider>
                 <AdminDataProvider>
                   <MetaProvider>
-                    <Title>Sorting Algorithm Visualization</Title>
+                    <Title>Sorting Visualizer</Title>
                     <Suspense>
                       <SessionProvider>{props.children}</SessionProvider>
                     </Suspense>

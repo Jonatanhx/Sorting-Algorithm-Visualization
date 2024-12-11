@@ -4,6 +4,7 @@ import { IsSortedContext } from "~/contexts/IsSortedContext";
 import { IsSortingContext } from "~/contexts/IsSortingContext";
 import type { country } from "~/interfaces";
 import SortingAlgorithmWrapper from "./SortingAlgorithmWrapper";
+import SortingTimer from "./SortingTimer";
 
 export default function InsertionSort() {
   const { countries } = useContext(CountryDataContext);
@@ -13,6 +14,7 @@ export default function InsertionSort() {
   const [array, setArray] = createSignal<country[]>([]);
   const [currentI, setCurrentI] = createSignal(0);
   const [currentJ, setCurrentJ] = createSignal(0);
+  const [isRunning, setIsRunning] = createSignal(false);
 
   createEffect(() => {
     const countryData = countries();
@@ -24,6 +26,7 @@ export default function InsertionSort() {
   function startSorting() {
     resetArray();
 
+    setIsRunning(true);
     setIsSorting(true);
     setIsSorted(false);
     setCurrentI(0);
@@ -34,6 +37,7 @@ export default function InsertionSort() {
       if (currentI() >= arr.length) {
         setIsSorted(true);
         clearInterval(sortInterval);
+        setIsRunning(false);
         setIsSorting(false);
         return;
       }
@@ -113,11 +117,12 @@ export default function InsertionSort() {
       <div>
         <button
           onClick={startSorting}
-          disabled={isSorting() || array().length === 0}
+          disabled={isSorting() || array().length === 0 || isRunning()}
           class="bg-blue-500 text-white px-4 py-2 mr-2"
         >
           Start
         </button>
+        <SortingTimer isRunning={isRunning()} />
       </div>
     </SortingAlgorithmWrapper>
   );
