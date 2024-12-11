@@ -90,7 +90,7 @@ export default function InsertionSort() {
             <For each={array()}>
               {(country, index) => (
                 <div
-                  class={`flex relative z-10
+                  class={`flex w-12 relative z-10
                     ${
                       index() === currentJ() || index() === currentJ() + 1
                         ? "bg-yellow-300"
