@@ -1,9 +1,13 @@
-import type { Accessor, Resource, Setter } from "solid-js";
+import type { Accessor, Resource, ResourceActions, Setter } from "solid-js";
 
 export interface country {
   name: string;
   populationSize: number;
   landArea: number;
+}
+
+export interface SortingTimerProps {
+  isRunning: boolean;
 }
 
 export interface SelectedDataTableContextValue {
@@ -16,6 +20,12 @@ export interface IsSortingContextValue {
   setIsSorting: Setter<boolean>;
 }
 
+export interface IsSortedContextValue {
+  isSorted: Accessor<boolean>;
+  setIsSorted: Setter<boolean>;
+}
+
+/* ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
 export interface CountryDataContextValue {
   countries: Resource<
     {
@@ -44,4 +54,28 @@ export interface CountryDataContextValue {
       >
     | null
     | undefined;
+}
+/* ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+export interface AdminDataContextValue {
+  admins: Resource<
+    {
+      id: string;
+      name: string | null;
+      email: string | null;
+      image: string | null;
+      isAdmin: boolean;
+    }[]
+  >;
+
+  refetch: ResourceActions<
+    | {
+        id: string;
+        name: string | null;
+        email: string | null;
+        image: string | null;
+        isAdmin: boolean;
+      }[]
+    | undefined,
+    unknown
+  >;
 }

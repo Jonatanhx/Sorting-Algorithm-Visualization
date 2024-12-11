@@ -1,14 +1,10 @@
 import { useAuth } from "@solid-mediakit/auth/client";
-import { createResource, Match, Show, Switch } from "solid-js";
-import { db } from "../../prisma/db";
+import { Match, Show, Switch, useContext } from "solid-js";
+import { AdminDataContext } from "~/contexts/AdminDataContext";
 import LoginButton from "./LoginButton";
 
 export function Navbar() {
-  const [admins] = createResource(async () => {
-    "use server";
-    const adminData = await db.user.findMany({});
-    return adminData;
-  });
+  const { admins } = useContext(AdminDataContext);
 
   const auth = useAuth();
   return (

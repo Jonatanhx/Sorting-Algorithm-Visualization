@@ -1,14 +1,15 @@
 import { createSignal, onCleanup, useContext } from "solid-js";
 import { IsSortingContext } from "~/contexts/IsSortingContext";
+import type { SortingTimerProps } from "~/interfaces";
 
-export default function SortingTimer() {
+export default function SortingTimer(props: SortingTimerProps) {
   const [minutes, setMinutes] = createSignal(0);
   const [seconds, setSeconds] = createSignal(0);
   const [milliSeconds, setMilliSeconds] = createSignal(0);
   const { isSorting } = useContext(IsSortingContext);
 
   const interval = setInterval(() => {
-    if (isSorting()) {
+    if (isSorting() && props.isRunning === true) {
       setMilliSeconds((ms) => {
         if (ms >= 99) {
           setSeconds((s) => {
