@@ -43,20 +43,18 @@ export default function InsertionSort() {
       }
 
       const key = arr[currentI()];
+      let j = currentI() - 1;
 
-      for (
-        setCurrentI(1);
-        currentI() < arr.length;
-        setCurrentI(currentI() + 1)
-      ) {
-        setCurrentJ(currentI() - 1);
-
-        while (currentJ() >= 0 && arr[currentJ()] > key) {
-          arr[currentJ() + 1] = arr[currentJ()];
-          setCurrentJ(currentJ() - 1);
-        }
-        arr[currentJ() + 1] = key;
+      while (j >= 0 && arr[j].populationSize > key.populationSize) {
+        arr[j + 1] = arr[j];
+        j--;
       }
+
+      arr[j + 1] = key;
+
+      setArray(arr);
+      setCurrentJ(j + 1);
+      setCurrentI(currentI() + 1);
     }, 100);
   }
 
