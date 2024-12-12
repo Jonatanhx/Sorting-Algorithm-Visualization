@@ -108,7 +108,7 @@ export default function BubbleSort() {
           <For each={array()}>
             {(country, index) => (
               <div
-                class={`flex-1 relative z-10
+                class={`flex-1 relative z-10 border border-black
                     ${
                       index() === currentJ() || index() === currentJ() + 1
                         ? "bg-yellow-300"
