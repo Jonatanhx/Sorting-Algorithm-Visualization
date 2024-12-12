@@ -36,8 +36,7 @@ export default function AdminDatatable() {
   }
 
   return (
-    <div class="flex flex-row ">
-      <div class="flex flex-1" id="empty-div" />
+    <div class="flex flex-row justify-center ">
       <div
         class="text-white border-8 border-purple-600 border-[radial-gradient(169.40%_89.55%_at_94.76%_6.29%,rgba(0,0,0,0.40)_0%,rgba(255,255,255,0.00)_100%)]"
         id="center-div"
@@ -84,7 +83,6 @@ export default function AdminDatatable() {
         </Button>
         {isEditing() == true && <AddDataDialog />}
       </div>
-      <div class="flex flex-1" id="empty-div" />
     </div>
   );
 }
