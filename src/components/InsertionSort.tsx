@@ -73,7 +73,7 @@ export default function InsertionSort() {
     const logValue = Math.log(value);
     const percentage = Math.floor((logValue - minLog) / scale) + 1;
 
-    return `${Math.min(Math.max(percentage, 1), 100)}%`;
+    return `${Math.min(Math.max(percentage, 5), 100)}%`;
   }
 
   function resetArray() {
@@ -89,34 +89,32 @@ export default function InsertionSort() {
 
   return (
     <SortingAlgorithmWrapper>
-      <div class="flex p-4">
+      <div class="flex p-4 justify-center">
         <h1 class="text-white text-4xl">Insertion sort</h1>
       </div>
-      <div class="relative border-black overflow-hidden">
-        <div>
-          <div class="m-2 relative flex h-64 bg-black border-black border-2 z-10 rotate-180 flex-row-reverse">
-            <For each={array()}>
-              {(country, index) => (
-                <div
-                  class={`flex w-12 relative z-10
+      <div class="flex flex-1 relative border-black overflow-hidden">
+        <div class="m-2 relative flex flex-1 h-64 bg-black border-black border-2 z-10 rotate-180 flex-row-reverse">
+          <For each={array()}>
+            {(country, index) => (
+              <div
+                class={`flex-1 relative z-10 border border-black
                     ${
                       index() === currentJ() || index() === currentJ() + 1
-                        ? "bg-yellow-300"
-                        : "bg-white p-2"
+                        ? "bg-yellow-300 "
+                        : "bg-white"
                     }`}
-                  style={{
-                    height: calculateHeight(country.populationSize),
-                  }}
-                />
-              )}
-            </For>
-          </div>
-          <div
-            class={`gradient-border blur-sm ${
-              isRunning() ? "animation-snake" : ""
-            }`}
-          />
+                style={{
+                  height: calculateHeight(country.populationSize),
+                }}
+              />
+            )}
+          </For>
         </div>
+        <div
+          class={`gradient-border blur-sm ${
+            isRunning() ? "animation-snake" : ""
+          }`}
+        />
       </div>
       <div>
         <button
