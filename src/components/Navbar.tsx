@@ -2,14 +2,13 @@ import { useAuth } from "@solid-mediakit/auth/client";
 import { Match, Show, Switch, useContext } from "solid-js";
 import { AdminDataContext } from "~/contexts/AdminDataContext";
 import LoginButton from "./LoginButton";
-import { Button } from "./ui/button";
 
 export function Navbar() {
   const { admins } = useContext(AdminDataContext);
 
   const auth = useAuth();
   return (
-    <nav class="flex-1 flex justify-end items-center">
+    <nav class="flex-1 flex justify-end">
       <LoginButton />
       <Switch>
         <Match when={auth.status() === "authenticated"}>
@@ -18,10 +17,11 @@ export function Navbar() {
               (admin) => admin.id === auth.session()?.user.id && admin.isAdmin
             )}
           >
-            <a href="/Admin">
-              <Button variant={"default"} class="text-white mr-3">
-                Admin
-              </Button>
+            <a
+              href="/Admin"
+              class="flex items-center font-semibold border-bottom-effect text-white px-10"
+            >
+              Admin
             </a>
           </Show>
           <div>

@@ -4,6 +4,8 @@ import { Route, Router } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
 import { Suspense } from "solid-js";
 import "./app.css";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
 import { AdminDataProvider } from "./contexts/AdminDataContext";
 import { CountryDataProvider } from "./contexts/CountryDataContext";
 import { IsSortedProvider } from "./contexts/IsSortedContext";
@@ -23,7 +25,11 @@ export default function App() {
                   <MetaProvider>
                     <Title>Sorting Visualizer</Title>
                     <Suspense>
-                      <SessionProvider>{props.children}</SessionProvider>
+                      <SessionProvider>
+                        <Header />
+                        {props.children}
+                        <Footer />
+                      </SessionProvider>
                     </Suspense>
                   </MetaProvider>
                 </AdminDataProvider>
