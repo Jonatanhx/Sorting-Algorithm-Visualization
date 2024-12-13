@@ -73,7 +73,7 @@ export default function InsertionSort() {
     const logValue = Math.log(value);
     const percentage = Math.floor((logValue - minLog) / scale) + 1;
 
-    return `${Math.min(Math.max(percentage, 1), 100)}%`;
+    return `${Math.min(Math.max(percentage, 5), 100)}%`;
   }
 
   function resetArray() {
@@ -100,8 +100,8 @@ export default function InsertionSort() {
                 class={`flex-1 relative z-10 border border-black
                     ${
                       index() === currentJ() || index() === currentJ() + 1
-                        ? "bg-yellow-300"
-                        : "bg-white p-2"
+                        ? "bg-yellow-300 "
+                        : "bg-white"
                     }`}
                 style={{
                   height: calculateHeight(country.populationSize),

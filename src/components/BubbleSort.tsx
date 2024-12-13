@@ -39,7 +39,7 @@ export default function BubbleSort() {
     const logValue = Math.log(value);
     const percentage = Math.floor((logValue - minLog) / scale) + 1;
 
-    return `${Math.min(Math.max(percentage, 1), 100)}%`;
+    return `${Math.min(Math.max(percentage, 5), 100)}%`;
   }
 
   function startSorting() {
@@ -112,7 +112,7 @@ export default function BubbleSort() {
                     ${
                       index() === currentJ() || index() === currentJ() + 1
                         ? "bg-yellow-300"
-                        : "bg-white p-2"
+                        : "bg-white"
                     }`}
                 style={{
                   height: calculateHeight(country.populationSize),
