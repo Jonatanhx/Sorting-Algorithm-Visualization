@@ -8,7 +8,8 @@ export function Navbar() {
 
   const auth = useAuth();
   return (
-    <nav class="flex-1 flex justify-end items-center">
+    <nav class="flex-1 flex justify-end">
+      <LoginButton />
       <Switch>
         <Match when={auth.status() === "authenticated"}>
           <Show
@@ -16,23 +17,22 @@ export function Navbar() {
               (admin) => admin.id === auth.session()?.user.id && admin.isAdmin
             )}
           >
-            <a href="/Admin">
-              <div class="text-white mr-3">Admin</div>
+            <a
+              href="/Admin"
+              class="flex items-center font-semibold border-bottom-effect text-white px-10"
+            >
+              Admin
             </a>
           </Show>
-          <div class="flex flex-row">
-            <span class="text-xl text-white mr-3 flex items-center">
-              Welcome {auth.session()?.user?.name}
-            </span>
+          <div>
             <img
-              class="h-36 w-36"
+              class="lg:h-28 md:h-20"
               src={`${auth.session()?.user.image}`}
               alt="User Github profile image"
             />
           </div>
         </Match>
       </Switch>
-      <LoginButton />
     </nav>
   );
 }

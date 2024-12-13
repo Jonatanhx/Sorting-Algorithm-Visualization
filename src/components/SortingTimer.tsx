@@ -30,7 +30,7 @@ export default function SortingTimer(props: SortingTimerProps) {
 
   return (
     <div>
-      <div class="text-white">
+      <div class="text-white font-mono">
         {minutes().toString().padStart(2, "0")}:
         {seconds().toString().padStart(2, "0")}:
         {milliSeconds().toString().padStart(2, "0")}
