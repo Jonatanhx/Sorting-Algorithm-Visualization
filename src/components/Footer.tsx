@@ -3,9 +3,9 @@ import { AiFillGithub, AiFillLinkedin } from "solid-icons/ai";
 export default function Footer() {
   return (
     <footer class="bg-cyan-500 h-56 flex items-center px-96 mt-12">
-      <h2 class="text-black flex-1 lg:text-4xl md:text-4xl sm:text-3xl font-bold">
+      <h1 class="text-black flex-1 lg:text-5xl md:text-4xl sm:text-3xl font-bold">
         Sorting Visualizer
-      </h2>
+      </h1>
       <div class="flex gap-4">
         <a
           href="https://github.com/Jonatanhx"
