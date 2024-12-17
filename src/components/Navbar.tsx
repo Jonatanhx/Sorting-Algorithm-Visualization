@@ -24,9 +24,9 @@ export function Navbar() {
               Admin
             </a>
           </Show>
-          <div>
+          <div class="flex items-center">
             <img
-              class="lg:h-28 md:h-20"
+              class="lg:h-20 md:h-16"
               src={`${auth.session()?.user.image}`}
               alt="User Github profile image"
             />

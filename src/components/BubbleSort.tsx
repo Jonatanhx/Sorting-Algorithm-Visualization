@@ -111,7 +111,7 @@ export default function BubbleSort() {
                 class={`flex-1 relative z-10 border border-black
                     ${
                       index() === currentJ() || index() === currentJ() + 1
-                        ? "bg-yellow-300"
+                        ? "bg-cyan-500"
                         : "bg-white"
                     }`}
                 style={{
