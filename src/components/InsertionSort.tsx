@@ -93,11 +93,11 @@ export default function InsertionSort() {
         <h1 class="text-white text-4xl">Insertion sort</h1>
       </div>
       <div class="flex flex-1 relative border-black overflow-hidden">
-        <div class="m-2 relative flex flex-1 h-64 bg-black border-black border-2 z-10 rotate-180 flex-row-reverse">
+        <div class="m-2 flex flex-1 h-64 bg-black border-black border-2 z-10 rotate-180 flex-row-reverse">
           <For each={array()}>
             {(country, index) => (
               <div
-                class={`flex-1 relative z-10 border border-black
+                class={`flex-1 z-10 border border-black
                     ${
                       index() === currentJ() || index() === currentJ() + 1
                         ? "bg-cyan-500 "

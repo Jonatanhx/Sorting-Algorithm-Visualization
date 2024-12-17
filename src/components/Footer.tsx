@@ -1,9 +1,27 @@
+import { AiFillGithub, AiFillLinkedin } from "solid-icons/ai";
+
 export default function Footer() {
   return (
-    <a href="/">
-      <footer class="bg-orange-600 bg-[radial-gradient(169.40%_89.55%_at_94.76%_6.29%,rgba(0,0,0,0.40)_0%,rgba(255,255,255,0.00)_100%)]">
-        <h2 class="text-6xl text-white">Sorting Visualizer</h2>
-      </footer>
-    </a>
+    <footer class="bg-cyan-500 h-56 flex items-center px-96 mt-12">
+      <h2 class="text-black flex-1 lg:text-4xl md:text-4xl sm:text-3xl font-bold">
+        Sorting Visualizer
+      </h2>
+      <div class="flex gap-4">
+        <a
+          href="https://github.com/Jonatanhx"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <AiFillGithub class="size-14" />
+        </a>
+        <a
+          href="https://www.linkedin.com/in/jonatanhx/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <AiFillLinkedin class="size-14" />
+        </a>
+      </div>
+    </footer>
   );
 }
