@@ -61,7 +61,7 @@ model Countries {
 
 model Products {
   id       Int    @id @default(autoincrement())
-  name     String
+  name     String @unique
   price    Int
   quantity Int
 }
@@ -71,4 +71,5 @@ model Patients {
   firstName String
   age       Int
   weight    Int
+  height    Int
 }
