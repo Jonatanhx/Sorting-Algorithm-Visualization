@@ -58,3 +58,15 @@ model Countries {
   populationSize Int
   landArea       Int
 }
+
+model Products {
+  id       Int @id @default(autoincrement())
+  price    Int
+  quantity Int
+}
+
+model Patients {
+  id     Int @id @default(autoincrement())
+  age    Int
+  weight Int
+}
