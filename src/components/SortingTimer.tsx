@@ -30,7 +30,11 @@ export default function SortingTimer(props: SortingTimerProps) {
 
   return (
     <div>
-      <div class="text-white font-mono">
+      <div
+        class={`font-mono ${
+          props.isRunning ? "text-yellow-300" : "text-white"
+        }`}
+      >
         {minutes().toString().padStart(2, "0")}:
         {seconds().toString().padStart(2, "0")}:
         {milliSeconds().toString().padStart(2, "0")}
