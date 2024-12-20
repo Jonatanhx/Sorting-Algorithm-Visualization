@@ -105,13 +105,23 @@ export default function InsertionSort() {
     <SortingAlgorithmWrapper>
       <div class="flex py-4 mx-16">
         <div class="flex-1" />
-        <h1 class="text-white text-4xl">Insertion sort</h1>
+        <div class="flex flex-col text-white items-center">
+          <h1 class="text-white text-4xl">Insertion sort</h1>
+          <h2>
+            Currently sorting:
+            {" " + selectedDataTable()}
+          </h2>
+        </div>
         <div class="flex-1">
           <div class="flex justify-end">
             <DropdownMenu placement="bottom">
               <DropdownMenuTrigger
                 as={(props: DropdownMenuSubTriggerProps) => (
-                  <Button variant="outline" {...props}>
+                  <Button
+                    variant="outline"
+                    {...props}
+                    disabled={isRunning() == true}
+                  >
                     Select dataset
                   </Button>
                 )}
@@ -167,7 +177,7 @@ export default function InsertionSort() {
       <div class="flex flex-col items-center m-1">
         <Button
           onClick={startSorting}
-          disabled={isSorting() || array().length === 0 || isRunning()}
+          disabled={isSorting() || array().length === 0}
           variant={"outline"}
         >
           Start

@@ -112,7 +112,13 @@ export default function BubbleSort() {
     <SortingAlgorithmWrapper>
       <div class="flex py-4 mx-16 justify-center">
         <div class="flex-1" />
-        <h1 class="text-white text-4xl">Bubble sort</h1>
+        <div class="flex flex-col text-white items-center">
+          <h1 class="text-white text-4xl">Bubble sort</h1>
+          <h2>
+            Currently sorting:
+            {" " + selectedDataTable()}
+          </h2>
+        </div>
         <div class="flex-1">
           <div class="flex justify-end">
             <DropdownMenu placement="bottom">
