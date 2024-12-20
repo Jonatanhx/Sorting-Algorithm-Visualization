@@ -110,10 +110,43 @@ export default function BubbleSort() {
 
   return (
     <SortingAlgorithmWrapper>
-      <div class="flex p-4 justify-center">
+      <div class="flex py-4 mx-16 justify-center">
+        <div class="flex-1" />
         <h1 class="text-white text-4xl">Bubble sort</h1>
+        <div class="flex-1">
+          <div class="flex justify-end">
+            <DropdownMenu placement="bottom">
+              <DropdownMenuTrigger
+                as={(props: DropdownMenuSubTriggerProps) => (
+                  <Button variant="outline" {...props}>
+                    Select dataset
+                  </Button>
+                )}
+              />
+              <DropdownMenuContent class="w-56">
+                <DropdownMenuGroup>
+                  <DropdownMenuGroupLabel>
+                    Select dataset
+                  </DropdownMenuGroupLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuRadioGroup
+                    value={selectedDataTable()}
+                    onChange={setSelectedDataTable}
+                  >
+                    <DropdownMenuRadioItem value="populationSize">
+                      Population Size
+                    </DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="landArea">
+                      Land Area in km2
+                    </DropdownMenuRadioItem>
+                  </DropdownMenuRadioGroup>
+                </DropdownMenuGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div>
       </div>
-      <div class="flex flex-1 relative border-black overflow-hidden">
+      <div class="flex flex-1 relative border-black overflow-hidden mx-16">
         <div class="m-2 flex flex-1 h-64 bg-black border-black border-2 z-10 rotate-180 flex-row-reverse">
           <For each={array()}>
             {(country, index) => (
@@ -134,50 +167,19 @@ export default function BubbleSort() {
           </For>
         </div>
         <div
-          class={`gradient-border blur-sm ${
-            isRunning() ? "animation-snake" : ""
-          }`}
+          class={`gradient-border ${isRunning() ? "animation-snake" : ""}`}
         />
       </div>
 
-      <div>
-        <button
+      <div class="flex flex-col items-center m-1">
+        <Button
+          variant={"outline"}
           onClick={startSorting}
           disabled={isSorting() || array().length === 0}
-          class="bg-blue-500 text-white px-4 py-2 mr-2"
         >
           Start
-        </button>
+        </Button>
         <SortingTimer isRunning={isRunning()} />
-      </div>
-
-      <div>
-        <DropdownMenu placement="bottom">
-          <DropdownMenuTrigger
-            as={(props: DropdownMenuSubTriggerProps) => (
-              <Button variant="outline" {...props}>
-                Select dataset
-              </Button>
-            )}
-          />
-          <DropdownMenuContent class="w-56">
-            <DropdownMenuGroup>
-              <DropdownMenuGroupLabel>Select data set</DropdownMenuGroupLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuRadioGroup
-                value={selectedDataTable()}
-                onChange={setSelectedDataTable}
-              >
-                <DropdownMenuRadioItem value="populationSize">
-                  Population Size
-                </DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="landArea">
-                  Land Area in km2
-                </DropdownMenuRadioItem>
-              </DropdownMenuRadioGroup>
-            </DropdownMenuGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
       </div>
     </SortingAlgorithmWrapper>
   );

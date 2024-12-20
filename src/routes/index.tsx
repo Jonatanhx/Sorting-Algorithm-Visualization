@@ -4,10 +4,12 @@ import InsertionSort from "~/components/InsertionSort";
 
 export default function Home() {
   return (
-    <main class="flex flex-col bg-[#1b1b1b] z-0 min-h-screen">
+    <main class="flex flex-col bg-[#1b1b1b] z-0 min-h-screen gap-4">
       <Banner />
-      <BubbleSort />
-      <InsertionSort />
+      <div class="flex flex-col gap-4">
+        <BubbleSort />
+        <InsertionSort />
+      </div>
     </main>
   );
 }
