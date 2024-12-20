@@ -1,3 +1,5 @@
+import { Button } from "@kobalte/core/button";
+import type { DropdownMenuSubTriggerProps } from "@kobalte/core/dropdown-menu";
 import { createEffect, createSignal, For, useContext } from "solid-js";
 import { CountryDataContext } from "~/contexts/CountryDataContext";
 import { IsSortedContext } from "~/contexts/IsSortedContext";
@@ -5,14 +7,25 @@ import { IsSortingContext } from "~/contexts/IsSortingContext";
 import type { country } from "~/interfaces";
 import SortingAlgorithmWrapper from "./SortingAlgorithmWrapper";
 import SortingTimer from "./SortingTimer";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuGroupLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 
 export default function BubbleSort() {
   const { countries } = useContext(CountryDataContext);
   const { isSorting, setIsSorting } = useContext(IsSortingContext);
   const { setIsSorted } = useContext(IsSortedContext);
 
+  const [selectedDataTable, setSelectedDataTable] =
+    createSignal("populationSize");
   const [isRunning, setIsRunning] = createSignal(false);
-
   const [array, setArray] = createSignal<country[]>([]);
   const [currentI, setCurrentI] = createSignal(0);
   const [currentJ, setCurrentJ] = createSignal(0);
@@ -26,20 +39,16 @@ export default function BubbleSort() {
 
   function calculateHeight(value: number) {
     const currentArray = array();
-    const minValue = Math.min(
-      ...currentArray.map((country) => country.populationSize)
+    const values = currentArray.map(
+      (country) => country[selectedDataTable() as keyof country] as number
     );
-    const maxValue = Math.max(
-      ...currentArray.map((country) => country.populationSize)
-    );
-    const minLog = Math.log(minValue);
-    const maxLog = Math.log(maxValue);
-    const scale = (maxLog - minLog) / 99;
 
-    const logValue = Math.log(value);
-    const percentage = Math.floor((logValue - minLog) / scale) + 1;
+    const minValue = Math.min(...values);
+    const maxValue = Math.max(...values);
 
-    return `${Math.min(Math.max(percentage, 5), 100)}%`;
+    const percentage = ((value - minValue) / (maxValue - minValue)) * 100;
+
+    return `${Math.max(5, Math.min(percentage))}%`;
   }
 
   function startSorting() {
@@ -69,7 +78,8 @@ export default function BubbleSort() {
 
       if (currentJ() < arr.length - currentI() - 1) {
         if (
-          arr[currentJ()].populationSize > arr[currentJ() + 1].populationSize
+          arr[currentJ()][selectedDataTable() as keyof country] >
+          arr[currentJ() + 1][selectedDataTable() as keyof country]
         ) {
           const newArr = [...arr];
           [newArr[currentJ()], newArr[currentJ() + 1]] = [
@@ -115,7 +125,9 @@ export default function BubbleSort() {
                         : "bg-white"
                     }`}
                 style={{
-                  height: calculateHeight(country.populationSize),
+                  height: calculateHeight(
+                    country[selectedDataTable() as keyof country] as number
+                  ),
                 }}
               />
             )}
@@ -137,6 +149,34 @@ export default function BubbleSort() {
           Start
         </button>
         <SortingTimer isRunning={isRunning()} />
+      </div>
+      <div>
+        <DropdownMenu placement="bottom">
+          <DropdownMenuTrigger
+            as={(props: DropdownMenuSubTriggerProps) => (
+              <Button variant="default" {...props} class="border-bottom-effect">
+                Select dataset
+              </Button>
+            )}
+          />
+          <DropdownMenuContent class="w-56">
+            <DropdownMenuGroup>
+              <DropdownMenuGroupLabel>Select data set</DropdownMenuGroupLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuRadioGroup
+                value={selectedDataTable()}
+                onChange={setSelectedDataTable}
+              >
+                <DropdownMenuRadioItem value="populationSize">
+                  Population Size
+                </DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="landArea">
+                  Land Area in km2
+                </DropdownMenuRadioItem>
+              </DropdownMenuRadioGroup>
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </SortingAlgorithmWrapper>
   );
