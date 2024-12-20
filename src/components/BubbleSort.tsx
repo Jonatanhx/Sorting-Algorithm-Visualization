@@ -1,10 +1,10 @@
-import { Button } from "@kobalte/core/button";
 import type { DropdownMenuSubTriggerProps } from "@kobalte/core/dropdown-menu";
 import { createEffect, createSignal, For, useContext } from "solid-js";
 import { CountryDataContext } from "~/contexts/CountryDataContext";
 import { IsSortedContext } from "~/contexts/IsSortedContext";
 import { IsSortingContext } from "~/contexts/IsSortingContext";
 import type { country } from "~/interfaces";
+import { Button } from "../components/ui/button";
 import SortingAlgorithmWrapper from "./SortingAlgorithmWrapper";
 import SortingTimer from "./SortingTimer";
 import {
@@ -150,11 +150,12 @@ export default function BubbleSort() {
         </button>
         <SortingTimer isRunning={isRunning()} />
       </div>
+
       <div>
         <DropdownMenu placement="bottom">
           <DropdownMenuTrigger
             as={(props: DropdownMenuSubTriggerProps) => (
-              <Button variant="default" {...props} class="border-bottom-effect">
+              <Button variant="outline" {...props}>
                 Select dataset
               </Button>
             )}
