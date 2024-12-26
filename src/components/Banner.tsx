@@ -8,7 +8,7 @@ export default function Banner() {
         <div class="lg:h-96 md:h-72 sm:h-64 bg-gradient-to-t from-black from-10% via-black/50 via-60% to-transparent to-100% flex justify-center items-center">
           <div class="flex flex-col lg:h-96 md:h-72 sm:h-64 mt-36 text-white font-semibold text-center">
             <h1 class="text-5xl font-extrabold">
-              Data sorting visualization
+              Data sorting visualizer
               <br />
               Learning data sorting algorithms made easy.
             </h1>
