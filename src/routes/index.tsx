@@ -1,6 +1,7 @@
 import Banner from "~/components/Banner";
 import BubbleSort from "~/components/BubbleSort";
 import InsertionSort from "~/components/InsertionSort";
+import QuickSort from "~/components/QuickSort";
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
       <div class="flex flex-col gap-4">
         <BubbleSort />
         <InsertionSort />
+        <QuickSort />
       </div>
     </main>
   );
