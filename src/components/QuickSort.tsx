@@ -232,9 +232,11 @@ export default function QuickSort() {
                 class={`flex-1 z-10 border border-black
                     ${
                       index() === currentPivot()
-                        ? "bg-blue-500"
-                        : index() === currentI() || index() === currentJ()
-                        ? "bg-cyan-500"
+                        ? "bg-red-600"
+                        : index() === currentI()
+                        ? "bg-red-600"
+                        : index() === currentJ() || index() === currentJ() + 1
+                        ? "bg-red-600"
                         : "bg-white"
                     }`}
                 style={{

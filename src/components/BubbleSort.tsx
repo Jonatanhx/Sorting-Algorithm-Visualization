@@ -159,8 +159,10 @@ export default function BubbleSort() {
               <div
                 class={`flex-1 z-10 border border-black
                     ${
-                      index() === currentJ() || index() === currentJ() + 1
-                        ? "bg-cyan-500"
+                      index() === currentI()
+                        ? "bg-red-600"
+                        : index() === currentJ() || index() === currentJ() + 1
+                        ? "bg-red-600"
                         : "bg-white"
                     }`}
                 style={{
