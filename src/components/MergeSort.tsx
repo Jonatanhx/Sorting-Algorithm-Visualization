@@ -18,17 +18,17 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 
-export default function InsertionSort() {
+export default function MergeSort() {
   const { countries } = useContext(CountryDataContext);
   const { isSorting, setIsSorting } = useContext(IsSortingContext);
   const { setIsSorted } = useContext(IsSortedContext);
 
   const [selectedDataTable, setSelectedDataTable] =
     createSignal("populationSize");
+  const [isRunning, setIsRunning] = createSignal(false);
   const [array, setArray] = createSignal<country[]>([]);
   const [currentI, setCurrentI] = createSignal(0);
   const [currentJ, setCurrentJ] = createSignal(0);
-  const [isRunning, setIsRunning] = createSignal(false);
 
   createEffect(() => {
     const countryData = countries();
@@ -36,45 +36,6 @@ export default function InsertionSort() {
       setArray(countryData as country[]);
     }
   });
-
-  function startSorting() {
-    resetArray();
-
-    setIsRunning(true);
-    setIsSorting(true);
-    setIsSorted(false);
-    setCurrentI(0);
-    setCurrentJ(0);
-
-    const sortInterval = setInterval(() => {
-      const arr = [...array()];
-      if (currentI() >= arr.length) {
-        setIsSorted(true);
-        clearInterval(sortInterval);
-        setIsRunning(false);
-        setIsSorting(false);
-        return;
-      }
-
-      const key = arr[currentI()];
-      let j = currentI() - 1;
-
-      while (
-        j >= 0 &&
-        arr[j][selectedDataTable() as keyof country] >
-          key[selectedDataTable() as keyof country]
-      ) {
-        arr[j + 1] = arr[j];
-        j--;
-      }
-
-      arr[j + 1] = key;
-
-      setArray(arr);
-      setCurrentJ(j + 1);
-      setCurrentI(currentI() + 1);
-    }, 100);
-  }
 
   function calculateHeight(value: number) {
     const currentArray = array();
@@ -101,12 +62,81 @@ export default function InsertionSort() {
     setIsSorted(false);
   }
 
+  function startSorting() {
+    resetArray();
+
+    if (isSorting() || array().length === 0) {
+      return;
+    }
+
+    setIsRunning(true);
+    setIsSorting(true);
+    setIsSorted(false);
+
+    const arr = [...array()];
+    const n = arr.length;
+    let currentSize = 1;
+
+    const sortInterval = setInterval(() => {
+      if (currentSize > n) {
+        setArray(arr);
+        setIsSorted(true);
+        clearInterval(sortInterval);
+        setIsRunning(false);
+        setIsSorting(false);
+        return;
+      }
+
+      for (let start = 0; start < n - 1; start += 2 * currentSize) {
+        const mid = Math.min(start + currentSize - 1, n - 1);
+        const end = Math.min(start + 2 * currentSize - 1, n - 1);
+
+        merge(arr, start, mid, end);
+      }
+
+      currentSize *= 2;
+      setArray([...arr]);
+    }, 100);
+  }
+
+  function merge(arr: country[], start: number, mid: number, end: number) {
+    const leftArr = arr.slice(start, mid + 1);
+    const rightArr = arr.slice(mid + 1, end + 1);
+    let i = 0,
+      j = 0,
+      k = start;
+
+    while (i < leftArr.length && j < rightArr.length) {
+      setCurrentI(start + i);
+      setCurrentJ(mid + 1 + j);
+
+      if (
+        leftArr[i][selectedDataTable() as keyof country] <=
+        rightArr[j][selectedDataTable() as keyof country]
+      ) {
+        arr[k++] = leftArr[i++];
+      } else {
+        arr[k++] = rightArr[j++];
+      }
+    }
+
+    while (i < leftArr.length) {
+      setCurrentI(start + i);
+      arr[k++] = leftArr[i++];
+    }
+
+    while (j < rightArr.length) {
+      setCurrentJ(mid + 1 + j);
+      arr[k++] = rightArr[j++];
+    }
+  }
+
   return (
     <SortingAlgorithmWrapper>
-      <div class="flex py-4 mx-16">
+      <div class="flex py-4 mx-16 justify-center">
         <div class="flex-1" />
         <div class="flex flex-col text-white items-center">
-          <h1 class="text-white text-4xl">Insertion sort</h1>
+          <h1 class="text-white text-4xl">Merge Sort</h1>
           <h2>
             Currently sorting:
             {" " + selectedDataTable()}
@@ -117,11 +147,7 @@ export default function InsertionSort() {
             <DropdownMenu placement="bottom">
               <DropdownMenuTrigger
                 as={(props: DropdownMenuSubTriggerProps) => (
-                  <Button
-                    variant="outline"
-                    {...props}
-                    disabled={isRunning() == true}
-                  >
+                  <Button variant="outline" {...props}>
                     Select dataset
                   </Button>
                 )}
@@ -149,19 +175,18 @@ export default function InsertionSort() {
           </div>
         </div>
       </div>
-      <div class="flex flex-1 relative overflow-hidden mx-16">
+      <div class="flex flex-1 relative border-black overflow-hidden mx-16">
         <div class="m-2 flex flex-1 h-64 bg-black border-black border-2 z-10 rotate-180 flex-row-reverse">
           <For each={array()}>
             {(country, index) => (
               <div
-                class={`flex-1 z-10 border border-black
-                    ${
-                      index() === currentI()
-                        ? "bg-red-600"
-                        : index() === currentJ() || index() === currentJ() + 1
-                        ? "bg-red-600"
-                        : "bg-white"
-                    }`}
+                class={`flex-1 z-10 border border-black ${
+                  index() === currentI()
+                    ? "bg-red-600"
+                    : index() === currentJ() || index() === currentJ() + 1
+                    ? "bg-red-600"
+                    : "bg-white"
+                }`}
                 style={{
                   height: calculateHeight(
                     country[selectedDataTable() as keyof country] as number
@@ -178,13 +203,12 @@ export default function InsertionSort() {
 
       <div class="flex flex-col items-center m-1">
         <Button
+          variant={"outline"}
           onClick={startSorting}
           disabled={isSorting() || array().length === 0}
-          variant={"outline"}
         >
           Start
         </Button>
-
         <SortingTimer isRunning={isRunning()} />
       </div>
     </SortingAlgorithmWrapper>
