@@ -1,6 +1,7 @@
 import Banner from "~/components/Banner";
 import BubbleSort from "~/components/BubbleSort";
 import InsertionSort from "~/components/InsertionSort";
+import MergeSort from "~/components/MergeSort";
 import QuickSort from "~/components/QuickSort";
 
 export default function Home() {
@@ -11,6 +12,7 @@ export default function Home() {
         <BubbleSort />
         <InsertionSort />
         <QuickSort />
+        <MergeSort />
       </div>
     </main>
   );
