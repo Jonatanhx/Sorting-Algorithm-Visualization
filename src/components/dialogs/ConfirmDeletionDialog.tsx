@@ -1,4 +1,4 @@
-import { useContext } from "solid-js";
+import { createSignal, useContext } from "solid-js";
 import { CountryDataContext } from "~/contexts/CountryDataContext";
 import { deleteCountry } from "~/server/endpoints/country-endpoints";
 import { Button } from "../ui/button";
@@ -21,6 +21,7 @@ export default function ConfirmDeletionDialog(
   props: ConfirmDeletionDialogProps
 ) {
   const { countries, refetch } = useContext(CountryDataContext);
+  const [open, setOpen] = createSignal(false);
 
   function handleDeleteCountry(index: number) {
     const countryData = countries();
@@ -35,7 +36,7 @@ export default function ConfirmDeletionDialog(
   }
 
   return (
-    <Dialog>
+    <Dialog open={open()} onOpenChange={setOpen}>
       <DialogTrigger>
         <Button variant="ghost">X</Button>
       </DialogTrigger>
@@ -55,9 +56,7 @@ export default function ConfirmDeletionDialog(
             <Button onClick={() => handleDeleteCountry(props.index)}>
               Confirm
             </Button>
-            <Button onClick={() => handleDeleteCountry(props.index)}>
-              Cancel
-            </Button>
+            <Button onClick={() => setOpen(false)}>Cancel</Button>
           </div>
         </DialogFooter>
       </DialogContent>
