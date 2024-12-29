@@ -36,7 +36,9 @@ export default function AdminDatatable() {
             ) : (
               countries()?.map((country, index) => (
                 <TableRow>
-                  <TableCell>{country.name}</TableCell>
+                  <TableCell class="truncate max-w-36">
+                    {country.name}
+                  </TableCell>
                   <TableCell>{country.populationSize}</TableCell>
                   <TableCell>{country.landArea}</TableCell>
                   <TableCell>
