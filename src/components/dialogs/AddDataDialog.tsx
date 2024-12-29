@@ -1,3 +1,4 @@
+import { AiOutlinePlus } from "solid-icons/ai";
 import AddDataForm from "../forms/AddDataForm";
 import { Button } from "../ui/button";
 import {
@@ -13,7 +14,12 @@ export default function AddDataDialog() {
   return (
     <Dialog>
       <DialogTrigger>
-        <Button variant="default">Add new entry</Button>
+        <Button
+          variant="default"
+          class=" border border-white hover:bg-white text-white hover:text-black"
+        >
+          <AiOutlinePlus />
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
