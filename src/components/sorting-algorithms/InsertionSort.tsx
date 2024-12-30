@@ -3,10 +3,10 @@ import { createEffect, createSignal, For, useContext } from "solid-js";
 import { CountryDataContext } from "~/contexts/CountryDataContext";
 import { IsSortedContext } from "~/contexts/IsSortedContext";
 import { IsSortingContext } from "~/contexts/IsSortingContext";
+import { calculateHeight } from "~/globalFunction";
 import type { country } from "~/interfaces";
-import { Button } from "../components/ui/button";
-import SortingAlgorithmWrapper from "./SortingAlgorithmWrapper";
-import SortingTimer from "./SortingTimer";
+import SortingTimer from "../SortingTimer";
+import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,7 +16,8 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+} from "../ui/dropdown-menu";
+import SortingAlgorithmWrapper from "./SortingAlgorithmWrapper";
 
 export default function InsertionSort() {
   const { countries } = useContext(CountryDataContext);
@@ -76,20 +77,6 @@ export default function InsertionSort() {
     }, 100);
   }
 
-  function calculateHeight(value: number) {
-    const currentArray = array();
-    const values = currentArray.map(
-      (country) => country[selectedDataTable() as keyof country] as number
-    );
-
-    const minValue = Math.min(...values);
-    const maxValue = Math.max(...values);
-
-    const percentage = ((value - minValue) / (maxValue - minValue)) * 100;
-
-    return `${Math.max(5, Math.min(percentage))}%`;
-  }
-
   function resetArray() {
     const countryData = countries();
     if (countryData && countryData.length > 0) {
@@ -128,7 +115,9 @@ export default function InsertionSort() {
                     }`}
                 style={{
                   height: calculateHeight(
-                    country[selectedDataTable() as keyof country] as number
+                    country[selectedDataTable() as keyof country] as number,
+                    array(),
+                    selectedDataTable() as keyof country
                   ),
                 }}
               />
