@@ -100,50 +100,14 @@ export default function SelectionSort() {
 
   return (
     <SortingAlgorithmWrapper>
-      <div class="flex py-4">
-        <div class="flex-1" />
+      <div class="flex py-2 justify-center">
         <div class="flex flex-col text-white items-center">
           <h1 class="text-white text-4xl">Selection sort</h1>
           <h2>
             Currently sorting:
             {" " + selectedDataTable()}
           </h2>
-        </div>
-        <div class="flex-1">
-          <div class="flex justify-end">
-            <DropdownMenu placement="bottom">
-              <DropdownMenuTrigger
-                as={(props: DropdownMenuSubTriggerProps) => (
-                  <Button
-                    variant="outline"
-                    {...props}
-                    disabled={isRunning() == true}
-                  >
-                    Select dataset
-                  </Button>
-                )}
-              />
-              <DropdownMenuContent class="w-56">
-                <DropdownMenuGroup>
-                  <DropdownMenuGroupLabel>
-                    Select dataset
-                  </DropdownMenuGroupLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuRadioGroup
-                    value={selectedDataTable()}
-                    onChange={setSelectedDataTable}
-                  >
-                    <DropdownMenuRadioItem value="populationSize">
-                      Population Size
-                    </DropdownMenuRadioItem>
-                    <DropdownMenuRadioItem value="landArea">
-                      Land Area in km2
-                    </DropdownMenuRadioItem>
-                  </DropdownMenuRadioGroup>
-                </DropdownMenuGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+          <SortingTimer isRunning={isRunning()} />
         </div>
       </div>
       <div class="flex flex-1 relative overflow-hidden">
@@ -175,7 +139,8 @@ export default function SelectionSort() {
         />
       </div>
 
-      <div class="flex flex-col items-center m-1">
+      <div class="flex flex-row items-center m-1">
+        <div class="flex-1" />
         <Button
           onClick={startSorting}
           disabled={isSorting() || array().length === 0}
@@ -184,7 +149,38 @@ export default function SelectionSort() {
           Start
         </Button>
 
-        <SortingTimer isRunning={isRunning()} />
+        <div class="flex justify-end flex-1">
+          <DropdownMenu placement="bottom">
+            <DropdownMenuTrigger
+              as={(props: DropdownMenuSubTriggerProps) => (
+                <Button
+                  variant="outline"
+                  {...props}
+                  disabled={isRunning() == true}
+                >
+                  Select dataset
+                </Button>
+              )}
+            />
+            <DropdownMenuContent class="w-56">
+              <DropdownMenuGroup>
+                <DropdownMenuGroupLabel>Select dataset</DropdownMenuGroupLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuRadioGroup
+                  value={selectedDataTable()}
+                  onChange={setSelectedDataTable}
+                >
+                  <DropdownMenuRadioItem value="populationSize">
+                    Population Size
+                  </DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="landArea">
+                    Land Area in km2
+                  </DropdownMenuRadioItem>
+                </DropdownMenuRadioGroup>
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
     </SortingAlgorithmWrapper>
   );
