@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <main class="flex flex-col bg-[#1b1b1b] z-0 min-h-screen gap-4">
       <Banner />
-      <div class="flex flex-col gap-4">
+      <div class="flex flex-col gap-4 items-center">
         <BubbleSort />
         <InsertionSort />
         <SelectionSort />

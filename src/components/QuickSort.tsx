@@ -178,7 +178,7 @@ export default function QuickSort() {
 
   return (
     <SortingAlgorithmWrapper>
-      <div class="flex py-4 mx-16">
+      <div class="flex py-4">
         <div class="flex-1" />
         <div class="flex flex-col text-white items-center">
           <h1 class="text-white text-4xl">Quick sort</h1>
@@ -224,7 +224,7 @@ export default function QuickSort() {
           </div>
         </div>
       </div>
-      <div class="flex flex-1 relative overflow-hidden mx-16">
+      <div class="flex flex-1 relative overflow-hidden">
         <div class="m-2 flex flex-1 h-64 bg-black border-black border-2 z-10 rotate-180 flex-row-reverse">
           <For each={array()}>
             {(country, index) => (
