@@ -19,11 +19,7 @@ const countries = [
   { name: "Argentina", populationSize: 45810000, landArea: 2780400 },
   { name: "Algeria", populationSize: 44180000, landArea: 2381741 },
   { name: "Kazakhstan", populationSize: 19240000, landArea: 2724900 },
-  {
-    name: "Congo",
-    populationSize: 95890000,
-    landArea: 2344858,
-  },
+  { name: "Congo", populationSize: 95890000, landArea: 2344858 },
   { name: "Saudi Arabia", populationSize: 35340000, landArea: 2149690 },
   { name: "South Africa", populationSize: 60040000, landArea: 1219090 },
   { name: "France", populationSize: 67750000, landArea: 551695 },
