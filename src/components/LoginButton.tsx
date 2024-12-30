@@ -6,20 +6,20 @@ export default function LoginButton() {
   return (
     <Switch fallback={<div>Loading...</div>}>
       <Match when={auth.status() === "authenticated"}>
-        <div
+        <button
           onClick={() => auth.signOut({ redirectTo: "/" })}
           class="flex items-center px-10 font-semibold text-white no-underline transition border-bottom-effect cursor-pointer"
         >
           Sign out
-        </div>
+        </button>
       </Match>
       <Match when={auth.status() === "unauthenticated"}>
-        <div
+        <button
           onClick={() => auth.signIn("github", { redirectTo: "/" })}
           class="flex items-center px-10 font-semibold text-white no-underline transition border-bottom-effect cursor-pointer"
         >
           Sign in
-        </div>
+        </button>
       </Match>
     </Switch>
   );
