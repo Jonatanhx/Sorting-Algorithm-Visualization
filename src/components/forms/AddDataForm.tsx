@@ -1,7 +1,9 @@
 import { createMemo, createSignal, useContext } from "solid-js";
+import { z } from "zod";
 import { CountryDataContext } from "~/contexts/CountryDataContext";
 import type { country } from "~/interfaces";
 import { addCountry } from "~/server/endpoints/country-endpoints";
+import { CountrySchema } from "~/zod/zodSchemas";
 import { Button } from "../ui/button";
 import {
   NumberField,
@@ -21,14 +23,12 @@ import {
 
 export default function AddDataForm() {
   const { countries, refetch } = useContext(CountryDataContext);
-  const [name, setName] = createSignal<string>("Name");
+  const [name, setName] = createSignal<string>("");
   const [populationSize, setPopulationSize] = createSignal<number>(0);
   const [landArea, setLandArea] = createSignal<number>(0);
+  const [errors, setErrors] = createSignal<Record<string, string>>({});
 
-  const minTextLength = 4;
-  const maxNumberValue = 1429000000;
-
-  const isNameUnique = () => {
+  const isNameUnique = createMemo(() => {
     const currentCountries = countries();
     if (!currentCountries || !Array.isArray(currentCountries)) return true;
 
@@ -36,21 +36,47 @@ export default function AddDataForm() {
       (country) =>
         country.name && country.name.toLowerCase() === name().toLowerCase()
     );
+  });
+
+  const validateForm = () => {
+    const formData = {
+      name: name(),
+      populationSize: populationSize(),
+      landArea: landArea(),
+    };
+
+    try {
+      CountrySchema.parse(formData);
+      if (!isNameUnique()) {
+        throw new Error("Name must be unique");
+      }
+      setErrors({});
+      return true;
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const newErrors: Record<string, string> = {};
+        error.errors.forEach((err) => {
+          if (err.path) {
+            newErrors[err.path[0]] = err.message;
+          }
+        });
+        if (!isNameUnique()) {
+          newErrors.name = "Name must be unique";
+        }
+        setErrors(newErrors);
+      }
+      return false;
+    }
   };
 
   const isFormValid = createMemo(() => {
-    return (
-      isNameUnique() &&
-      name().length >= minTextLength &&
-      populationSize() > 0 &&
-      populationSize() <= maxNumberValue &&
-      landArea() > 0 &&
-      landArea() <= maxNumberValue
-    );
+    return validateForm();
   });
 
-  function handleSubmit(event: Event) {
+  async function handleSubmit(event: Event) {
     event.preventDefault();
+
+    if (!isFormValid()) return;
 
     const formData: country = {
       name: name(),
@@ -58,8 +84,12 @@ export default function AddDataForm() {
       landArea: landArea(),
     };
 
-    addCountry(formData);
-    refetch();
+    await addCountry(formData);
+    await refetch();
+
+    setName("");
+    setPopulationSize(0);
+    setLandArea(0);
   }
 
   return (
@@ -67,60 +97,50 @@ export default function AddDataForm() {
       <form class="flex gap-1 flex-col" onSubmit={handleSubmit}>
         <TextFieldRoot
           class="mb-4"
-          defaultValue="Name"
-          validationState={
-            name().length >= minTextLength && isNameUnique()
-              ? "valid"
-              : "invalid"
-          }
           value={name()}
-          onChange={setName}
+          onChange={(value: string) => setName(value)}
         >
           <TextFieldLabel>Name</TextFieldLabel>
           <TextField required type="text" />
-          <TextFieldErrorMessage>
-            Minimum four characters and a unique name is required.
-          </TextFieldErrorMessage>
+          {errors().name && (
+            <TextFieldErrorMessage>{errors().name}</TextFieldErrorMessage>
+          )}
         </TextFieldRoot>
 
         <NumberField
           minValue={0}
-          maxValue={maxNumberValue}
-          onRawValueChange={setPopulationSize}
-          validationState={
-            populationSize() <= maxNumberValue ? "valid" : "invalid"
-          }
+          maxValue={1429000000}
+          onRawValueChange={(value) => setPopulationSize(Number(value))}
           class="mb-4"
         >
           <NumberFieldLabel>Population size</NumberFieldLabel>
           <NumberFieldGroup>
             <NumberFieldDecrementTrigger aria-label="Decrement" />
             <NumberFieldInput placeholder="0" />
-
-            <NumberFieldErrorMessage>
-              The value can not exceed {maxNumberValue}
-            </NumberFieldErrorMessage>
-
+            {errors().populationSize && (
+              <NumberFieldErrorMessage>
+                {errors().populationSize}
+              </NumberFieldErrorMessage>
+            )}
             <NumberFieldIncrementTrigger aria-label="Increment" />
           </NumberFieldGroup>
         </NumberField>
 
         <NumberField
           minValue={0}
-          maxValue={maxNumberValue}
+          maxValue={1429000000}
           class="mb-4"
-          onRawValueChange={setLandArea}
-          validationState={landArea() <= maxNumberValue ? "valid" : "invalid"}
+          onRawValueChange={(value) => setLandArea(Number(value))}
         >
           <NumberFieldLabel>Land area in km2</NumberFieldLabel>
           <NumberFieldGroup>
             <NumberFieldDecrementTrigger aria-label="Decrement" />
             <NumberFieldInput placeholder="0" />
-
-            <NumberFieldErrorMessage>
-              The value can not exceed {maxNumberValue}
-            </NumberFieldErrorMessage>
-
+            {errors().landArea && (
+              <NumberFieldErrorMessage>
+                {errors().landArea}
+              </NumberFieldErrorMessage>
+            )}
             <NumberFieldIncrementTrigger aria-label="Increment" />
           </NumberFieldGroup>
         </NumberField>
