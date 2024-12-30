@@ -64,18 +64,19 @@ export default function SelectionSort() {
 
   function startSorting() {
     resetArray();
-
     setIsRunning(true);
     setIsSorting(true);
     setIsSorted(false);
     setCurrentI(0);
-    setCurrentJ(1);
+    setCurrentJ(0);
 
     const sortInterval = setInterval(() => {
       const arr = [...array()];
       const n = arr.length;
+      const i = currentI();
+      const j = currentJ();
 
-      if (currentI() >= n - 1) {
+      if (i >= n - 1) {
         setIsSorted(true);
         clearInterval(sortInterval);
         setIsRunning(false);
@@ -83,12 +84,9 @@ export default function SelectionSort() {
         return;
       }
 
-      const i = currentI();
-      let minIdx = i;
-      const j = currentJ();
-
-      if (j < n) {
-        for (let k = j; k < n; k++) {
+      if (j >= n) {
+        let minIdx = i;
+        for (let k = i + 1; k < n; k++) {
           if (
             arr[k][selectedDataTable() as keyof country] <
             arr[minIdx][selectedDataTable() as keyof country]
@@ -101,15 +99,15 @@ export default function SelectionSort() {
           const temp = arr[i];
           arr[i] = arr[minIdx];
           arr[minIdx] = temp;
-
           setArray(arr);
         }
 
-        setCurrentJ(j + 1);
-      } else {
         setCurrentI(i + 1);
-        setCurrentJ(i + 2);
+        setCurrentJ(i + 1);
+        return;
       }
+
+      setCurrentJ(j + 1);
     }, 100);
   }
 
