@@ -1,0 +1,7 @@
+import { setEnvDefaults } from 'file://D:/Code/Examen-projekt/Sorting-Algorithm-Visualization/node_modules/@auth/core/index.js';
+import { isDev } from 'file://D:/Code/Examen-projekt/Sorting-Algorithm-Visualization/node_modules/solid-js/web/dist/server.js';
+
+const i={BASE_URL:"/_server",CWD:"D:\\Code\\Examen-projekt\\Sorting-Algorithm-Visualization",DEV:!1,DEVTOOLS:!1,MANIFEST:globalThis.MANIFEST,MODE:"production",PROD:!0,ROUTERS:["public","ssr","client","server-fns"],ROUTER_HANDLER:"node_modules/@solidjs/start/dist/runtime/server-handler.js",ROUTER_NAME:"server-fns",ROUTER_TYPE:"http",SERVER_BASE_URL:"",SSR:!0,START_APP:"./src/app.tsx",START_DEV_OVERLAY:!0,START_ISLANDS:!1,START_SSR:!0,VITE_AUTH_PATH:"/api/auth"};function h(t){const e=new URL("http://localhost:3000/api/auth");t&&!t.toString().startsWith("http")&&(t=`https://${t}`);const s=new URL(t??e),r=(s.pathname==="/"?e.pathname:s.pathname).replace(/\/$/,""),n=`${s.origin}${r}`;return {origin:s.origin,host:s.host,path:r,base:n,toString:()=>n}}const p=t=>{if(t.startsWith("VITE_"))return i[t];if(typeof process<"u"&&typeof process.env<"u"&&!t.startsWith("VITE_"))return process.env[t]},u=(...t)=>{for(const e of t){const s=p(e);if(s)return s}};function R(t,e){setEnvDefaults(t,e,!0),e.trustHost??=isDev,e.basePath??=E(e);}const E=t=>t?.basePath?t.basePath:u("VITE_AUTH_PATH")??"/api/auth";
+
+export { E, R, h, u };
+//# sourceMappingURL=utils.mjs.map
