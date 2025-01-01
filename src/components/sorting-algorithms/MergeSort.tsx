@@ -3,10 +3,10 @@ import { createEffect, createSignal, For, useContext } from "solid-js";
 import { CountryDataContext } from "~/contexts/CountryDataContext";
 import { IsSortedContext } from "~/contexts/IsSortedContext";
 import { IsSortingContext } from "~/contexts/IsSortingContext";
+import { calculateHeight } from "~/globalFunction";
 import type { country } from "~/interfaces";
-import { Button } from "../components/ui/button";
-import SortingAlgorithmWrapper from "./SortingAlgorithmWrapper";
-import SortingTimer from "./SortingTimer";
+import SortingTimer from "../SortingTimer";
+import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,7 +16,8 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+} from "../ui/dropdown-menu";
+import SortingAlgorithmWrapper from "./SortingAlgorithmWrapper";
 
 export default function MergeSort() {
   const { countries } = useContext(CountryDataContext);
@@ -36,20 +37,6 @@ export default function MergeSort() {
       setArray(countryData as country[]);
     }
   });
-
-  function calculateHeight(value: number) {
-    const currentArray = array();
-    const values = currentArray.map(
-      (country) => country[selectedDataTable() as keyof country] as number
-    );
-
-    const minValue = Math.min(...values);
-    const maxValue = Math.max(...values);
-
-    const percentage = ((value - minValue) / (maxValue - minValue)) * 100;
-
-    return `${Math.max(5, Math.min(percentage))}%`;
-  }
 
   function resetArray() {
     const countryData = countries();
@@ -133,49 +120,17 @@ export default function MergeSort() {
 
   return (
     <SortingAlgorithmWrapper>
-      <div class="flex py-4 mx-16 justify-center">
-        <div class="flex-1" />
+      <div class="flex py-2 justify-center">
         <div class="flex flex-col text-white items-center">
-          <h1 class="text-white text-4xl">Merge Sort</h1>
+          <h1 class="text-white text-4xl">Merge sort</h1>
           <h2>
             Currently sorting:
             {" " + selectedDataTable()}
           </h2>
-        </div>
-        <div class="flex-1">
-          <div class="flex justify-end">
-            <DropdownMenu placement="bottom">
-              <DropdownMenuTrigger
-                as={(props: DropdownMenuSubTriggerProps) => (
-                  <Button variant="outline" {...props}>
-                    Select dataset
-                  </Button>
-                )}
-              />
-              <DropdownMenuContent class="w-56">
-                <DropdownMenuGroup>
-                  <DropdownMenuGroupLabel>
-                    Select dataset
-                  </DropdownMenuGroupLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuRadioGroup
-                    value={selectedDataTable()}
-                    onChange={setSelectedDataTable}
-                  >
-                    <DropdownMenuRadioItem value="populationSize">
-                      Population Size
-                    </DropdownMenuRadioItem>
-                    <DropdownMenuRadioItem value="landArea">
-                      Land Area in km2
-                    </DropdownMenuRadioItem>
-                  </DropdownMenuRadioGroup>
-                </DropdownMenuGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+          <SortingTimer isRunning={isRunning()} />
         </div>
       </div>
-      <div class="flex flex-1 relative border-black overflow-hidden mx-16">
+      <div class="flex flex-1 relative border-black overflow-hidden">
         <div class="m-2 flex flex-1 h-64 bg-black border-black border-2 z-10 rotate-180 flex-row-reverse">
           <For each={array()}>
             {(country, index) => (
@@ -189,7 +144,9 @@ export default function MergeSort() {
                 }`}
                 style={{
                   height: calculateHeight(
-                    country[selectedDataTable() as keyof country] as number
+                    country[selectedDataTable() as keyof country] as number,
+                    array(),
+                    selectedDataTable() as keyof country
                   ),
                 }}
               />
@@ -201,15 +158,48 @@ export default function MergeSort() {
         />
       </div>
 
-      <div class="flex flex-col items-center m-1">
+      <div class="flex flex-row items-center m-1">
+        <div class="flex-1" />
         <Button
-          variant={"outline"}
           onClick={startSorting}
           disabled={isSorting() || array().length === 0}
+          variant={"outline"}
         >
           Start
         </Button>
-        <SortingTimer isRunning={isRunning()} />
+
+        <div class="flex justify-end flex-1">
+          <DropdownMenu placement="bottom">
+            <DropdownMenuTrigger
+              as={(props: DropdownMenuSubTriggerProps) => (
+                <Button
+                  variant="outline"
+                  {...props}
+                  disabled={isRunning() == true}
+                >
+                  Select dataset
+                </Button>
+              )}
+            />
+            <DropdownMenuContent class="w-56">
+              <DropdownMenuGroup>
+                <DropdownMenuGroupLabel>Select dataset</DropdownMenuGroupLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuRadioGroup
+                  value={selectedDataTable()}
+                  onChange={setSelectedDataTable}
+                >
+                  <DropdownMenuRadioItem value="populationSize">
+                    Population Size
+                  </DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="landArea">
+                    Land Area in km2
+                  </DropdownMenuRadioItem>
+                </DropdownMenuRadioGroup>
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
     </SortingAlgorithmWrapper>
   );

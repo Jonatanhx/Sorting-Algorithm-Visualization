@@ -8,7 +8,13 @@
   inherits: false;
 }
 
-#app {
+*:focus-visible {
+  outline: 5px solid red;
+}
+
+#app,
+html,
+main {
   background-color: #1b1b1b;
 }
 
