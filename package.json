@@ -42,12 +42,10 @@
     "tailwindcss-animate": "^1.0.7",
     "ts-node": "^10.9.2",
     "vinxi": "^0.4.3",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+     "@rollup/rollup-linux-x64-gnu": "4.6.1"
   },
   "engines": {
     "node": ">=16"
-  },
-  "overrides": {
-    "@rollup/rollup-linux-x64-gnu": "4.6.1"
   }
 }
