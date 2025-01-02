@@ -35,6 +35,7 @@
     "autoprefixer": "^10.4.19",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "mongodb": "^6.12.0",
     "postcss": "^8.4.40",
     "solid-icons": "^1.1.0",
     "solid-js": "^1.9.3",
