@@ -1,53 +1,53 @@
 {
-  "_AdminDataTable-BKTiWCd0.js": {
-    "file": "assets/AdminDataTable-BKTiWCd0.js",
+  "_AdminDataTable-CUZRnUZU.js": {
+    "file": "assets/AdminDataTable-CUZRnUZU.js",
     "name": "AdminDataTable",
     "imports": [
-      "_button-DZau4pWG.js"
+      "_button-DC20VBR0.js"
     ]
   },
-  "_IsSortingContext-CDsLx5bK.js": {
-    "file": "assets/IsSortingContext-CDsLx5bK.js",
+  "_IsSortingContext-TIOTS9Ww.js": {
+    "file": "assets/IsSortingContext-TIOTS9Ww.js",
     "name": "IsSortingContext",
     "imports": [
-      "_button-DZau4pWG.js"
+      "_button-DC20VBR0.js"
     ]
   },
-  "_button-DZau4pWG.js": {
-    "file": "assets/button-DZau4pWG.js",
+  "_button-DC20VBR0.js": {
+    "file": "assets/button-DC20VBR0.js",
     "name": "button"
   },
   "src/routes/admin.tsx?pick=default&pick=$css": {
-    "file": "assets/admin-CBQ4KACJ.js",
+    "file": "assets/admin-suVXVjAH.js",
     "name": "admin",
     "src": "src/routes/admin.tsx?pick=default&pick=$css",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_button-DZau4pWG.js",
-      "_AdminDataTable-BKTiWCd0.js"
+      "_button-DC20VBR0.js",
+      "_AdminDataTable-CUZRnUZU.js"
     ]
   },
   "src/routes/index.tsx?pick=default&pick=$css": {
-    "file": "assets/index-BnBGNiXX.js",
+    "file": "assets/index-B197vIQj.js",
     "name": "index",
     "src": "src/routes/index.tsx?pick=default&pick=$css",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_button-DZau4pWG.js",
-      "_IsSortingContext-CDsLx5bK.js"
+      "_button-DC20VBR0.js",
+      "_IsSortingContext-TIOTS9Ww.js"
     ]
   },
   "virtual:$vinxi/handler/client": {
-    "file": "assets/client-CbwuEBSm.js",
+    "file": "assets/client-CNSkTMa0.js",
     "name": "client",
     "src": "virtual:$vinxi/handler/client",
     "isEntry": true,
     "imports": [
-      "_AdminDataTable-BKTiWCd0.js",
-      "_button-DZau4pWG.js",
-      "_IsSortingContext-CDsLx5bK.js"
+      "_AdminDataTable-CUZRnUZU.js",
+      "_button-DC20VBR0.js",
+      "_IsSortingContext-TIOTS9Ww.js"
     ],
     "dynamicImports": [
       "src/routes/admin.tsx?pick=default&pick=$css",
