@@ -27,6 +27,9 @@ jobs:
         with:
           path: ./.output/public
 
+      - name: create .nojekyll
+        run: touch .output/public/.nojekyll
+
   # Deployment job
   deploy:
     # Add a dependency to the build job
