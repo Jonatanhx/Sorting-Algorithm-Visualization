@@ -107,8 +107,8 @@ export default function BubbleSort() {
           <SortingTimer isRunning={isRunning()} />
         </div>
       </div>
-      <div class="flex flex-1 relative border-black overflow-hidden">
-        <div class="m-2 flex flex-1 h-64 bg-black border-black border-2 z-10 rotate-180 flex-row-reverse">
+      <div class="flex flex-1 relative overflow-hidden">
+        <div class="m-2 flex flex-1 h-64 bg-black z-10 rotate-180 flex-row-reverse">
           <For each={array()}>
             {(country, index) => (
               <div

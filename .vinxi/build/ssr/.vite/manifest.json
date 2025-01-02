@@ -1,38 +1,37 @@
 {
-  "_AdminDataTable-CnJrdyl5.js": {
-    "file": "assets/AdminDataTable-CnJrdyl5.js",
+  "_AdminDataTable-W7UY_Bup.js": {
+    "file": "assets/AdminDataTable-W7UY_Bup.js",
     "name": "AdminDataTable",
     "imports": [
       "_utils-BZDLBCUj.js",
-      "_button-6pYK_Hex.js",
-      "_db-Cq-AFaFn.js"
+      "_button-CwX4pdjk.js"
     ]
   },
-  "_IsSortingContext-DfGNI3hh.js": {
-    "file": "assets/IsSortingContext-DfGNI3hh.js",
+  "_IsSortingContext-DJfWCCK7.js": {
+    "file": "assets/IsSortingContext-DJfWCCK7.js",
     "name": "IsSortingContext",
     "imports": [
-      "_button-6pYK_Hex.js"
+      "_button-CwX4pdjk.js"
     ]
   },
-  "_auth-C5GgnXCh.js": {
-    "file": "assets/auth-C5GgnXCh.js",
+  "_auth-DWsWZ911.js": {
+    "file": "assets/auth-DWsWZ911.js",
     "name": "auth",
     "imports": [
-      "_db-Cq-AFaFn.js",
+      "_http-BotmrE-L.js",
       "_utils-BZDLBCUj.js"
     ]
   },
-  "_button-6pYK_Hex.js": {
-    "file": "assets/button-6pYK_Hex.js",
+  "_button-CwX4pdjk.js": {
+    "file": "assets/button-CwX4pdjk.js",
     "name": "button",
     "imports": [
-      "_db-Cq-AFaFn.js"
+      "_http-BotmrE-L.js"
     ]
   },
-  "_db-Cq-AFaFn.js": {
-    "file": "assets/db-Cq-AFaFn.js",
-    "name": "db"
+  "_http-BotmrE-L.js": {
+    "file": "assets/http-BotmrE-L.js",
+    "name": "http"
   },
   "_utils-BZDLBCUj.js": {
     "file": "assets/utils-BZDLBCUj.js",
@@ -45,10 +44,10 @@
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_AdminDataTable-CnJrdyl5.js",
+      "_AdminDataTable-W7UY_Bup.js",
       "_utils-BZDLBCUj.js",
-      "_button-6pYK_Hex.js",
-      "_db-Cq-AFaFn.js"
+      "_button-CwX4pdjk.js",
+      "_http-BotmrE-L.js"
     ]
   },
   "src/routes/api/auth/[...solidauth].ts?pick=GET": {
@@ -58,8 +57,8 @@
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_auth-C5GgnXCh.js",
-      "_db-Cq-AFaFn.js",
+      "_auth-DWsWZ911.js",
+      "_http-BotmrE-L.js",
       "_utils-BZDLBCUj.js"
     ]
   },
@@ -70,8 +69,8 @@
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_auth-C5GgnXCh.js",
-      "_db-Cq-AFaFn.js",
+      "_auth-DWsWZ911.js",
+      "_http-BotmrE-L.js",
       "_utils-BZDLBCUj.js"
     ]
   },
@@ -82,9 +81,9 @@
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_button-6pYK_Hex.js",
-      "_IsSortingContext-DfGNI3hh.js",
-      "_db-Cq-AFaFn.js"
+      "_button-CwX4pdjk.js",
+      "_IsSortingContext-DJfWCCK7.js",
+      "_http-BotmrE-L.js"
     ]
   },
   "virtual:$vinxi/handler/ssr": {
@@ -93,10 +92,10 @@
     "src": "virtual:$vinxi/handler/ssr",
     "isEntry": true,
     "imports": [
-      "_AdminDataTable-CnJrdyl5.js",
-      "_IsSortingContext-DfGNI3hh.js",
-      "_button-6pYK_Hex.js",
-      "_db-Cq-AFaFn.js",
+      "_AdminDataTable-W7UY_Bup.js",
+      "_IsSortingContext-DJfWCCK7.js",
+      "_button-CwX4pdjk.js",
+      "_http-BotmrE-L.js",
       "_utils-BZDLBCUj.js"
     ],
     "dynamicImports": [
@@ -112,7 +111,7 @@
       "src/routes/api/auth/[...solidauth].ts?pick=POST"
     ],
     "css": [
-      "assets/ssr-WZuO8Kxk.css"
+      "assets/ssr-CrDvrXL_.css"
     ]
   }
 }

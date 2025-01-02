@@ -15,6 +15,7 @@ export function Navbar() {
   const { admins } = useContext(AdminDataContext);
 
   const auth = useAuth();
+
   return (
     <nav class="flex flex-1">
       <div class="hidden md:flex flex-1 justify-end">
