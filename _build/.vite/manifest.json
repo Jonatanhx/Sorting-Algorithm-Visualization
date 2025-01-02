@@ -1,0 +1,60 @@
+{
+  "_AdminDataTable-BKTiWCd0.js": {
+    "file": "assets/AdminDataTable-BKTiWCd0.js",
+    "name": "AdminDataTable",
+    "imports": [
+      "_button-DZau4pWG.js"
+    ]
+  },
+  "_IsSortingContext-CDsLx5bK.js": {
+    "file": "assets/IsSortingContext-CDsLx5bK.js",
+    "name": "IsSortingContext",
+    "imports": [
+      "_button-DZau4pWG.js"
+    ]
+  },
+  "_button-DZau4pWG.js": {
+    "file": "assets/button-DZau4pWG.js",
+    "name": "button"
+  },
+  "src/routes/admin.tsx?pick=default&pick=$css": {
+    "file": "assets/admin-CBQ4KACJ.js",
+    "name": "admin",
+    "src": "src/routes/admin.tsx?pick=default&pick=$css",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_button-DZau4pWG.js",
+      "_AdminDataTable-BKTiWCd0.js"
+    ]
+  },
+  "src/routes/index.tsx?pick=default&pick=$css": {
+    "file": "assets/index-BnBGNiXX.js",
+    "name": "index",
+    "src": "src/routes/index.tsx?pick=default&pick=$css",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_button-DZau4pWG.js",
+      "_IsSortingContext-CDsLx5bK.js"
+    ]
+  },
+  "virtual:$vinxi/handler/client": {
+    "file": "assets/client-CbwuEBSm.js",
+    "name": "client",
+    "src": "virtual:$vinxi/handler/client",
+    "isEntry": true,
+    "imports": [
+      "_AdminDataTable-BKTiWCd0.js",
+      "_button-DZau4pWG.js",
+      "_IsSortingContext-CDsLx5bK.js"
+    ],
+    "dynamicImports": [
+      "src/routes/admin.tsx?pick=default&pick=$css",
+      "src/routes/index.tsx?pick=default&pick=$css"
+    ],
+    "css": [
+      "assets/client-WZuO8Kxk.css"
+    ]
+  }
+}
