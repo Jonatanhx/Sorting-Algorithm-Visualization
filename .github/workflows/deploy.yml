@@ -1,66 +1,50 @@
+# https://github.com/actions/deploy-pages#usage
 name: Deploy to GitHub Pages
 
 on:
-  push:
-    branches: ["main"]
-  pull_request:
-    branches: ["main"]
-
   workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
+  push:
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - run: corepack enable
+      - uses: actions/setup-node@v3
         with:
           node-version: "18"
-          cache: "npm"
 
-      - name: Install Dependencies
-        run: |
-          npm install
-          npm install @rollup/rollup-linux-x64-gnu
-
-      - name: Build Project
-        run: npm run build
+      - run: npx nypm install
+      - run: npm run build
         env:
-          NODE_ENV: production
-
-      - name: Configure SSG
-        run: |
-          mkdir -p dist
-          [ -f dist/index.html ] && cp dist/index.html dist/404.html || echo "index.html not found"
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
+          NITRO_PRESET: github_pages
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v1
         with:
-          path: "./dist"
+          path: ./.output/public
 
+  # Deployment job
   deploy:
+    # Add a dependency to the build job
+    needs: build
+
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      pages: write # to deploy to Pages
+      id-token: write # to verify the deployment originates from an appropriate source
+
+    # Deploy to the github_pages environment
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    needs: build
-    runs-on: ubuntu-latest
 
+    # Specify runner + deployment step
+    runs-on: ubuntu-latest
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v1
