@@ -9,8 +9,11 @@ const __dirname = dirname(__filename);
 export default defineConfig({
   ssr: true,
   server: {
-    baseURL: process.env.BASE_PATH,
-    preset: "static",
+    static: true,
+    prerender: {
+      routes: ["/"],
+    },
+    preset: "github-pages",
   },
   vite: {
     resolve: {
