@@ -1,0 +1,191 @@
+{
+  "_AdminDataTable.mjs": {
+    "file": "AdminDataTable.mjs",
+    "name": "AdminDataTable",
+    "imports": [
+      "_utils.mjs",
+      "src/contexts/CountryDataContext.tsx",
+      "src/server/endpoints/country-endpoints.ts",
+      "_index2.mjs"
+    ]
+  },
+  "_T4C3DMHT.mjs": {
+    "file": "T4C3DMHT.mjs",
+    "name": "T4C3DMHT",
+    "imports": [
+      "_index2.mjs"
+    ]
+  },
+  "_auth.mjs": {
+    "file": "auth.mjs",
+    "name": "auth",
+    "imports": [
+      "_fetchEvent.mjs",
+      "_utils.mjs",
+      "_db.mjs"
+    ]
+  },
+  "_db.mjs": {
+    "file": "db.mjs",
+    "name": "db"
+  },
+  "_fetchEvent.mjs": {
+    "file": "fetchEvent.mjs",
+    "name": "fetchEvent"
+  },
+  "_index2.mjs": {
+    "file": "index2.mjs",
+    "name": "index"
+  },
+  "_server-fns-runtime.mjs": {
+    "file": "server-fns-runtime.mjs",
+    "name": "server-fns-runtime",
+    "imports": [
+      "_fetchEvent.mjs"
+    ]
+  },
+  "_server-fns.mjs": {
+    "file": "server-fns.mjs",
+    "name": "server-fns",
+    "imports": [
+      "_fetchEvent.mjs"
+    ],
+    "dynamicImports": [
+      "src/routes/admin.tsx?pick=default&pick=$css",
+      "src/routes/admin.tsx?pick=default&pick=$css",
+      "src/routes/index.tsx?pick=default&pick=$css",
+      "src/routes/index.tsx?pick=default&pick=$css",
+      "src/routes/api/auth/[...solidauth].ts?pick=GET",
+      "src/routes/api/auth/[...solidauth].ts?pick=GET",
+      "src/routes/api/auth/[...solidauth].ts?pick=GET",
+      "src/routes/api/auth/[...solidauth].ts?pick=GET",
+      "src/routes/api/auth/[...solidauth].ts?pick=POST",
+      "src/routes/api/auth/[...solidauth].ts?pick=POST",
+      "src/app.tsx"
+    ]
+  },
+  "_utils.mjs": {
+    "file": "utils.mjs",
+    "name": "utils"
+  },
+  "src/app.tsx": {
+    "file": "app.mjs",
+    "name": "app",
+    "src": "src/app.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_AdminDataTable.mjs",
+      "_server-fns.mjs",
+      "src/contexts/AdminDataContext.tsx",
+      "_T4C3DMHT.mjs",
+      "_index2.mjs",
+      "src/contexts/CountryDataContext.tsx",
+      "_utils.mjs",
+      "src/server/endpoints/country-endpoints.ts",
+      "_server-fns-runtime.mjs",
+      "_fetchEvent.mjs",
+      "_db.mjs"
+    ],
+    "css": [
+      "assets/app-WZuO8Kxk.css"
+    ]
+  },
+  "src/contexts/AdminDataContext.tsx": {
+    "file": "c_1p5wook.mjs",
+    "name": "c_1p5wook",
+    "src": "src/contexts/AdminDataContext.tsx",
+    "isEntry": true,
+    "imports": [
+      "_server-fns-runtime.mjs",
+      "_db.mjs",
+      "_fetchEvent.mjs"
+    ]
+  },
+  "src/contexts/CountryDataContext.tsx": {
+    "file": "c_9hizgz.mjs",
+    "name": "c_9hizgz",
+    "src": "src/contexts/CountryDataContext.tsx",
+    "isEntry": true,
+    "imports": [
+      "_server-fns-runtime.mjs",
+      "_db.mjs",
+      "_fetchEvent.mjs"
+    ]
+  },
+  "src/routes/admin.tsx?pick=default&pick=$css": {
+    "file": "admin.mjs",
+    "name": "admin",
+    "src": "src/routes/admin.tsx?pick=default&pick=$css",
+    "isDynamicEntry": true,
+    "imports": [
+      "_AdminDataTable.mjs",
+      "src/contexts/AdminDataContext.tsx",
+      "_utils.mjs",
+      "src/contexts/CountryDataContext.tsx",
+      "_server-fns-runtime.mjs",
+      "_fetchEvent.mjs",
+      "_db.mjs",
+      "src/server/endpoints/country-endpoints.ts",
+      "_index2.mjs"
+    ]
+  },
+  "src/routes/api/auth/[...solidauth].ts?pick=GET": {
+    "file": "_...solidauth_.mjs",
+    "name": "_...solidauth_",
+    "src": "src/routes/api/auth/[...solidauth].ts?pick=GET",
+    "isDynamicEntry": true,
+    "imports": [
+      "_auth.mjs",
+      "_fetchEvent.mjs",
+      "_utils.mjs",
+      "_db.mjs"
+    ]
+  },
+  "src/routes/api/auth/[...solidauth].ts?pick=POST": {
+    "file": "_...solidauth_2.mjs",
+    "name": "_...solidauth_",
+    "src": "src/routes/api/auth/[...solidauth].ts?pick=POST",
+    "isDynamicEntry": true,
+    "imports": [
+      "_auth.mjs",
+      "_fetchEvent.mjs",
+      "_utils.mjs",
+      "_db.mjs"
+    ]
+  },
+  "src/routes/index.tsx?pick=default&pick=$css": {
+    "file": "index.mjs",
+    "name": "index",
+    "src": "src/routes/index.tsx?pick=default&pick=$css",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/contexts/CountryDataContext.tsx",
+      "_T4C3DMHT.mjs",
+      "_index2.mjs",
+      "_server-fns-runtime.mjs",
+      "_fetchEvent.mjs",
+      "_db.mjs"
+    ]
+  },
+  "src/server/endpoints/country-endpoints.ts": {
+    "file": "c_ol5iyx.mjs",
+    "name": "c_ol5iyx",
+    "src": "src/server/endpoints/country-endpoints.ts",
+    "isEntry": true,
+    "imports": [
+      "_server-fns-runtime.mjs",
+      "_db.mjs",
+      "_fetchEvent.mjs"
+    ]
+  },
+  "virtual:$vinxi/handler/server-fns": {
+    "file": "entry.mjs",
+    "name": "entry",
+    "src": "virtual:$vinxi/handler/server-fns",
+    "isEntry": true,
+    "imports": [
+      "_server-fns.mjs",
+      "_fetchEvent.mjs"
+    ]
+  }
+}

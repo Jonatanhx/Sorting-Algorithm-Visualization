@@ -21,8 +21,5 @@ export default defineConfig({
     ssr: {
       external: ["@prisma/client"],
     },
-    build: {
-      outDir: "docs",
-    },
   },
 });
