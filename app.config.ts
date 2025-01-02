@@ -16,7 +16,6 @@ export default defineConfig({
     preset: "github-pages",
   },
   vite: {
-    base: BASE_URL,
     resolve: {
       alias: {
         "@": resolve(__dirname, "./src"),
