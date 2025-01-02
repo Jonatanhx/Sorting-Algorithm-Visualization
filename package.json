@@ -3,7 +3,7 @@
   "scripts": {
     "dev": "vinxi dev",
     "postinstall": "prisma generate",
-    "build": "prisma generate && vinxi build",
+    "build": "prisma generate && next build",
     "start": "vinxi start",
     "lint": "eslint --fix \"**/*.{ts,tsx,js,jsx}\"",
     "push": "prisma db push",
