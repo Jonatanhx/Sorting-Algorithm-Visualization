@@ -2,7 +2,7 @@
   "name": "sorting-algorithm-visualization",
   "scripts": {
     "dev": "vinxi dev",
-    "build": "vinxi build",
+    "build": "prisma generate && vinxi build",
     "start": "vinxi start",
     "lint": "eslint --fix \"**/*.{ts,tsx,js,jsx}\"",
     "push": "prisma db push",
