@@ -3,6 +3,7 @@ import { createEffect, createSignal, For, useContext } from "solid-js";
 import { CountryDataContext } from "~/contexts/CountryDataContext";
 import { IsSortedContext } from "~/contexts/IsSortedContext";
 import { IsSortingContext } from "~/contexts/IsSortingContext";
+import { SortingSpeedContext } from "~/contexts/SortingSpeedContext";
 import { calculateHeight } from "~/globalFunction";
 import type { country } from "~/interfaces";
 import SortingTimer from "../SortingTimer";
@@ -23,6 +24,7 @@ export default function BubbleSort() {
   const { countries } = useContext(CountryDataContext);
   const { isSorting, setIsSorting } = useContext(IsSortingContext);
   const { setIsSorted } = useContext(IsSortedContext);
+  const { speed } = useContext(SortingSpeedContext);
 
   const [selectedDataTable, setSelectedDataTable] =
     createSignal("populationSize");
@@ -81,7 +83,7 @@ export default function BubbleSort() {
         setCurrentJ(0);
         setCurrentI((i) => i + 1);
       }
-    }, 100);
+    }, 100 / speed());
   }
 
   function resetArray() {
@@ -108,7 +110,7 @@ export default function BubbleSort() {
         </div>
       </div>
       <div class="flex flex-1 relative overflow-hidden">
-        <div class="m-2 flex flex-1 h-64 bg-black z-10 rotate-180 flex-row-reverse">
+        <div class="mb-2 flex flex-1 h-64 bg-black z-10 rotate-180 flex-row-reverse ">
           <For each={array()}>
             {(country, index) => (
               <div
@@ -131,6 +133,7 @@ export default function BubbleSort() {
             )}
           </For>
         </div>
+
         <div
           class={`gradient-border ${isRunning() ? "animation-snake" : ""}`}
         />

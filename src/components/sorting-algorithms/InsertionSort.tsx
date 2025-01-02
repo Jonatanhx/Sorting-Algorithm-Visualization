@@ -3,6 +3,7 @@ import { createEffect, createSignal, For, useContext } from "solid-js";
 import { CountryDataContext } from "~/contexts/CountryDataContext";
 import { IsSortedContext } from "~/contexts/IsSortedContext";
 import { IsSortingContext } from "~/contexts/IsSortingContext";
+import { SortingSpeedContext } from "~/contexts/SortingSpeedContext";
 import { calculateHeight } from "~/globalFunction";
 import type { country } from "~/interfaces";
 import SortingTimer from "../SortingTimer";
@@ -23,6 +24,7 @@ export default function InsertionSort() {
   const { countries } = useContext(CountryDataContext);
   const { isSorting, setIsSorting } = useContext(IsSortingContext);
   const { setIsSorted } = useContext(IsSortedContext);
+  const { speed } = useContext(SortingSpeedContext);
 
   const [selectedDataTable, setSelectedDataTable] =
     createSignal("populationSize");
@@ -74,7 +76,7 @@ export default function InsertionSort() {
       setArray(arr);
       setCurrentJ(j + 1);
       setCurrentI(currentI() + 1);
-    }, 100);
+    }, 100 / speed());
   }
 
   function resetArray() {

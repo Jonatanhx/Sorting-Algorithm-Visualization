@@ -10,6 +10,11 @@ export interface SortingTimerProps {
   isRunning: boolean;
 }
 
+export interface SortingSpeedContextValue {
+  speed: Accessor<number>;
+  setSpeed: Setter<number>;
+}
+
 export interface SelectedDataTableContextValue {
   selectedDataTable: Accessor<string>;
   setSelectedDataTable: Setter<string>;

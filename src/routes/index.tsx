@@ -11,6 +11,7 @@ export default function Home() {
       <Banner />
       <div class="flex flex-col gap-4 items-center">
         <BubbleSort />
+
         <InsertionSort />
         <SelectionSort />
         <QuickSort />
