@@ -8,10 +8,10 @@ export default function SortingSpeedSlider() {
   return (
     <div class="flex text-white">
       <Slider
-        class="SliderRoot"
-        step={1}
-        minValue={1}
-        maxValue={10}
+        class="SliderRoot justify-center"
+        step={10}
+        minValue={10}
+        maxValue={100}
         value={[speed()]}
         onChange={(value: number[]) => setSpeed(value[0])}
       >

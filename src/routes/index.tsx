@@ -4,17 +4,38 @@ import InsertionSort from "~/components/sorting-algorithms/InsertionSort";
 import MergeSort from "~/components/sorting-algorithms/MergeSort";
 import QuickSort from "~/components/sorting-algorithms/QuickSort";
 import SelectionSort from "~/components/sorting-algorithms/SelectionSort";
+import { Separator } from "~/components/ui/separator";
 
 export default function Home() {
   return (
-    <main class="flex flex-col z-0 min-h-screen gap-4">
+    <main class="relative flex flex-col z-0 min-h-screen gap-20 mb-24">
       <Banner />
-      <div class="flex flex-col gap-4 items-center">
+
+      <div class="flex flex-col gap-20 items-center">
+        <div class="flex flex-row min-w-full items-center">
+          <Separator class="border-neutral-600 border-dotted" />
+          <p class="text-neutral-200 uppercase font-semibold px-20 text-3xl">
+            Quadratic
+          </p>
+          <Separator class="border-neutral-600 border-dotted" />
+        </div>
+
         <BubbleSort />
 
         <InsertionSort />
+
         <SelectionSort />
+
+        <div class="flex flex-row min-w-full items-center">
+          <Separator class="border-neutral-600 border-dotted" />
+          <p class="text-neutral-200 uppercase font-semibold px-20 text-3xl">
+            Logarithmic
+          </p>
+          <Separator class="border-neutral-600 border-dotted" />
+        </div>
+
         <QuickSort />
+
         <MergeSort />
       </div>
     </main>

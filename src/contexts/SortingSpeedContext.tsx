@@ -7,7 +7,7 @@ export const SortingSpeedContext = createContext<SortingSpeedContextValue>(
 );
 
 export function SortingSpeedProvider(props: ParentProps) {
-  const [speed, setSpeed] = createSignal<number>(1);
+  const [speed, setSpeed] = createSignal<number>(50);
 
   return (
     <SortingSpeedContext.Provider value={{ speed, setSpeed }}>

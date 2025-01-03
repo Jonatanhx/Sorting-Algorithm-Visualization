@@ -1,6 +1,6 @@
 import { useAuth } from "@solid-mediakit/auth/client";
 import { AiOutlineMenu } from "solid-icons/ai";
-import { Match, Show, Switch, useContext } from "solid-js";
+import { createSignal, Match, Show, Switch, useContext } from "solid-js";
 import { AdminDataContext } from "~/contexts/AdminDataContext";
 import LoginButton from "./LoginButton";
 import {
@@ -11,9 +11,10 @@ import {
   MenubarTrigger,
 } from "./ui/menubar";
 
+export const [activeSection, setActiveSection] = createSignal("");
+
 export function Navbar() {
   const { admins } = useContext(AdminDataContext);
-
   const auth = useAuth();
 
   return (

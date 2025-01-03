@@ -12,6 +12,7 @@ import { IsSortedProvider } from "./contexts/IsSortedContext";
 import { IsSortingProvider } from "./contexts/IsSortingContext";
 import { SelectedDataTableProvider } from "./contexts/SelectedDataTableContext";
 import { SortingSpeedProvider } from "./contexts/SortingSpeedContext";
+import Home from "./routes";
 import Admin from "./routes/admin";
 
 export default function App() {
@@ -45,6 +46,7 @@ export default function App() {
     >
       <FileRoutes />
       <Route path="/Admin" component={Admin} />
+      <Route path="/" component={Home} />
     </Router>
   );
 }

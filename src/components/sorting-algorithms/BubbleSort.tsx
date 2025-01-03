@@ -1,4 +1,6 @@
 import type { DropdownMenuSubTriggerProps } from "@kobalte/core/dropdown-menu";
+import { Tooltip } from "@kobalte/core/tooltip";
+import { IoInformationCircleOutline } from "solid-icons/io";
 import { createEffect, createSignal, For, useContext } from "solid-js";
 import { CountryDataContext } from "~/contexts/CountryDataContext";
 import { IsSortedContext } from "~/contexts/IsSortedContext";
@@ -18,6 +20,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import SortingAlgorithmWrapper from "./SortingAlgorithmWrapper";
 
 export default function BubbleSort() {
@@ -99,9 +102,45 @@ export default function BubbleSort() {
 
   return (
     <SortingAlgorithmWrapper>
-      <div class="flex py-2 justify-center">
-        <div class="flex flex-col text-white items-center">
-          <h1 class="text-white text-4xl">Bubble sort</h1>
+      <div class="flex py-2 items-center">
+        <div class="flex flex-col flex-1 text-white gap-2">
+          <div class="flex">
+            <div class="flex-1" />
+            <h1 class="text-white text-4xl flex-1 mt-4">Bubble sort</h1>
+            <div class="flex-1">
+              <Tooltip>
+                <div class="flex flex-1 w-full justify-end text-white">
+                  <TooltipTrigger>
+                    <IoInformationCircleOutline class="size-5 mr-1" />
+                  </TooltipTrigger>
+                </div>
+                <TooltipContent class="max-w-[20rem] border border-neutral-400 bg-neutral-700">
+                  <div class="gap-2 flex flex-col text-sm">
+                    <p>
+                      Bubble Sort is an iterative sorting algorithm that
+                      imitates the movement of bubbles in sparkling water. The
+                      bubbles represents the elements of the data structure.
+                    </p>
+                    <p>
+                      The bigger bubbles reach the top faster than smaller
+                      bubbles, and this algorithm works in the same way. It
+                      iterates through the data structure and for each cycle
+                      compares the current element with the next one, swapping
+                      them if they are in the wrong order.
+                    </p>
+                    <p>
+                      It's a simple algorithm to implement, but not much
+                      efficient: on average, quadratic sorting algorithms with
+                      the same time complexity such as Selection Sort or
+                      Insertion Sort perform better. It has several variants to
+                      improve its performances, such as Shaker Sort, Odd Even
+                      Sort and Comb Sort.
+                    </p>
+                  </div>
+                </TooltipContent>
+              </Tooltip>
+            </div>
+          </div>
           <h2>
             Currently sorting:
             {" " + selectedDataTable()}
@@ -110,7 +149,7 @@ export default function BubbleSort() {
         </div>
       </div>
       <div class="flex flex-1 relative overflow-hidden">
-        <div class="mb-2 flex flex-1 h-64 bg-black z-10 rotate-180 flex-row-reverse ">
+        <div class="mb-1 flex flex-1 h-64 bg-neutral-900 z-10 rotate-180 flex-row-reverse ">
           <For each={array()}>
             {(country, index) => (
               <div

@@ -12,9 +12,9 @@
   outline: 5px solid red;
 }
 
+html,
 main,
-#app,
-html {
+#app {
   background-color: #0a0a0a;
 }
 

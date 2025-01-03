@@ -2,7 +2,7 @@ export default function Banner() {
   return (
     <div
       id="gradient-border"
-      class="bg-gradient-to-r from-[#1b1b1b] from-10% via-blue-500 via-50% to-[#1b1b1b] to-90% pb-[2px]"
+      class="bg-gradient-to-r from-[#1b1b1b] from-10% via-blue-500 via-50% to-[#1b1b1b] to-90% pb-[2px] z-40"
     >
       <section class="lg:h-96 md:h-72 sm:h-64 bg-carbon-fibre">
         <div class="lg:h-96 md:h-72 sm:h-64 bg-gradient-to-t from-black from-10% via-black/50 via-60% to-transparent to-100% flex justify-center items-center p-4">
@@ -18,8 +18,8 @@ export default function Banner() {
               visual rendering of data sets in real time in a web environment.
             </p>
             <p class="lg:text-lg md:text-md text-[0.8rem]">
-              Boost your knowledge in the fundamentals to make your software
-              blazingly fast.
+              Boost your knowledge in the data science fundamentals to make your
+              software blazingly fast.
             </p>
           </div>
         </div>

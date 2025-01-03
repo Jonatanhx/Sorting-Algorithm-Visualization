@@ -1,8 +1,11 @@
 import type { DropdownMenuSubTriggerProps } from "@kobalte/core/dropdown-menu";
+import { Tooltip } from "@kobalte/core/tooltip";
+import { IoInformationCircleOutline } from "solid-icons/io";
 import { createEffect, createSignal, For, useContext } from "solid-js";
 import { CountryDataContext } from "~/contexts/CountryDataContext";
 import { IsSortedContext } from "~/contexts/IsSortedContext";
 import { IsSortingContext } from "~/contexts/IsSortingContext";
+import { SortingSpeedContext } from "~/contexts/SortingSpeedContext";
 import { calculateHeight } from "~/globalFunction";
 import type { country } from "~/interfaces";
 import SortingTimer from "../SortingTimer";
@@ -17,12 +20,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import SortingAlgorithmWrapper from "./SortingAlgorithmWrapper";
 
 export default function MergeSort() {
   const { countries } = useContext(CountryDataContext);
   const { isSorting, setIsSorting } = useContext(IsSortingContext);
   const { setIsSorted } = useContext(IsSortedContext);
+  const { speed } = useContext(SortingSpeedContext);
 
   const [selectedDataTable, setSelectedDataTable] =
     createSignal("populationSize");
@@ -83,7 +88,7 @@ export default function MergeSort() {
 
       currentSize *= 2;
       setArray([...arr]);
-    }, 100);
+    }, 100 / speed());
   }
 
   function merge(arr: country[], start: number, mid: number, end: number) {
@@ -120,9 +125,41 @@ export default function MergeSort() {
 
   return (
     <SortingAlgorithmWrapper>
-      <div class="flex py-2 justify-center">
-        <div class="flex flex-col text-white items-center">
-          <h1 class="text-white text-4xl">Merge sort</h1>
+      <div class="flex py-2 items-center">
+        <div class="flex flex-col flex-1 text-white gap-2">
+          <div class="flex">
+            <div class="flex-1" />
+            <h1 class="text-white text-4xl flex-1 mt-4">Merge sort</h1>
+            <div class="flex-1">
+              <Tooltip>
+                <div class="flex flex-1 w-full justify-end text-white">
+                  <TooltipTrigger>
+                    <IoInformationCircleOutline class="size-5 mr-1" />
+                  </TooltipTrigger>
+                </div>
+                <TooltipContent class="max-w-[20rem] border border-neutral-400 bg-neutral-700">
+                  <div class="gap-2 flex flex-col text-sm">
+                    <p>
+                      Merge Sort is a sorting algorithm based on the Divide and
+                      Conqueor technique, like Quick Sort. It can be implemented
+                      iteratively or recursively, using the Top-Down and
+                      Bottom-Up algorithms respectively. We represented the
+                      first one.
+                    </p>
+                    <p>
+                      The algorithm divides the data structure recursively until
+                      the subsequences contain only one element. At this point,
+                      the subsequences get merged and ordered sequentially. To
+                      do so, the algorithm progressively builds the sorted
+                      sublist by adding each time the minimum element of the
+                      next two unsorted subsequences until there is only one
+                      sublist remaining. This will be the sorted data structure
+                    </p>
+                  </div>
+                </TooltipContent>
+              </Tooltip>
+            </div>
+          </div>
           <h2>
             Currently sorting:
             {" " + selectedDataTable()}
@@ -131,7 +168,7 @@ export default function MergeSort() {
         </div>
       </div>
       <div class="flex flex-1 relative border-black overflow-hidden">
-        <div class="m-2 flex flex-1 h-64 bg-black border-black border-2 z-10 rotate-180 flex-row-reverse">
+        <div class="mb-1 flex flex-1 h-64 bg-neutral-900 z-10 rotate-180 flex-row-reverse">
           <For each={array()}>
             {(country, index) => (
               <div
