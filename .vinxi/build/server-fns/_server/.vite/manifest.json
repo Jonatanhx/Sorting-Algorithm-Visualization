@@ -56,6 +56,8 @@
       "src/routes/admin.tsx?pick=default&pick=$css",
       "src/routes/index.tsx?pick=default&pick=$css",
       "src/routes/index.tsx?pick=default&pick=$css",
+      "src/routes/NotFound.tsx?pick=default&pick=$css",
+      "src/routes/NotFound.tsx?pick=default&pick=$css",
       "src/routes/api/auth/[...solidauth].ts?pick=GET",
       "src/routes/api/auth/[...solidauth].ts?pick=GET",
       "src/routes/api/auth/[...solidauth].ts?pick=GET",
@@ -88,7 +90,7 @@
       "_db.mjs"
     ],
     "css": [
-      "assets/app-K9BFr-Xb.css"
+      "assets/app-DMbi6qr0.css"
     ]
   },
   "src/contexts/AdminDataContext.tsx": {
@@ -112,6 +114,12 @@
       "_db.mjs",
       "_fetchEvent.mjs"
     ]
+  },
+  "src/routes/NotFound.tsx?pick=default&pick=$css": {
+    "file": "NotFound.mjs",
+    "name": "NotFound",
+    "src": "src/routes/NotFound.tsx?pick=default&pick=$css",
+    "isDynamicEntry": true
   },
   "src/routes/admin.tsx?pick=default&pick=$css": {
     "file": "admin.mjs",

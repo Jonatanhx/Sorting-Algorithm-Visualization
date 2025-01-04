@@ -17,15 +17,15 @@ export default function AdminDatatable() {
   return (
     <div class="flex flex-row justify-center flex-1 items-center">
       <div
-        class="text-white border-2 bg-neutral-900 rounded-md p-12"
+        class="text-white border-2 border-neutral-400 bg-[#1b1b1b] rounded-md md:p-12 md:min-w-[38rem]"
         id="center-div"
       >
         <Table>
           <TableHeader>
             <TableRow>
               <TableHead>Name</TableHead>
-              <TableHead>Population Size</TableHead>
-              <TableHead>Land Area in km2</TableHead>
+              <TableHead class="md:min-w-[10rem]">Population Size</TableHead>
+              <TableHead class="md:min-w-[10rem]">Land Area in km2</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
