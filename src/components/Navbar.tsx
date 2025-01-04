@@ -1,6 +1,6 @@
 import { useAuth } from "@solid-mediakit/auth/client";
 import { AiOutlineMenu } from "solid-icons/ai";
-import { Match, Show, Switch, useContext } from "solid-js";
+import { createSignal, Match, Show, Switch, useContext } from "solid-js";
 import { AdminDataContext } from "~/contexts/AdminDataContext";
 import LoginButton from "./LoginButton";
 import {
@@ -11,37 +11,38 @@ import {
   MenubarTrigger,
 } from "./ui/menubar";
 
+export const [activeSection, setActiveSection] = createSignal("");
+
 export function Navbar() {
   const { admins } = useContext(AdminDataContext);
-
   const auth = useAuth();
+
   return (
     <nav class="flex flex-1">
       <div class="hidden md:flex flex-1 justify-end">
         <LoginButton />
-        <Switch>
-          <Match when={auth.status() === "authenticated"}>
-            <Show
-              when={admins()?.some(
-                (admin) => admin.id === auth.session()?.user.id && admin.isAdmin
-              )}
-            >
-              <a
-                href="/Admin"
-                class="flex items-center font-semibold border-bottom-effect text-white px-10"
-              >
-                Admin
-              </a>
-            </Show>
-            <div class="flex items-center">
-              <img
-                class="lg:h-20 md:h-16"
-                src={`${auth.session()?.user.image}`}
-                alt="User Github profile image"
-              />
-            </div>
-          </Match>
-        </Switch>
+        <Show
+          when={admins()?.some(
+            (admin) =>
+              admin.id === auth.session()?.user.id &&
+              admin.isAdmin &&
+              auth.status() === "authenticated"
+          )}
+        >
+          <a
+            href="/Admin"
+            class="flex items-center font-semibold border-bottom-effect text-white px-10"
+          >
+            Admin
+          </a>
+        </Show>
+        <Show when={auth.status() === "authenticated"}>
+          <img
+            class="lg:h-20 md:h-16"
+            src={`${auth.session()?.user.image}`}
+            alt="User Github profile image"
+          />
+        </Show>
       </div>
 
       <div class="md:hidden flex flex-1 justify-end items-center">

@@ -11,6 +11,8 @@ import { CountryDataProvider } from "./contexts/CountryDataContext";
 import { IsSortedProvider } from "./contexts/IsSortedContext";
 import { IsSortingProvider } from "./contexts/IsSortingContext";
 import { SelectedDataTableProvider } from "./contexts/SelectedDataTableContext";
+import { SortingSpeedProvider } from "./contexts/SortingSpeedContext";
+import Home from "./routes";
 import Admin from "./routes/admin";
 
 export default function App() {
@@ -23,16 +25,18 @@ export default function App() {
             <IsSortedProvider>
               <CountryDataProvider>
                 <AdminDataProvider>
-                  <MetaProvider>
-                    <Title>Sorting Visualizer</Title>
-                    <Suspense>
-                      <SessionProvider>
-                        <Header />
-                        {props.children}
-                        <Footer />
-                      </SessionProvider>
-                    </Suspense>
-                  </MetaProvider>
+                  <SortingSpeedProvider>
+                    <MetaProvider>
+                      <Title>Sorting Visualizer</Title>
+                      <Suspense>
+                        <SessionProvider>
+                          <Header />
+                          {props.children}
+                          <Footer />
+                        </SessionProvider>
+                      </Suspense>
+                    </MetaProvider>
+                  </SortingSpeedProvider>
                 </AdminDataProvider>
               </CountryDataProvider>
             </IsSortedProvider>
@@ -42,6 +46,7 @@ export default function App() {
     >
       <FileRoutes />
       <Route path="/Admin" component={Admin} />
+      <Route path="/" component={Home} />
     </Router>
   );
 }

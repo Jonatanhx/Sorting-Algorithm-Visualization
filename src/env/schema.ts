@@ -9,7 +9,7 @@ export const serverScheme = z.object({
   AUTH_SECRET: z.string(),
   AUTH_TRUST_HOST: z.string().optional(),
   AUTH_URL: z.string().optional(),
-  MONGO_URI: z.string(),
+  MONGODB_URI: z.string(),
 });
 
 export const clientScheme = z.object({

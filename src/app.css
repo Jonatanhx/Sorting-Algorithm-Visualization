@@ -12,10 +12,10 @@
   outline: 5px solid red;
 }
 
-#app,
 html,
-main {
-  background-color: #1b1b1b;
+main,
+#app {
+  background-color: #0a0a0a;
 }
 
 .border-bottom-effect:hover {
@@ -43,12 +43,6 @@ main {
     from var(--a),
     #00008b,
     #0000cd,
-    #1e90ff,
-    #4169e1,
-    #6495ed,
-    #87cefa,
-    #6495ed,
-    #4169e1,
     #1e90ff,
     #0000cd,
     #00008b
@@ -139,4 +133,95 @@ main {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.SliderRoot {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  user-select: none;
+  touch-action: none;
+  width: 200px;
+}
+.SliderTrack {
+  background-color: hsl(240 6% 90%);
+  position: relative;
+  border-radius: 9999px;
+  height: 8px;
+  width: 100%;
+}
+.SliderRange {
+  position: absolute;
+  background-color: hsl(200 98% 39%);
+  border-radius: 9999px;
+  height: 100%;
+}
+.SliderThumb {
+  display: block;
+  width: 16px;
+  height: 16px;
+  background-color: hsl(200 98% 39%);
+  border-radius: 9999px;
+  top: -4px;
+}
+.SliderThumb:hover {
+  box-shadow: 0 0 0 5px #2a91fe98;
+}
+.SliderThumb:focus {
+  outline: none;
+  box-shadow: 0 0 0 5px #2a91fe98;
+}
+.SliderLabel {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+#banner {
+  background-color: #131217;
+  width: 100%;
+  position: relative;
+  display: grid;
+  place-content: center;
+  font-family: Montserrat;
+  overflow: hidden;
+}
+
+h1 {
+  font-size: 8rem;
+  font-weight: 700;
+  color: white;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+#pattern {
+  position: absolute;
+  top: -44px;
+  left: -50px;
+  right: 0;
+  bottom: 0;
+}
+
+#gradient {
+  background: radial-gradient(
+    circle at center,
+    #4169e1 0%,
+    #1e90ff 25%,
+    #0000cd 50%,
+    #00008b 75%,
+    transparent 50%
+  );
+  width: 400px;
+  height: 400px;
+  position: absolute;
+  top: -200px;
+  left: -200px;
+  transform: translate(200px, 200px);
+  transition: transform 0.1s ease-out;
+  transition-delay: 2ms;
+  filter: url(#blob);
+  opacity: 0.33;
 }

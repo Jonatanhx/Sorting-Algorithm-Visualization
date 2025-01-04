@@ -1,4 +1,5 @@
 import { Navbar } from "./Navbar";
+import SortingSpeedSlider from "./SortingSpeedSlider";
 
 export default function Header() {
   return (
@@ -12,6 +13,7 @@ export default function Header() {
             Sorting Visualizer
           </h1>
         </a>
+        <SortingSpeedSlider />
         <Navbar />
       </header>
     </div>

@@ -1,8 +1,11 @@
 import type { DropdownMenuSubTriggerProps } from "@kobalte/core/dropdown-menu";
+import { Tooltip } from "@kobalte/core/tooltip";
+import { IoInformationCircleOutline } from "solid-icons/io";
 import { createEffect, createSignal, For, useContext } from "solid-js";
 import { CountryDataContext } from "~/contexts/CountryDataContext";
 import { IsSortedContext } from "~/contexts/IsSortedContext";
 import { IsSortingContext } from "~/contexts/IsSortingContext";
+import { SortingSpeedContext } from "~/contexts/SortingSpeedContext";
 import { calculateHeight } from "~/globalFunction";
 import type { country } from "~/interfaces";
 import SortingTimer from "../SortingTimer";
@@ -17,12 +20,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import SortingAlgorithmWrapper from "./SortingAlgorithmWrapper";
 
 export default function InsertionSort() {
   const { countries } = useContext(CountryDataContext);
   const { isSorting, setIsSorting } = useContext(IsSortingContext);
   const { setIsSorted } = useContext(IsSortedContext);
+  const { speed } = useContext(SortingSpeedContext);
 
   const [selectedDataTable, setSelectedDataTable] =
     createSignal("populationSize");
@@ -74,7 +79,7 @@ export default function InsertionSort() {
       setArray(arr);
       setCurrentJ(j + 1);
       setCurrentI(currentI() + 1);
-    }, 100);
+    }, 100 / speed());
   }
 
   function resetArray() {
@@ -91,8 +96,40 @@ export default function InsertionSort() {
   return (
     <SortingAlgorithmWrapper>
       <div class="flex py-2 justify-center">
-        <div class="flex flex-col text-white items-center">
-          <h1 class="text-white text-4xl">Insertion sort</h1>
+        <div class="flex flex-col flex-1 text-white gap-2">
+          <div class="flex">
+            <div class="flex-1" />
+            <h1 class="text-white text-4xl flex-1 mt-4">Insertion sort</h1>
+            <div class="flex-1">
+              <Tooltip>
+                <div class="flex flex-1 w-full justify-end text-white">
+                  <TooltipTrigger>
+                    <IoInformationCircleOutline class="size-5 mr-1" />
+                  </TooltipTrigger>
+                </div>
+                <TooltipContent class="max-w-[20rem] border border-neutral-400 bg-neutral-700">
+                  <div class="gap-2 flex flex-col text-sm">
+                    <p>
+                      Insertion sort is a simple sorting algorithm that builds
+                      the final sorted array one item at a time. It's less
+                      performant than advanced sorting algorithms, but it can
+                      still have some advantages: it's really easy to implement
+                      and it's efficient on small data structures almost sorted.
+                    </p>
+                    <p>
+                      The algorithm divides the data structure in two sublists:
+                      a sorted one, and one still to sort. Initially, the sorted
+                      sublist is made up of just one element and it gets
+                      progressively filled. For every iteration, the algorithm
+                      picks an element on the unsorted sublist and inserts it at
+                      the right place in the sorted sublist. It's available in
+                      several variants such as Gnome Sort.
+                    </p>
+                  </div>
+                </TooltipContent>
+              </Tooltip>
+            </div>
+          </div>
           <h2>
             Currently sorting:
             {" " + selectedDataTable()}
@@ -101,7 +138,7 @@ export default function InsertionSort() {
         </div>
       </div>
       <div class="flex flex-1 relative overflow-hidden">
-        <div class="m-2 flex flex-1 h-64 bg-black border-black border-2 z-10 rotate-180 flex-row-reverse">
+        <div class="mb-1 flex flex-1 h-64 bg-neutral-900 z-10 rotate-180 flex-row-reverse">
           <For each={array()}>
             {(country, index) => (
               <div

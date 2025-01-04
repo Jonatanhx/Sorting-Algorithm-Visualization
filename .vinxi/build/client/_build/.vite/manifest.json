@@ -1,60 +1,60 @@
 {
-  "_AdminDataTable-CUZRnUZU.js": {
-    "file": "assets/AdminDataTable-CUZRnUZU.js",
+  "_AdminDataTable-Cqh3XJua.js": {
+    "file": "assets/AdminDataTable-Cqh3XJua.js",
     "name": "AdminDataTable",
     "imports": [
-      "_button-DC20VBR0.js"
+      "_button-B2qJlUg8.js"
     ]
   },
-  "_IsSortingContext-TIOTS9Ww.js": {
-    "file": "assets/IsSortingContext-TIOTS9Ww.js",
-    "name": "IsSortingContext",
-    "imports": [
-      "_button-DC20VBR0.js"
-    ]
-  },
-  "_button-DC20VBR0.js": {
-    "file": "assets/button-DC20VBR0.js",
+  "_button-B2qJlUg8.js": {
+    "file": "assets/button-B2qJlUg8.js",
     "name": "button"
   },
+  "_separator-BqqrgqYc.js": {
+    "file": "assets/separator-BqqrgqYc.js",
+    "name": "separator",
+    "imports": [
+      "_button-B2qJlUg8.js"
+    ]
+  },
   "src/routes/admin.tsx?pick=default&pick=$css": {
-    "file": "assets/admin-suVXVjAH.js",
+    "file": "assets/admin-C-xac_X_.js",
     "name": "admin",
     "src": "src/routes/admin.tsx?pick=default&pick=$css",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_button-DC20VBR0.js",
-      "_AdminDataTable-CUZRnUZU.js"
+      "_button-B2qJlUg8.js",
+      "_AdminDataTable-Cqh3XJua.js"
     ]
   },
   "src/routes/index.tsx?pick=default&pick=$css": {
-    "file": "assets/index-B197vIQj.js",
+    "file": "assets/index-DicnUVk9.js",
     "name": "index",
     "src": "src/routes/index.tsx?pick=default&pick=$css",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_button-DC20VBR0.js",
-      "_IsSortingContext-TIOTS9Ww.js"
+      "_button-B2qJlUg8.js",
+      "_separator-BqqrgqYc.js"
     ]
   },
   "virtual:$vinxi/handler/client": {
-    "file": "assets/client-CNSkTMa0.js",
+    "file": "assets/client-CZh_hu7m.js",
     "name": "client",
     "src": "virtual:$vinxi/handler/client",
     "isEntry": true,
     "imports": [
-      "_AdminDataTable-CUZRnUZU.js",
-      "_button-DC20VBR0.js",
-      "_IsSortingContext-TIOTS9Ww.js"
+      "_AdminDataTable-Cqh3XJua.js",
+      "_button-B2qJlUg8.js",
+      "_separator-BqqrgqYc.js"
     ],
     "dynamicImports": [
       "src/routes/admin.tsx?pick=default&pick=$css",
       "src/routes/index.tsx?pick=default&pick=$css"
     ],
     "css": [
-      "assets/client-WZuO8Kxk.css"
+      "assets/client-K9BFr-Xb.css"
     ]
   }
 }
