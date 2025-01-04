@@ -177,3 +177,51 @@ main,
   display: flex;
   justify-content: space-between;
 }
+
+#banner {
+  background-color: #131217;
+  width: 100%;
+  position: relative;
+  display: grid;
+  place-content: center;
+  font-family: Montserrat;
+  overflow: hidden;
+}
+
+h1 {
+  font-size: 8rem;
+  font-weight: 700;
+  color: white;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+#pattern {
+  position: absolute;
+  top: -44px;
+  left: -50px;
+  right: 0;
+  bottom: 0;
+}
+
+#gradient {
+  background: radial-gradient(
+    circle at center,
+    #4169e1 0%,
+    #1e90ff 25%,
+    #0000cd 50%,
+    #00008b 75%,
+    transparent 50%
+  );
+  width: 400px;
+  height: 400px;
+  position: absolute;
+  top: -200px;
+  left: -200px;
+  transform: translate(200px, 200px);
+  transition: transform 0.1s ease-out;
+  transition-delay: 2ms;
+  filter: url(#blob);
+  opacity: 0.33;
+}
