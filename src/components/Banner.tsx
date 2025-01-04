@@ -54,20 +54,20 @@ export default function Banner() {
     >
       <section
         id="banner"
-        class="lg:h-96 md:h-72 sm:h-64 relative overflow-hidden"
+        class="lg:h-96 md:h-72 h-64 relative overflow-hidden"
       >
-        <div class="flex flex-col lg:h-96 md:h-72 sm:h-64 text-white font-semibold text-center justify-center md:gap-2 absolute inset-0 z-10">
+        <div class="flex flex-col lg:h-96 md:h-72 sm:h-64 text-white font-semibold text-center justify-center md:gap-2 absolute inset-0 z-10 font-[Montserrat] lg:p-0 p-2">
           <h1 class="lg:text-5xl md:text-4xl text-xl font-extrabold">
             Data sorting visualizer
           </h1>
           <h2 class="lg:text-5xl md:text-4xl text-lg font-extrabold">
             Learning data sorting algorithms made easy.
           </h2>
-          <p class="lg:text-lg md:text-md text-[0.8rem]">
+          <p class="lg:text-lg md:text-[0.9rem] text-[0.8rem]">
             Learn the strengths and weaknesses of each sorting algorithm with
             visual rendering of data sets in real time in a web environment.
           </p>
-          <p class="lg:text-lg md:text-md text-[0.8rem]">
+          <p class="lg:text-lg md:text-[0.9rem] text-[0.8rem]">
             Boost your knowledge in the data science fundamentals to make your
             software blazingly fast.
           </p>

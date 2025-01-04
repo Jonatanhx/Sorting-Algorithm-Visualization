@@ -8,7 +8,7 @@ export default function LoginButton() {
       <Match when={auth.status() === "authenticated"}>
         <button
           onClick={() => auth.signOut({ redirectTo: "/" })}
-          class="flex items-center px-10 font-semibold text-white no-underline transition border-bottom-effect cursor-pointer"
+          class="flex md:min-w-36 md:ml-16 items-center px-10 font-semibold text-white no-underline transition border-bottom-effect cursor-pointer"
         >
           Sign out
         </button>

@@ -38,7 +38,7 @@ export function Navbar() {
         </Show>
         <Show when={auth.status() === "authenticated"}>
           <img
-            class="lg:h-20 md:h-16"
+            class="lg:w-20 md:w-[8rem]"
             src={`${auth.session()?.user.image}`}
             alt="User Github profile image"
           />
