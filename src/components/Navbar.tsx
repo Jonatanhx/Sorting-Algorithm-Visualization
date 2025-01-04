@@ -18,7 +18,7 @@ export function Navbar() {
   const auth = useAuth();
 
   return (
-    <nav class="flex flex-1">
+    <nav class="flex absolute md:relative">
       <div class="hidden md:flex flex-1 justify-end">
         <LoginButton />
         <Show

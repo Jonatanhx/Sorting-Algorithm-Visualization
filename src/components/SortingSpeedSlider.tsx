@@ -6,7 +6,7 @@ export default function SortingSpeedSlider() {
   const { speed, setSpeed } = useContext(SortingSpeedContext);
 
   return (
-    <div class="flex text-white">
+    <div class="flex text-white flex-1 justify-center">
       <Slider
         class="SliderRoot justify-center"
         step={10}
