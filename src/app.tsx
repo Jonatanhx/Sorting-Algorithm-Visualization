@@ -14,6 +14,7 @@ import { SelectedDataTableProvider } from "./contexts/SelectedDataTableContext";
 import { SortingSpeedProvider } from "./contexts/SortingSpeedContext";
 import Home from "./routes";
 import Admin from "./routes/admin";
+import NotFound from "./routes/NotFound";
 
 export default function App() {
   return (
@@ -47,6 +48,7 @@ export default function App() {
       <FileRoutes />
       <Route path="/Admin" component={Admin} />
       <Route path="/" component={Home} />
+      <Route path="*404" component={NotFound} />
     </Router>
   );
 }
