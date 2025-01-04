@@ -5,6 +5,11 @@ export default function Banner() {
     const patternElement = document.getElementById("pattern");
     if (!patternElement) return;
 
+    const gradientElement = document.getElementById("gradient");
+    if (gradientElement) {
+      gradientElement.style.opacity = "0.33";
+    }
+
     const countY = Math.ceil(patternElement.clientHeight / 40) + 1;
     const countX = Math.ceil(patternElement.clientWidth / 48) + 1;
 
