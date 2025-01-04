@@ -43,13 +43,13 @@ I chose Shadcn as my component library, which is used for a variety of buttons, 
 ## ==== G-krav ====
 
 ## Planering & Research
-* [] Målgruppsanalys.
+* [ ] Målgruppsanalys.
 * [x] Projekthanteringsverktyg.
   
 ## Design och Prototyping
-* [] Wireframes och prototyp.
-* [] Design för åtminstonde två skärmstorlekar.
-* [] WCAG 2.1-standarder.
+* [ ] Wireframes och prototyp.
+* [x] Design för åtminstonde två skärmstorlekar.
+* [x] WCAG 2.1-standarder.
 
 ## Applikationsutveckling
 * [x] Modernt JavaScript framework.
@@ -63,23 +63,23 @@ I chose Shadcn as my component library, which is used for a variety of buttons, 
 * [x] Repo på Github.
 
 ## Slutrapport
-* [] Abstract
-* [] Tech stack och motivation av valen.
-* [] Dokumentation av arbetsprocess, planering och research.
+* [ ] Abstract
+* [ ] Tech stack och motivation av valen.
+* [ ] Dokumentation av arbetsprocess, planering och research.
 
 ## Deploy
-* [] Hostad och vara tillgängligt i webbläsare.
+* [x] Hostad och vara tillgängligt i webbläsare.
 
 ## ==== VG-krav ====
 
 ## Design och Prototyping
-* [] Interaktiv prototyp.
-* [] Prototyp väldigt lik riktiga produkten.
-* [] Designen följer WCAG 2.1-standarder **utan undantag** för nivå A och AA.
+* [x] Interaktiv prototyp.
+* [ ] Prototyp väldigt lik riktiga produkten.
+* [ ] Designen följer WCAG 2.1-standarder **utan undantag** för nivå A och AA.
 
 ## Applikationsutveckling
 * [x] Lösning för att hantering globala state.
-* [] Koden följer **utan undantag** WCAG 2.1-standarder för nivå A och AA.
+* [ ] Koden följer **utan undantag** WCAG 2.1-standarder för nivå A och AA.
 * [x] Produkten ska vara optimerad, återanvända kod & komponenter.
 * [x] CRUD-operationer & säker hantering av användardata.
 * [x] Säker autentiseringslösning, t.ex. OAuth.
@@ -91,9 +91,9 @@ I chose Shadcn as my component library, which is used for a variety of buttons, 
 * [x] Tydlig README.
 
 ## Slutrapport
-* [] Gå igenom varje steg av processen djupgående, reflektera.
-* [] Beskriv val av verktyg.
-* [] Motivera UX/UI val.
+* [ ] Gå igenom varje steg av processen djupgående, reflektera.
+* [ ] Beskriv val av verktyg.
+* [ ] Motivera UX/UI val.
 
 ## Deploy
-* [] CI/CD pipeline.
+* [x] CI/CD pipeline.
