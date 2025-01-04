@@ -12,17 +12,13 @@ export default function Admin() {
         when={admins()?.some(
           (admin) => admin.id === auth.session()?.user.id && admin.isAdmin
         )}
+        fallback={
+          <p class="text-white min-h-screen flex items-center justify-center">
+            You do not have the required credentials to view this page.
+          </p>
+        }
       >
         <AdminDatatable />
-      </Show>
-      <Show
-        when={admins()?.some(
-          (admin) => admin.id !== auth.session()?.user.id && admin.isAdmin
-        )}
-      >
-        <div class="flex flex-col text-white min-h-screen items-center justify-center">
-          <p>You do not have the required credentials to view this page.</p>
-        </div>
       </Show>
     </main>
   );
