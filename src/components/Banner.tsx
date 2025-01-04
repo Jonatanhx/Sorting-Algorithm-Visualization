@@ -50,7 +50,7 @@ export default function Banner() {
   return (
     <div
       id="gradient-border"
-      class="bg-gradient-to-r from-[#1b1b1b] from-10% via-blue-500 via-50% to-[#1b1b1b] to-90% pb-[2px] z-40"
+      class="bg-gradient-to-r from-neutral-950 from-10% via-blue-500 via-50% to-neutral-950 to-90% pb-[2px] z-40"
     >
       <section
         id="banner"

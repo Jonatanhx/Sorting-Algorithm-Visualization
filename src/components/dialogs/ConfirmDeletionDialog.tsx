@@ -28,7 +28,7 @@ export default function ConfirmDeletionDialog(
     if (countryData && countryData[index]) {
       const countryAtIndex = countryData[index];
 
-      deleteCountry(countryAtIndex);
+      deleteCountry({ ...countryAtIndex, id: countryAtIndex.id.toString() });
       refetch();
     } else {
       console.error(`countryData object: ${countryData} threw exception`);

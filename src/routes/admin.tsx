@@ -7,7 +7,7 @@ export default function Admin() {
   const { admins } = useContext(AdminDataContext);
   const auth = useAuth();
   return (
-    <main class="flex min-h-screen flex-col mt-4">
+    <main class="flex min-h-screen flex-col my-4">
       <Show
         when={admins()?.some(
           (admin) => admin.id === auth.session()?.user.id && admin.isAdmin
@@ -20,9 +20,9 @@ export default function Admin() {
           (admin) => admin.id !== auth.session()?.user.id && admin.isAdmin
         )}
       >
-        <p class="text-white">
-          You do not have the required credentials to view this
-        </p>
+        <div class="flex flex-col text-white min-h-screen items-center justify-center">
+          <p>You do not have the required credentials to view this page.</p>
+        </div>
       </Show>
     </main>
   );
