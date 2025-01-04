@@ -3,6 +3,7 @@ import { MetaProvider, Title } from "@solidjs/meta";
 import { Route, Router } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
 import { Suspense } from "solid-js";
+import logo from "../src/assets/favicon.png";
 import "./app.css";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
@@ -30,6 +31,7 @@ export default function App() {
                     <MetaProvider>
                       <Title>Sorting Visualizer</Title>
                       <Suspense>
+                        <link rel="icon" href={logo} />
                         <SessionProvider>
                           <Header />
                           {props.children}
