@@ -1,6 +1,8 @@
 ## About
 This is my thesis project for my frontend developer program. Taking inspiration from the [data sorting visualization](https://www.youtube.com/watch?v=kPRA0W1kECg&t=76s) youtube video created by Timo Bingmann I wanted to explore and learn more about data sorting algorithms and their use cases, while at the same time creating a educational tool for whoever may want to learn more about it themselves. Utilizing real world data sets and SolidJS JavaScript framework, i blend a mix of realism and rendering efficiency in this project. 
 
+view the deployed project [here](https://sorting-algorithm-visualization-ten.vercel.app/).
+
 ## Start Dev Server
 
 ```bash
