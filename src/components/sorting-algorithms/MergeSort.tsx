@@ -31,11 +31,21 @@ export default function MergeSort() {
   const [array, setArray] = createSignal<country[]>([]);
   const [currentI, setCurrentI] = createSignal(0);
   const [currentJ, setCurrentJ] = createSignal(0);
+  let initialArray: country[] = [];
 
   createEffect(() => {
     const countryData = countries();
     if (countryData && countryData.length > 0) {
-      setArray(countryData as country[]);
+      setArray(
+        countryData.map((country) => ({
+          ...country,
+          name: country.name ?? "Unknown",
+        })) as country[]
+      );
+      initialArray = countryData.map((country) => ({
+        ...country,
+        name: country.name ?? "Unknown",
+      }));
     }
   });
 
@@ -69,7 +79,7 @@ export default function MergeSort() {
       let i = start;
       let j = mid + 1;
       let k = start;
-      if (!isRunning() == false) {
+      if (isRunning()) {
         while (i <= mid && j <= end) {
           setCurrentI(i);
           setCurrentJ(j);
@@ -180,7 +190,7 @@ export default function MergeSort() {
                 style={{
                   height: calculateHeight(
                     country[selectedDataTable() as keyof country] as number,
-                    array(),
+                    initialArray,
                     selectedDataTable() as keyof country
                   ),
                 }}
