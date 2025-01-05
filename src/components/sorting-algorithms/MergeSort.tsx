@@ -169,8 +169,13 @@ export default function MergeSort() {
             </div>
           </div>
           <h2>
-            Currently sorting:
-            {" " + selectedDataTable()}
+            Currently sorting:{" "}
+            <Show
+              when={selectedDataTable() == "populationSize"}
+              fallback={"Land Area"}
+            >
+              Population Size
+            </Show>
           </h2>
           <SortingTimer isRunning={isRunning()} />
         </div>
