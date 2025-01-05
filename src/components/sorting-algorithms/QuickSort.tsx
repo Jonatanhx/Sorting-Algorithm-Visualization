@@ -1,7 +1,7 @@
 import type { DropdownMenuSubTriggerProps } from "@kobalte/core/dropdown-menu";
 import { Tooltip } from "@kobalte/core/tooltip";
 import { IoInformationCircleOutline } from "solid-icons/io";
-import { createEffect, createSignal, For, useContext } from "solid-js";
+import { createEffect, createSignal, For, Show, useContext } from "solid-js";
 import { CountryDataContext } from "~/contexts/CountryDataContext";
 import { IsSortedContext } from "~/contexts/IsSortedContext";
 import { IsSortingContext } from "~/contexts/IsSortingContext";
@@ -25,7 +25,7 @@ import { TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 export default function QuickSort() {
   const { countries } = useContext(CountryDataContext);
-  const { isSorting, setIsSorting } = useContext(IsSortingContext);
+  const { setIsSorting } = useContext(IsSortingContext);
   const { setIsSorted } = useContext(IsSortedContext);
   const { speed } = useContext(SortingSpeedContext);
 
@@ -53,6 +53,28 @@ export default function QuickSort() {
       setArray(countryData as country[]);
     }
   });
+
+  function resetArray() {
+    const countryData = countries();
+    if (countryData && countryData.length > 0) {
+      setArray(countryData as country[]);
+    }
+
+    setIsRunning(false);
+    setCurrentI(-1);
+    setCurrentJ(-1);
+    setCurrentPivot(-1);
+    setStack([]);
+    setCurrentPartition(null);
+    setPartitionState({
+      pivotIndex: -1,
+      i: -1,
+      j: -1,
+      isPartitioning: false,
+    });
+    setIsSorting(false);
+    setIsSorted(false);
+  }
 
   function startSorting() {
     resetArray();
@@ -148,26 +170,6 @@ export default function QuickSort() {
     }, 100 / speed());
   }
 
-  function resetArray() {
-    const countryData = countries();
-    if (countryData && countryData.length > 0) {
-      setArray(countryData as country[]);
-    }
-    setCurrentI(-1);
-    setCurrentJ(-1);
-    setCurrentPivot(-1);
-    setStack([]);
-    setCurrentPartition(null);
-    setPartitionState({
-      pivotIndex: -1,
-      i: -1,
-      j: -1,
-      isPartitioning: false,
-    });
-    setIsSorting(false);
-    setIsSorted(false);
-  }
-
   return (
     <SortingAlgorithmWrapper>
       <div class="flex py-2 justify-center">
@@ -208,8 +210,13 @@ export default function QuickSort() {
             </div>
           </div>
           <h2>
-            Currently sorting:
-            {" " + selectedDataTable()}
+            Currently sorting:{" "}
+            <Show
+              when={selectedDataTable() == "populationSize"}
+              fallback={"Land Area"}
+            >
+              Population Size
+            </Show>
           </h2>
           <SortingTimer isRunning={isRunning()} />
         </div>
@@ -240,20 +247,32 @@ export default function QuickSort() {
             )}
           </For>
         </div>
-        <div
-          class={`gradient-border ${isRunning() ? "animation-snake" : ""}`}
-        />
       </div>
 
       <div class="flex flex-row items-center m-1">
         <div class="flex-1" />
-        <Button
-          onClick={startSorting}
-          disabled={isSorting() || array().length === 0}
-          variant={"outline"}
+        <Show
+          when={!isRunning()}
+          fallback={
+            <Button
+              variant={"outline"}
+              onClick={() => {
+                resetArray();
+              }}
+            >
+              Stop
+            </Button>
+          }
         >
-          Start
-        </Button>
+          <Button
+            onClick={() => {
+              startSorting();
+            }}
+            variant={"outline"}
+          >
+            Start
+          </Button>
+        </Show>
 
         <div class="flex justify-end flex-1">
           <DropdownMenu placement="bottom">

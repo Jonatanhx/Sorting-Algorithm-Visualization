@@ -1,7 +1,7 @@
 import type { DropdownMenuSubTriggerProps } from "@kobalte/core/dropdown-menu";
 import { Tooltip } from "@kobalte/core/tooltip";
 import { IoInformationCircleOutline } from "solid-icons/io";
-import { createEffect, createSignal, For, useContext } from "solid-js";
+import { createEffect, createSignal, For, Show, useContext } from "solid-js";
 import { CountryDataContext } from "~/contexts/CountryDataContext";
 import { IsSortedContext } from "~/contexts/IsSortedContext";
 import { IsSortingContext } from "~/contexts/IsSortingContext";
@@ -25,7 +25,7 @@ import SortingAlgorithmWrapper from "./SortingAlgorithmWrapper";
 
 export default function BubbleSort() {
   const { countries } = useContext(CountryDataContext);
-  const { isSorting, setIsSorting } = useContext(IsSortingContext);
+  const { setIsSorting } = useContext(IsSortingContext);
   const { setIsSorted } = useContext(IsSortedContext);
   const { speed } = useContext(SortingSpeedContext);
 
@@ -43,13 +43,21 @@ export default function BubbleSort() {
     }
   });
 
+  function resetArray() {
+    const countryData = countries();
+    if (countryData && countryData.length > 0) {
+      setArray(countryData as country[]);
+    }
+
+    setIsRunning(false);
+    setCurrentI(0);
+    setCurrentJ(0);
+    setIsSorting(false);
+    setIsSorted(false);
+  }
+
   function startSorting() {
     resetArray();
-
-    const currentArray = array();
-    if (isSorting() || currentArray.length === 0) {
-      return;
-    }
 
     setIsRunning(true);
     setIsSorting(true);
@@ -60,7 +68,7 @@ export default function BubbleSort() {
     const sortInterval = setInterval(() => {
       const arr = [...array()];
 
-      if (currentI() >= arr.length - 1) {
+      if (currentI() >= arr.length - 1 || !isRunning()) {
         setIsSorted(true);
         clearInterval(sortInterval);
         setIsRunning(false);
@@ -87,17 +95,6 @@ export default function BubbleSort() {
         setCurrentI((i) => i + 1);
       }
     }, 100 / speed());
-  }
-
-  function resetArray() {
-    const countryData = countries();
-    if (countryData && countryData.length > 0) {
-      setArray(countryData as country[]);
-    }
-    setCurrentI(0);
-    setCurrentJ(0);
-    setIsSorting(false);
-    setIsSorted(false);
   }
 
   return (
@@ -142,8 +139,13 @@ export default function BubbleSort() {
             </div>
           </div>
           <h2>
-            Currently sorting:
-            {" " + selectedDataTable()}
+            Currently sorting:{" "}
+            <Show
+              when={selectedDataTable() == "populationSize"}
+              fallback={"Land Area"}
+            >
+              Population Size
+            </Show>
           </h2>
           <SortingTimer isRunning={isRunning()} />
         </div>
@@ -172,21 +174,32 @@ export default function BubbleSort() {
             )}
           </For>
         </div>
-
-        <div
-          class={`gradient-border ${isRunning() ? "animation-snake" : ""}`}
-        />
       </div>
 
       <div class="flex flex-row items-center m-1">
         <div class="flex-1" />
-        <Button
-          onClick={startSorting}
-          disabled={isSorting() || array().length === 0}
-          variant={"outline"}
+        <Show
+          when={!isRunning()}
+          fallback={
+            <Button
+              variant={"outline"}
+              onClick={() => {
+                resetArray();
+              }}
+            >
+              Stop
+            </Button>
+          }
         >
-          Start
-        </Button>
+          <Button
+            onClick={() => {
+              startSorting();
+            }}
+            variant={"outline"}
+          >
+            Start
+          </Button>
+        </Show>
 
         <div class="flex justify-end flex-1">
           <DropdownMenu placement="bottom">

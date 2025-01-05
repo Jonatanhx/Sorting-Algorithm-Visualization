@@ -1,7 +1,7 @@
 import type { DropdownMenuSubTriggerProps } from "@kobalte/core/dropdown-menu";
 import { Tooltip } from "@kobalte/core/tooltip";
 import { IoInformationCircleOutline } from "solid-icons/io";
-import { createEffect, createSignal, For, useContext } from "solid-js";
+import { createEffect, createSignal, For, Show, useContext } from "solid-js";
 import { CountryDataContext } from "~/contexts/CountryDataContext";
 import { IsSortedContext } from "~/contexts/IsSortedContext";
 import { IsSortingContext } from "~/contexts/IsSortingContext";
@@ -25,7 +25,7 @@ import { TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 export default function SelectionSort() {
   const { countries } = useContext(CountryDataContext);
-  const { isSorting, setIsSorting } = useContext(IsSortingContext);
+  const { setIsSorting } = useContext(IsSortingContext);
   const { setIsSorted } = useContext(IsSortedContext);
   const { speed } = useContext(SortingSpeedContext);
 
@@ -48,6 +48,8 @@ export default function SelectionSort() {
     if (countryData && countryData.length > 0) {
       setArray(countryData as country[]);
     }
+
+    setIsRunning(false);
     setCurrentI(0);
     setCurrentJ(0);
     setIsSorting(false);
@@ -68,7 +70,7 @@ export default function SelectionSort() {
       const i = currentI();
       const j = currentJ();
 
-      if (i >= n - 1) {
+      if (i >= n - 1 || !isRunning()) {
         setIsSorted(true);
         clearInterval(sortInterval);
         setIsRunning(false);
@@ -144,8 +146,13 @@ export default function SelectionSort() {
             </div>
           </div>
           <h2>
-            Currently sorting:
-            {" " + selectedDataTable()}
+            Currently sorting:{" "}
+            <Show
+              when={selectedDataTable() == "populationSize"}
+              fallback={"Land Area"}
+            >
+              Population Size
+            </Show>
           </h2>
           <SortingTimer isRunning={isRunning()} />
         </div>
@@ -174,20 +181,32 @@ export default function SelectionSort() {
             )}
           </For>
         </div>
-        <div
-          class={`gradient-border ${isRunning() ? "animation-snake" : ""}`}
-        />
       </div>
 
       <div class="flex flex-row items-center m-1">
         <div class="flex-1" />
-        <Button
-          onClick={startSorting}
-          disabled={isSorting() || array().length === 0}
-          variant={"outline"}
+        <Show
+          when={!isRunning()}
+          fallback={
+            <Button
+              variant={"outline"}
+              onClick={() => {
+                resetArray();
+              }}
+            >
+              Stop
+            </Button>
+          }
         >
-          Start
-        </Button>
+          <Button
+            onClick={() => {
+              startSorting();
+            }}
+            variant={"outline"}
+          >
+            Start
+          </Button>
+        </Show>
 
         <div class="flex justify-end flex-1">
           <DropdownMenu placement="bottom">
