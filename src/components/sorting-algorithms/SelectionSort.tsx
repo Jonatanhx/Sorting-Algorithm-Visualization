@@ -1,13 +1,11 @@
 import type { DropdownMenuSubTriggerProps } from "@kobalte/core/dropdown-menu";
-import { Tooltip } from "@kobalte/core/tooltip";
-import { IoInformationCircleOutline } from "solid-icons/io";
 import { createEffect, createSignal, For, Show, useContext } from "solid-js";
 import { CountryDataContext } from "~/contexts/CountryDataContext";
 import { IsSortedContext } from "~/contexts/IsSortedContext";
 import { IsSortingContext } from "~/contexts/IsSortingContext";
-import { SortingSpeedContext } from "~/contexts/SortingSpeedContext";
 import { calculateHeight } from "~/globalFunction";
 import type { country } from "~/interfaces";
+import InformationPopover from "../InformationPopover";
 import SortingAlgorithmWrapper from "../sorting-algorithms/SortingAlgorithmWrapper";
 import SortingTimer from "../SortingTimer";
 import { Button } from "../ui/button";
@@ -21,13 +19,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 export default function SelectionSort() {
   const { countries } = useContext(CountryDataContext);
   const { setIsSorting } = useContext(IsSortingContext);
   const { setIsSorted } = useContext(IsSortedContext);
-  const { speed } = useContext(SortingSpeedContext);
 
   const [selectedDataTable, setSelectedDataTable] =
     createSignal("populationSize");
@@ -102,7 +98,7 @@ export default function SelectionSort() {
       }
 
       setCurrentJ(j + 1);
-    }, 100 / speed());
+    }, 10);
   }
 
   return (
@@ -113,36 +109,25 @@ export default function SelectionSort() {
             <div class="flex-1" />
             <h1 class="text-white text-4xl flex-1 mt-4">Selection sort</h1>
             <div class="flex-1">
-              <Tooltip>
-                <div class="flex flex-1 w-full justify-end text-white">
-                  <TooltipTrigger class="mr-1">
-                    <IoInformationCircleOutline class="size-5" />
-                  </TooltipTrigger>
-                </div>
-                <TooltipContent class="max-w-[20rem] border border-neutral-400 bg-neutral-700">
-                  <div class="gap-2 flex flex-col text-sm">
-                    <p>
-                      Selection Sort is an iterative and in-place sorting
-                      algorithm that divides the data structure in two sublists:
-                      the ordered one, and the unordered one. The algorithm
-                      loops for all the elements of the data structure and for
-                      every cycle picks the smallest element of the unordered
-                      sublist and adds it to the sorted sublist, progressively
-                      filling it.
-                    </p>
-                    <p>
-                      It's a really simple and intuitive algorithm that does not
-                      require additional memory, but it's not really efficient
-                      on big data structures due to its quadratic time
-                      complexity.
-                    </p>
-                    <p>
-                      This algorithm has been upgraded and enhanced in several
-                      variants such as Heap Sort.
-                    </p>
-                  </div>
-                </TooltipContent>
-              </Tooltip>
+              <InformationPopover>
+                <p>
+                  Selection Sort is an iterative and in-place sorting algorithm
+                  that divides the data structure in two sublists: the ordered
+                  one, and the unordered one. The algorithm loops for all the
+                  elements of the data structure and for every cycle picks the
+                  smallest element of the unordered sublist and adds it to the
+                  sorted sublist, progressively filling it.
+                </p>
+                <p>
+                  It's a really simple and intuitive algorithm that does not
+                  require additional memory, but it's not really efficient on
+                  big data structures due to its quadratic time complexity.
+                </p>
+                <p>
+                  This algorithm has been upgraded and enhanced in several
+                  variants such as Heap Sort.
+                </p>
+              </InformationPopover>
             </div>
           </div>
           <h2>

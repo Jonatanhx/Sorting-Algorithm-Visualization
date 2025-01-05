@@ -1,13 +1,11 @@
 import type { DropdownMenuSubTriggerProps } from "@kobalte/core/dropdown-menu";
-import { Tooltip } from "@kobalte/core/tooltip";
-import { IoInformationCircleOutline } from "solid-icons/io";
 import { createEffect, createSignal, For, Show, useContext } from "solid-js";
 import { CountryDataContext } from "~/contexts/CountryDataContext";
 import { IsSortedContext } from "~/contexts/IsSortedContext";
 import { IsSortingContext } from "~/contexts/IsSortingContext";
-import { SortingSpeedContext } from "~/contexts/SortingSpeedContext";
 import { calculateHeight } from "~/globalFunction";
 import type { country } from "~/interfaces";
+import InformationPopover from "../InformationPopover";
 import SortingTimer from "../SortingTimer";
 import { Button } from "../ui/button";
 import {
@@ -20,14 +18,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import SortingAlgorithmWrapper from "./SortingAlgorithmWrapper";
 
 export default function BubbleSort() {
   const { countries } = useContext(CountryDataContext);
   const { setIsSorting } = useContext(IsSortingContext);
   const { setIsSorted } = useContext(IsSortedContext);
-  const { speed } = useContext(SortingSpeedContext);
 
   const [selectedDataTable, setSelectedDataTable] =
     createSignal("populationSize");
@@ -94,7 +90,7 @@ export default function BubbleSort() {
         setCurrentJ(0);
         setCurrentI((i) => i + 1);
       }
-    }, 100 / speed());
+    }, 10);
   }
 
   return (
@@ -105,37 +101,27 @@ export default function BubbleSort() {
             <div class="flex-1" />
             <h1 class="text-white text-4xl flex-1 mt-4">Bubble sort</h1>
             <div class="flex-1">
-              <Tooltip>
-                <div class="flex flex-1 w-full justify-end text-white">
-                  <TooltipTrigger class="mr-1">
-                    <IoInformationCircleOutline class="size-5" />
-                  </TooltipTrigger>
-                </div>
-                <TooltipContent class="max-w-[20rem] border border-neutral-400 bg-neutral-700">
-                  <div class="gap-2 flex flex-col text-sm">
-                    <p>
-                      Bubble Sort is an iterative sorting algorithm that
-                      imitates the movement of bubbles in sparkling water. The
-                      bubbles represents the elements of the data structure.
-                    </p>
-                    <p>
-                      The bigger bubbles reach the top faster than smaller
-                      bubbles, and this algorithm works in the same way. It
-                      iterates through the data structure and for each cycle
-                      compares the current element with the next one, swapping
-                      them if they are in the wrong order.
-                    </p>
-                    <p>
-                      It's a simple algorithm to implement, but not much
-                      efficient: on average, quadratic sorting algorithms with
-                      the same time complexity such as Selection Sort or
-                      Insertion Sort perform better. It has several variants to
-                      improve its performances, such as Shaker Sort, Odd Even
-                      Sort and Comb Sort.
-                    </p>
-                  </div>
-                </TooltipContent>
-              </Tooltip>
+              <InformationPopover>
+                <p>
+                  Bubble Sort is an iterative sorting algorithm that imitates
+                  the movement of bubbles in sparkling water. The bubbles
+                  represents the elements of the data structure.
+                </p>
+                <p>
+                  The bigger bubbles reach the top faster than smaller bubbles,
+                  and this algorithm works in the same way. It iterates through
+                  the data structure and for each cycle compares the current
+                  element with the next one, swapping them if they are in the
+                  wrong order.
+                </p>
+                <p>
+                  It's a simple algorithm to implement, but not much efficient:
+                  on average, quadratic sorting algorithms with the same time
+                  complexity such as Selection Sort or Insertion Sort perform
+                  better. It has several variants to improve its performances,
+                  such as Shaker Sort, Odd Even Sort and Comb Sort.
+                </p>
+              </InformationPopover>
             </div>
           </div>
           <h2>

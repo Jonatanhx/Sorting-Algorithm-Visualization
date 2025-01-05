@@ -1,6 +1,5 @@
 import logo from "../assets/SortingVisualizerLogoAlt.png";
 import { Navbar } from "./Navbar";
-import SortingSpeedSlider from "./SortingSpeedSlider";
 
 export default function Header() {
   return (
@@ -16,7 +15,6 @@ export default function Header() {
           </h1>
         </a>
 
-        <SortingSpeedSlider />
         <Navbar />
       </header>
     </div>

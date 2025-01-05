@@ -1,13 +1,11 @@
 import type { DropdownMenuSubTriggerProps } from "@kobalte/core/dropdown-menu";
-import { Tooltip } from "@kobalte/core/tooltip";
-import { IoInformationCircleOutline } from "solid-icons/io";
 import { createEffect, createSignal, For, Show, useContext } from "solid-js";
 import { CountryDataContext } from "~/contexts/CountryDataContext";
 import { IsSortedContext } from "~/contexts/IsSortedContext";
 import { IsSortingContext } from "~/contexts/IsSortingContext";
-import { SortingSpeedContext } from "~/contexts/SortingSpeedContext";
 import { calculateHeight } from "~/globalFunction";
 import type { country } from "~/interfaces";
+import InformationPopover from "../InformationPopover";
 import SortingTimer from "../SortingTimer";
 import { Button } from "../ui/button";
 import {
@@ -20,14 +18,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import SortingAlgorithmWrapper from "./SortingAlgorithmWrapper";
 
 export default function InsertionSort() {
   const { countries } = useContext(CountryDataContext);
   const { setIsSorting } = useContext(IsSortingContext);
   const { setIsSorted } = useContext(IsSortedContext);
-  const { speed } = useContext(SortingSpeedContext);
 
   const [selectedDataTable, setSelectedDataTable] =
     createSignal("populationSize");
@@ -99,7 +95,7 @@ export default function InsertionSort() {
         setKey(null);
         setCurrentI(currentI() + 1);
       }
-    }, 100 / speed());
+    }, 10);
   }
   return (
     <SortingAlgorithmWrapper>
@@ -109,33 +105,24 @@ export default function InsertionSort() {
             <div class="flex-1" />
             <h1 class="text-white text-4xl flex-1 mt-4">Insertion sort</h1>
             <div class="flex-1">
-              <Tooltip>
-                <div class="flex flex-1 w-full justify-end text-white">
-                  <TooltipTrigger class="mr-1">
-                    <IoInformationCircleOutline class="size-5" />
-                  </TooltipTrigger>
-                </div>
-                <TooltipContent class="max-w-[20rem] border border-neutral-400 bg-neutral-700">
-                  <div class="gap-2 flex flex-col text-sm">
-                    <p>
-                      Insertion sort is a simple sorting algorithm that builds
-                      the final sorted array one item at a time. It's less
-                      performant than advanced sorting algorithms, but it can
-                      still have some advantages: it's really easy to implement
-                      and it's efficient on small data structures almost sorted.
-                    </p>
-                    <p>
-                      The algorithm divides the data structure in two sublists:
-                      a sorted one, and one still to sort. Initially, the sorted
-                      sublist is made up of just one element and it gets
-                      progressively filled. For every iteration, the algorithm
-                      picks an element on the unsorted sublist and inserts it at
-                      the right place in the sorted sublist. It's available in
-                      several variants such as Gnome Sort.
-                    </p>
-                  </div>
-                </TooltipContent>
-              </Tooltip>
+              <InformationPopover>
+                <p>
+                  Insertion sort is a simple sorting algorithm that builds the
+                  final sorted array one item at a time. It's less performant
+                  than advanced sorting algorithms, but it can still have some
+                  advantages: it's really easy to implement and it's efficient
+                  on small data structures almost sorted.
+                </p>
+                <p>
+                  The algorithm divides the data structure in two sublists: a
+                  sorted one, and one still to sort. Initially, the sorted
+                  sublist is made up of just one element and it gets
+                  progressively filled. For every iteration, the algorithm picks
+                  an element on the unsorted sublist and inserts it at the right
+                  place in the sorted sublist. It's available in several
+                  variants such as Gnome Sort.
+                </p>
+              </InformationPopover>
             </div>
           </div>
           <h2>

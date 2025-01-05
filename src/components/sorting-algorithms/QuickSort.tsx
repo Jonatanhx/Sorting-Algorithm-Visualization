@@ -1,13 +1,11 @@
 import type { DropdownMenuSubTriggerProps } from "@kobalte/core/dropdown-menu";
-import { Tooltip } from "@kobalte/core/tooltip";
-import { IoInformationCircleOutline } from "solid-icons/io";
 import { createEffect, createSignal, For, Show, useContext } from "solid-js";
 import { CountryDataContext } from "~/contexts/CountryDataContext";
 import { IsSortedContext } from "~/contexts/IsSortedContext";
 import { IsSortingContext } from "~/contexts/IsSortingContext";
-import { SortingSpeedContext } from "~/contexts/SortingSpeedContext";
 import { calculateHeight } from "~/globalFunction";
 import type { country } from "~/interfaces";
+import InformationPopover from "../InformationPopover";
 import SortingAlgorithmWrapper from "../sorting-algorithms/SortingAlgorithmWrapper";
 import SortingTimer from "../SortingTimer";
 import { Button } from "../ui/button";
@@ -21,13 +19,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 export default function QuickSort() {
   const { countries } = useContext(CountryDataContext);
   const { setIsSorting } = useContext(IsSortingContext);
   const { setIsSorted } = useContext(IsSortedContext);
-  const { speed } = useContext(SortingSpeedContext);
 
   const [selectedDataTable, setSelectedDataTable] =
     createSignal("populationSize");
@@ -167,7 +163,7 @@ export default function QuickSort() {
           });
         }
       }
-    }, 100 / speed());
+    }, 10);
   }
 
   return (
@@ -178,35 +174,25 @@ export default function QuickSort() {
             <div class="flex-1" />
             <h1 class="text-white text-4xl flex-1 mt-4">Quick sort</h1>
             <div class="flex-1">
-              <Tooltip>
-                <div class="flex flex-1 w-full justify-end text-white">
-                  <TooltipTrigger class="mr-1">
-                    <IoInformationCircleOutline class="size-5" />
-                  </TooltipTrigger>
-                </div>
-                <TooltipContent class="max-w-[20rem] border border-neutral-400 bg-neutral-700">
-                  <div class="gap-2 flex flex-col text-sm">
-                    <p>
-                      Quick Sort is a sorting algorithm based on splitting the
-                      data structure in smaller partitions and sort them
-                      recursively until the data structure is sorted.
-                    </p>
-                    <p>
-                      This division in partitions is done based on an element,
-                      called pivot: all the elements bigger than the pivot get
-                      placed on the right side of the structure, the smaller
-                      ones to the left, creating two partitions. Next, this
-                      procedure gets applied recursively to the two partitions
-                      and so on.
-                    </p>
-                    <p>
-                      This partition technique based on the pivot is called
-                      Divide and conquer. It's a performant strategy also used
-                      by other sorting algorithms, such as Merge Sort.
-                    </p>
-                  </div>
-                </TooltipContent>
-              </Tooltip>
+              <InformationPopover>
+                <p>
+                  Quick Sort is a sorting algorithm based on splitting the data
+                  structure in smaller partitions and sort them recursively
+                  until the data structure is sorted.
+                </p>
+                <p>
+                  This division in partitions is done based on an element,
+                  called pivot: all the elements bigger than the pivot get
+                  placed on the right side of the structure, the smaller ones to
+                  the left, creating two partitions. Next, this procedure gets
+                  applied recursively to the two partitions and so on.
+                </p>
+                <p>
+                  This partition technique based on the pivot is called Divide
+                  and conquer. It's a performant strategy also used by other
+                  sorting algorithms, such as Merge Sort.
+                </p>
+              </InformationPopover>
             </div>
           </div>
           <h2>

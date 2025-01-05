@@ -12,7 +12,6 @@ import { CountryDataProvider } from "./contexts/CountryDataContext";
 import { IsSortedProvider } from "./contexts/IsSortedContext";
 import { IsSortingProvider } from "./contexts/IsSortingContext";
 import { SelectedDataTableProvider } from "./contexts/SelectedDataTableContext";
-import { SortingSpeedProvider } from "./contexts/SortingSpeedContext";
 import Home from "./routes";
 import Admin from "./routes/admin";
 import NotFound from "./routes/NotFound";
@@ -27,19 +26,17 @@ export default function App() {
             <IsSortedProvider>
               <CountryDataProvider>
                 <AdminDataProvider>
-                  <SortingSpeedProvider>
-                    <MetaProvider>
-                      <Title>Sorting Visualizer</Title>
-                      <Suspense>
-                        <link rel="icon" href={logo} />
-                        <SessionProvider>
-                          <Header />
-                          {props.children}
-                          <Footer />
-                        </SessionProvider>
-                      </Suspense>
-                    </MetaProvider>
-                  </SortingSpeedProvider>
+                  <MetaProvider>
+                    <Title>Sorting Visualizer</Title>
+                    <Suspense>
+                      <link rel="icon" href={logo} />
+                      <SessionProvider>
+                        <Header />
+                        {props.children}
+                        <Footer />
+                      </SessionProvider>
+                    </Suspense>
+                  </MetaProvider>
                 </AdminDataProvider>
               </CountryDataProvider>
             </IsSortedProvider>
