@@ -1,7 +1,7 @@
 import type { DropdownMenuSubTriggerProps } from "@kobalte/core/dropdown-menu";
 import { Tooltip } from "@kobalte/core/tooltip";
 import { IoInformationCircleOutline } from "solid-icons/io";
-import { createEffect, createSignal, For, useContext } from "solid-js";
+import { createEffect, createSignal, For, Show, useContext } from "solid-js";
 import { CountryDataContext } from "~/contexts/CountryDataContext";
 import { IsSortedContext } from "~/contexts/IsSortedContext";
 import { IsSortingContext } from "~/contexts/IsSortingContext";
@@ -48,79 +48,86 @@ export default function MergeSort() {
     if (countryData && countryData.length > 0) {
       setArray(countryData as country[]);
     }
+    setIsRunning(false);
     setCurrentI(0);
     setCurrentJ(0);
     setIsSorting(false);
     setIsSorted(false);
   }
 
-  function startSorting() {
+  async function startSorting() {
     resetArray();
-
-    if (isSorting() || array().length === 0) {
-      return;
-    }
-
     setIsRunning(true);
     setIsSorting(true);
     setIsSorted(false);
 
+    const delay = () =>
+      new Promise((resolve) => setTimeout(resolve, 100 / speed()));
+
+    async function merge(
+      arr: country[],
+      start: number,
+      mid: number,
+      end: number
+    ) {
+      const temp = [...arr];
+      let i = start;
+      let j = mid + 1;
+      let k = start;
+
+      while (i <= mid && j <= end) {
+        setCurrentI(i);
+        setCurrentJ(j);
+        await delay();
+
+        if (
+          temp[i][selectedDataTable() as keyof country] <=
+          temp[j][selectedDataTable() as keyof country]
+        ) {
+          arr[k] = temp[i];
+          i++;
+        } else {
+          arr[k] = temp[j];
+          j++;
+        }
+        k++;
+        setArray([...arr]);
+      }
+
+      while (i <= mid) {
+        setCurrentI(i);
+        await delay();
+        arr[k] = temp[i];
+        i++;
+        k++;
+        setArray([...arr]);
+      }
+
+      while (j <= end) {
+        setCurrentJ(j);
+        await delay();
+        arr[k] = temp[j];
+        j++;
+        k++;
+        setArray([...arr]);
+      }
+    }
+
+    async function mergeSort(arr: country[], start: number, end: number) {
+      if (start < end) {
+        const mid = Math.floor((start + end) / 2);
+        await mergeSort(arr, start, mid);
+        await mergeSort(arr, mid + 1, end);
+        await merge(arr, start, mid, end);
+      }
+    }
+
     const arr = [...array()];
-    const n = arr.length;
-    let currentSize = 1;
+    await mergeSort(arr, 0, arr.length - 1);
 
-    const sortInterval = setInterval(() => {
-      if (currentSize > n) {
-        setArray(arr);
-        setIsSorted(true);
-        clearInterval(sortInterval);
-        setIsRunning(false);
-        setIsSorting(false);
-        return;
-      }
-
-      for (let start = 0; start < n - 1; start += 2 * currentSize) {
-        const mid = Math.min(start + currentSize - 1, n - 1);
-        const end = Math.min(start + 2 * currentSize - 1, n - 1);
-
-        merge(arr, start, mid, end);
-      }
-
-      currentSize *= 2;
-      setArray([...arr]);
-    }, 100 / speed());
-  }
-
-  function merge(arr: country[], start: number, mid: number, end: number) {
-    const leftArr = arr.slice(start, mid + 1);
-    const rightArr = arr.slice(mid + 1, end + 1);
-    let i = 0,
-      j = 0,
-      k = start;
-
-    while (i < leftArr.length && j < rightArr.length) {
-      setCurrentI(start + i);
-      setCurrentJ(mid + 1 + j);
-
-      if (
-        leftArr[i][selectedDataTable() as keyof country] <=
-        rightArr[j][selectedDataTable() as keyof country]
-      ) {
-        arr[k++] = leftArr[i++];
-      } else {
-        arr[k++] = rightArr[j++];
-      }
-    }
-
-    while (i < leftArr.length) {
-      setCurrentI(start + i);
-      arr[k++] = leftArr[i++];
-    }
-
-    while (j < rightArr.length) {
-      setCurrentJ(mid + 1 + j);
-      arr[k++] = rightArr[j++];
-    }
+    setIsSorted(true);
+    setIsRunning(false);
+    setIsSorting(false);
   }
 
   return (
@@ -190,20 +197,32 @@ export default function MergeSort() {
             )}
           </For>
         </div>
-        <div
-          class={`gradient-border ${isRunning() ? "animation-snake" : ""}`}
-        />
       </div>
 
       <div class="flex flex-row items-center m-1">
         <div class="flex-1" />
-        <Button
-          onClick={startSorting}
-          disabled={isSorting() || array().length === 0}
-          variant={"outline"}
+        <Show
+          when={!isSorting() && !isRunning()}
+          fallback={
+            <Button
+              variant={"outline"}
+              onClick={() => {
+                resetArray();
+              }}
+            >
+              Stop
+            </Button>
+          }
         >
-          Start
-        </Button>
+          <Button
+            onClick={() => {
+              startSorting();
+            }}
+            variant={"outline"}
+          >
+            Start
+          </Button>
+        </Show>
 
         <div class="flex justify-end flex-1">
           <DropdownMenu placement="bottom">

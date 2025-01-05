@@ -1,7 +1,7 @@
 import type { DropdownMenuSubTriggerProps } from "@kobalte/core/dropdown-menu";
 import { Tooltip } from "@kobalte/core/tooltip";
 import { IoInformationCircleOutline } from "solid-icons/io";
-import { createEffect, createSignal, For, useContext } from "solid-js";
+import { createEffect, createSignal, For, Show, useContext } from "solid-js";
 import { CountryDataContext } from "~/contexts/CountryDataContext";
 import { IsSortedContext } from "~/contexts/IsSortedContext";
 import { IsSortingContext } from "~/contexts/IsSortingContext";
@@ -87,6 +87,7 @@ export default function InsertionSort() {
     if (countryData && countryData.length > 0) {
       setArray(countryData as country[]);
     }
+    setIsRunning(false);
     setCurrentI(0);
     setCurrentJ(0);
     setIsSorting(false);
@@ -161,20 +162,32 @@ export default function InsertionSort() {
             )}
           </For>
         </div>
-        <div
-          class={`gradient-border ${isRunning() ? "animation-snake" : ""}`}
-        />
       </div>
 
       <div class="flex flex-row items-center m-1">
         <div class="flex-1" />
-        <Button
-          onClick={startSorting}
-          disabled={isSorting() || array().length === 0}
-          variant={"outline"}
+        <Show
+          when={!isSorting() && !isRunning()}
+          fallback={
+            <Button
+              variant={"outline"}
+              onClick={() => {
+                resetArray();
+              }}
+            >
+              Stop
+            </Button>
+          }
         >
-          Start
-        </Button>
+          <Button
+            onClick={() => {
+              startSorting();
+            }}
+            variant={"outline"}
+          >
+            Start
+          </Button>
+        </Show>
 
         <div class="flex justify-end flex-1">
           <DropdownMenu placement="bottom">
