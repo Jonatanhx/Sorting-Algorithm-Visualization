@@ -107,8 +107,8 @@ export default function BubbleSort() {
             <div class="flex-1">
               <Tooltip>
                 <div class="flex flex-1 w-full justify-end text-white">
-                  <TooltipTrigger>
-                    <IoInformationCircleOutline class="size-5 mr-1" />
+                  <TooltipTrigger class="mr-1">
+                    <IoInformationCircleOutline class="size-5" />
                   </TooltipTrigger>
                 </div>
                 <TooltipContent class="max-w-[20rem] border border-neutral-400 bg-neutral-700">
