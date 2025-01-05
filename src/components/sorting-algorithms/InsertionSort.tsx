@@ -35,6 +35,7 @@ export default function InsertionSort() {
   const [currentI, setCurrentI] = createSignal(0);
   const [currentJ, setCurrentJ] = createSignal(0);
   const [isRunning, setIsRunning] = createSignal(false);
+  const [key, setKey] = createSignal<country | null>(null);
 
   createEffect(() => {
     const countryData = countries();
@@ -43,57 +44,62 @@ export default function InsertionSort() {
     }
   });
 
-  function startSorting() {
-    resetArray();
-
-    setIsRunning(true);
-    setIsSorting(true);
-    setIsSorted(false);
-    setCurrentI(0);
-    setCurrentJ(0);
-
-    const sortInterval = setInterval(() => {
-      const arr = [...array()];
-      if (currentI() >= arr.length) {
-        setIsSorted(true);
-        clearInterval(sortInterval);
-        setIsRunning(false);
-        setIsSorting(false);
-        return;
-      }
-
-      const key = arr[currentI()];
-      let j = currentI() - 1;
-
-      while (
-        j >= 0 &&
-        arr[j][selectedDataTable() as keyof country] >
-          key[selectedDataTable() as keyof country]
-      ) {
-        arr[j + 1] = arr[j];
-        j--;
-      }
-
-      arr[j + 1] = key;
-
-      setArray(arr);
-      setCurrentJ(j + 1);
-      setCurrentI(currentI() + 1);
-    }, 100 / speed());
-  }
-
   function resetArray() {
     const countryData = countries();
     if (countryData && countryData.length > 0) {
       setArray(countryData as country[]);
     }
     setIsRunning(false);
-    setCurrentI(0);
+    setCurrentI(1);
     setCurrentJ(0);
+    setKey(null);
     setIsSorting(false);
     setIsSorted(false);
   }
 
+  function startSorting() {
+    resetArray();
+
+    setIsRunning(true);
+    setIsSorting(true);
+    setIsSorted(false);
+    setCurrentI(1);
+    setCurrentJ(0);
+
+    const sortInterval = setInterval(() => {
+      const arr = [...array()];
+
+      if (currentI() >= arr.length) {
+        setIsSorted(true);
+        clearInterval(sortInterval);
+        setIsRunning(false);
+        setIsSorting(false);
+        setKey(null);
+        return;
+      }
+
+      if (key() === null) {
+        setKey(arr[currentI()]);
+        setCurrentJ(currentI() - 1);
+        return;
+      }
+
+      if (
+        currentJ() >= 0 &&
+        arr[currentJ()][selectedDataTable() as keyof country] >
+          key()![selectedDataTable() as keyof country]
+      ) {
+        arr[currentJ() + 1] = arr[currentJ()];
+        setArray(arr);
+        setCurrentJ(currentJ() - 1);
+      } else {
+        arr[currentJ() + 1] = key()!;
+        setArray(arr);
+        setKey(null);
+        setCurrentI(currentI() + 1);
+      }
+    }, 100 / speed());
+  }
   return (
     <SortingAlgorithmWrapper>
       <div class="flex py-2 justify-center">
