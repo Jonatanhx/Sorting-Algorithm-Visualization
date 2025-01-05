@@ -1,4 +1,4 @@
-import { createMemo, createSignal, useContext } from "solid-js";
+import { createEffect, createMemo, createSignal, useContext } from "solid-js";
 import { z } from "zod";
 import { CountryDataContext } from "~/contexts/CountryDataContext";
 import type { country } from "~/interfaces";
@@ -8,18 +8,12 @@ import { Button } from "../ui/button";
 import {
   NumberField,
   NumberFieldDecrementTrigger,
-  NumberFieldErrorMessage,
   NumberFieldGroup,
   NumberFieldIncrementTrigger,
   NumberFieldInput,
   NumberFieldLabel,
 } from "../ui/number-field";
-import {
-  TextField,
-  TextFieldErrorMessage,
-  TextFieldLabel,
-  TextFieldRoot,
-} from "../ui/textfield";
+import { TextField, TextFieldLabel, TextFieldRoot } from "../ui/textfield";
 
 export default function AddDataForm() {
   const { countries, refetch } = useContext(CountryDataContext);
@@ -36,6 +30,10 @@ export default function AddDataForm() {
       (country) =>
         country.name && country.name.toLowerCase() === name().toLowerCase()
     );
+  });
+
+  createEffect(() => {
+    validateForm();
   });
 
   const validateForm = () => {
@@ -93,64 +91,57 @@ export default function AddDataForm() {
   }
 
   return (
-    <div>
-      <form class="flex gap-1 flex-col" onSubmit={handleSubmit}>
-        <TextFieldRoot
-          class="mb-4"
-          value={name()}
-          onChange={(value: string) => setName(value)}
-        >
-          <TextFieldLabel>Name</TextFieldLabel>
-          <TextField required type="text" />
-          {errors().name && (
-            <TextFieldErrorMessage>{errors().name}</TextFieldErrorMessage>
-          )}
-        </TextFieldRoot>
+    <form
+      class="flex gap-1 flex-col border min-h-[25rem]"
+      onSubmit={handleSubmit}
+    >
+      <TextFieldRoot
+        class="mb-4 min-h-[5rem]"
+        value={name()}
+        onChange={(value: string) => setName(value)}
+      >
+        <TextFieldLabel>Name</TextFieldLabel>
+        <TextField required type="text" />
+        {errors().name && <p class="text-red-700">{errors().name}</p>}
+      </TextFieldRoot>
 
-        <NumberField
-          minValue={0}
-          maxValue={1429000000}
-          onRawValueChange={(value) => setPopulationSize(Number(value))}
-          class="mb-4"
-        >
-          <NumberFieldLabel>Population size</NumberFieldLabel>
-          <NumberFieldGroup>
-            <NumberFieldDecrementTrigger aria-label="Decrement" />
-            <NumberFieldInput placeholder="0" />
-            {errors().populationSize && (
-              <NumberFieldErrorMessage>
-                {errors().populationSize}
-              </NumberFieldErrorMessage>
-            )}
-            <NumberFieldIncrementTrigger aria-label="Increment" />
-          </NumberFieldGroup>
-        </NumberField>
+      <NumberField
+        minValue={0}
+        maxValue={1429000000}
+        onRawValueChange={(value) => setPopulationSize(Number(value))}
+        class="mb-4 min-h-[5rem]"
+      >
+        <NumberFieldLabel>Population size</NumberFieldLabel>
+        <NumberFieldGroup>
+          <NumberFieldDecrementTrigger aria-label="Decrement" />
+          <NumberFieldInput placeholder="0" />
+          <NumberFieldIncrementTrigger aria-label="Increment" />
+        </NumberFieldGroup>
+        {errors().populationSize && (
+          <p class="text-red-700">{errors().populationSize}</p>
+        )}
+      </NumberField>
 
-        <NumberField
-          minValue={0}
-          maxValue={1429000000}
-          class="mb-4"
-          onRawValueChange={(value) => setLandArea(Number(value))}
-        >
-          <NumberFieldLabel>Land area in km2</NumberFieldLabel>
-          <NumberFieldGroup>
-            <NumberFieldDecrementTrigger aria-label="Decrement" />
-            <NumberFieldInput placeholder="0" />
-            {errors().landArea && (
-              <NumberFieldErrorMessage>
-                {errors().landArea}
-              </NumberFieldErrorMessage>
-            )}
-            <NumberFieldIncrementTrigger aria-label="Increment" />
-          </NumberFieldGroup>
-        </NumberField>
+      <NumberField
+        minValue={0}
+        maxValue={1429000000}
+        class="mb-4 min-h-[5rem]"
+        onRawValueChange={(value) => setLandArea(Number(value))}
+      >
+        <NumberFieldLabel>Land area in km2</NumberFieldLabel>
+        <NumberFieldGroup>
+          <NumberFieldDecrementTrigger aria-label="Decrement" />
+          <NumberFieldInput placeholder="0" />
+          <NumberFieldIncrementTrigger aria-label="Increment" />
+        </NumberFieldGroup>
+        {errors().landArea && <p class="text-red-700">{errors().landArea}</p>}
+      </NumberField>
 
-        <div class="flex flex-col-reverse">
-          <Button type="submit" disabled={!isFormValid()}>
-            Submit
-          </Button>
-        </div>
-      </form>
-    </div>
+      <div class="flex flex-col-reverse">
+        <Button type="submit" disabled={!isFormValid()}>
+          Submit
+        </Button>
+      </div>
+    </form>
   );
 }
