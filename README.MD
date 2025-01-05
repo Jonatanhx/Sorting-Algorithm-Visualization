@@ -38,7 +38,7 @@ Prisma was my choice of ORM due to its performance, syntax readability as well a
 ### Shadcn + Tailwind
 I chose Shadcn as my component library, which is used for a variety of buttons, dialogs and menus. Unlike other component libraries, shadcn gives you the source code of each component directly in your project, making you able to tweak any little part of its functionality as you wish, which i have used extensively. Tailwindcss is my preferred inline syntax for css, and is also needed to be paired with shadcn to work. 
 
-### Betygskriterier
+## Betygskriterier
 
 ## ==== G-krav ====
 
