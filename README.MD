@@ -32,8 +32,8 @@ This will start a production server on port `3000`.
 ### SolidJS 
 As of 2024, SolidJS is [benchmarked](https://github.com/krausest/js-framework-benchmark) as the fastest and most perfomant JavaScript framework, making it an obvious choice to use for demanding tasks like sorting large sets of data, with the downside of a minimal ecosystem.
 
-### Prisma ORM + SQLite
-Prisma was my choice of ORM due to its performance, syntax readability as well as my familiarity with it. I chose to pair it with SQLite as my database because i saw no reason to host it on the cloud, as its an unnecessary layer of complexity with little to no gain for a project of this small size.
+### Prisma ORM + Mongodb
+Prisma was my choice of ORM due to its performance, syntax readability as well as my familiarity with it. I chose to pair it with Mongodb for its generous free cloudbased hosting and my overall familiarity with it.
 
 ### Shadcn + Tailwind
 I chose Shadcn as my component library, which is used for a variety of buttons, dialogs and menus. Unlike other component libraries, shadcn gives you the source code of each component directly in your project, making you able to tweak any little part of its functionality as you wish, which i have used extensively. Tailwindcss is my preferred inline syntax for css, and is also needed to be paired with shadcn to work. 
@@ -43,11 +43,11 @@ I chose Shadcn as my component library, which is used for a variety of buttons, 
 ## ==== G-krav ====
 
 ## Planering & Research
-* [ ] Målgruppsanalys.
+* [x] Målgruppsanalys.
 * [x] Projekthanteringsverktyg.
   
 ## Design och Prototyping
-* [ ] Wireframes och prototyp.
+* [x] Wireframes och prototyp.
 * [x] Design för åtminstonde två skärmstorlekar.
 * [x] WCAG 2.1-standarder.
 
@@ -63,9 +63,9 @@ I chose Shadcn as my component library, which is used for a variety of buttons, 
 * [x] Repo på Github.
 
 ## Slutrapport
-* [ ] Abstract
-* [ ] Tech stack och motivation av valen.
-* [ ] Dokumentation av arbetsprocess, planering och research.
+* [x] Abstract
+* [x] Tech stack och motivation av valen.
+* [x] Dokumentation av arbetsprocess, planering och research.
 
 ## Deploy
 * [x] Hostad och vara tillgängligt i webbläsare.
@@ -74,12 +74,12 @@ I chose Shadcn as my component library, which is used for a variety of buttons, 
 
 ## Design och Prototyping
 * [x] Interaktiv prototyp.
-* [ ] Prototyp väldigt lik riktiga produkten.
-* [ ] Designen följer WCAG 2.1-standarder **utan undantag** för nivå A och AA.
+* [x] Prototyp väldigt lik riktiga produkten.
+* [x] Designen följer WCAG 2.1-standarder **utan undantag** för nivå A och AA.
 
 ## Applikationsutveckling
 * [x] Lösning för att hantering globala state.
-* [ ] Koden följer **utan undantag** WCAG 2.1-standarder för nivå A och AA.
+* [x] Koden följer **utan undantag** WCAG 2.1-standarder för nivå A och AA.
 * [x] Produkten ska vara optimerad, återanvända kod & komponenter.
 * [x] CRUD-operationer & säker hantering av användardata.
 * [x] Säker autentiseringslösning, t.ex. OAuth.
@@ -91,9 +91,9 @@ I chose Shadcn as my component library, which is used for a variety of buttons, 
 * [x] Tydlig README.
 
 ## Slutrapport
-* [ ] Gå igenom varje steg av processen djupgående, reflektera.
-* [ ] Beskriv val av verktyg.
-* [ ] Motivera UX/UI val.
+* [x] Gå igenom varje steg av processen djupgående, reflektera.
+* [x] Beskriv val av verktyg.
+* [x] Motivera UX/UI val.
 
 ## Deploy
 * [x] CI/CD pipeline.
