@@ -25,7 +25,7 @@ import { TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 export default function SelectionSort() {
   const { countries } = useContext(CountryDataContext);
-  const { isSorting, setIsSorting } = useContext(IsSortingContext);
+  const { setIsSorting } = useContext(IsSortingContext);
   const { setIsSorted } = useContext(IsSortedContext);
   const { speed } = useContext(SortingSpeedContext);
 
@@ -181,7 +181,7 @@ export default function SelectionSort() {
       <div class="flex flex-row items-center m-1">
         <div class="flex-1" />
         <Show
-          when={!isSorting() && !isRunning()}
+          when={!isRunning()}
           fallback={
             <Button
               variant={"outline"}

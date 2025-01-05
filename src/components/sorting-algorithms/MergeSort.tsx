@@ -25,7 +25,7 @@ import SortingAlgorithmWrapper from "./SortingAlgorithmWrapper";
 
 export default function MergeSort() {
   const { countries } = useContext(CountryDataContext);
-  const { isSorting, setIsSorting } = useContext(IsSortingContext);
+  const { setIsSorting } = useContext(IsSortingContext);
   const { setIsSorted } = useContext(IsSortedContext);
   const { speed } = useContext(SortingSpeedContext);
 
@@ -74,42 +74,43 @@ export default function MergeSort() {
       let i = start;
       let j = mid + 1;
       let k = start;
+      if (!isRunning() == false) {
+        while (i <= mid && j <= end) {
+          setCurrentI(i);
+          setCurrentJ(j);
+          await delay();
 
-      while (i <= mid && j <= end) {
-        setCurrentI(i);
-        setCurrentJ(j);
-        await delay();
+          if (
+            temp[i][selectedDataTable() as keyof country] <=
+            temp[j][selectedDataTable() as keyof country]
+          ) {
+            arr[k] = temp[i];
+            i++;
+          } else {
+            arr[k] = temp[j];
+            j++;
+          }
+          k++;
+          setArray([...arr]);
+        }
 
-        if (
-          temp[i][selectedDataTable() as keyof country] <=
-          temp[j][selectedDataTable() as keyof country]
-        ) {
+        while (i <= mid) {
+          setCurrentI(i);
+          await delay();
           arr[k] = temp[i];
           i++;
-        } else {
+          k++;
+          setArray([...arr]);
+        }
+
+        while (j <= end) {
+          setCurrentJ(j);
+          await delay();
           arr[k] = temp[j];
           j++;
+          k++;
+          setArray([...arr]);
         }
-        k++;
-        setArray([...arr]);
-      }
-
-      while (i <= mid) {
-        setCurrentI(i);
-        await delay();
-        arr[k] = temp[i];
-        i++;
-        k++;
-        setArray([...arr]);
-      }
-
-      while (j <= end) {
-        setCurrentJ(j);
-        await delay();
-        arr[k] = temp[j];
-        j++;
-        k++;
-        setArray([...arr]);
       }
     }
 
@@ -202,7 +203,7 @@ export default function MergeSort() {
       <div class="flex flex-row items-center m-1">
         <div class="flex-1" />
         <Show
-          when={!isSorting() && !isRunning()}
+          when={!isRunning()}
           fallback={
             <Button
               variant={"outline"}

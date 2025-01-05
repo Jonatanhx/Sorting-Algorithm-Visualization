@@ -25,7 +25,7 @@ import SortingAlgorithmWrapper from "./SortingAlgorithmWrapper";
 
 export default function BubbleSort() {
   const { countries } = useContext(CountryDataContext);
-  const { isSorting, setIsSorting } = useContext(IsSortingContext);
+  const { setIsSorting } = useContext(IsSortingContext);
   const { setIsSorted } = useContext(IsSortedContext);
   const { speed } = useContext(SortingSpeedContext);
 
@@ -43,13 +43,21 @@ export default function BubbleSort() {
     }
   });
 
+  function resetArray() {
+    const countryData = countries();
+    if (countryData && countryData.length > 0) {
+      setArray(countryData as country[]);
+    }
+
+    setIsRunning(false);
+    setCurrentI(0);
+    setCurrentJ(0);
+    setIsSorting(false);
+    setIsSorted(false);
+  }
+
   function startSorting() {
     resetArray();
-
-    const currentArray = array();
-    if (isSorting() || currentArray.length === 0) {
-      return;
-    }
 
     setIsRunning(true);
     setIsSorting(true);
@@ -87,19 +95,6 @@ export default function BubbleSort() {
         setCurrentI((i) => i + 1);
       }
     }, 100 / speed());
-  }
-
-  function resetArray() {
-    const countryData = countries();
-    if (countryData && countryData.length > 0) {
-      setArray(countryData as country[]);
-    }
-
-    setIsRunning(false);
-    setCurrentI(0);
-    setCurrentJ(0);
-    setIsSorting(false);
-    setIsSorted(false);
   }
 
   return (
@@ -179,7 +174,7 @@ export default function BubbleSort() {
       <div class="flex flex-row items-center m-1">
         <div class="flex-1" />
         <Show
-          when={!isSorting() && !isRunning()}
+          when={!isRunning()}
           fallback={
             <Button
               variant={"outline"}

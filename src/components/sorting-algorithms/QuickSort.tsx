@@ -25,7 +25,7 @@ import { TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 export default function QuickSort() {
   const { countries } = useContext(CountryDataContext);
-  const { isSorting, setIsSorting } = useContext(IsSortingContext);
+  const { setIsSorting } = useContext(IsSortingContext);
   const { setIsSorted } = useContext(IsSortedContext);
   const { speed } = useContext(SortingSpeedContext);
 
@@ -53,6 +53,28 @@ export default function QuickSort() {
       setArray(countryData as country[]);
     }
   });
+
+  function resetArray() {
+    const countryData = countries();
+    if (countryData && countryData.length > 0) {
+      setArray(countryData as country[]);
+    }
+
+    setIsRunning(false);
+    setCurrentI(-1);
+    setCurrentJ(-1);
+    setCurrentPivot(-1);
+    setStack([]);
+    setCurrentPartition(null);
+    setPartitionState({
+      pivotIndex: -1,
+      i: -1,
+      j: -1,
+      isPartitioning: false,
+    });
+    setIsSorting(false);
+    setIsSorted(false);
+  }
 
   function startSorting() {
     resetArray();
@@ -148,28 +170,6 @@ export default function QuickSort() {
     }, 100 / speed());
   }
 
-  function resetArray() {
-    const countryData = countries();
-    if (countryData && countryData.length > 0) {
-      setArray(countryData as country[]);
-    }
-
-    setIsRunning(false);
-    setCurrentI(-1);
-    setCurrentJ(-1);
-    setCurrentPivot(-1);
-    setStack([]);
-    setCurrentPartition(null);
-    setPartitionState({
-      pivotIndex: -1,
-      i: -1,
-      j: -1,
-      isPartitioning: false,
-    });
-    setIsSorting(false);
-    setIsSorted(false);
-  }
-
   return (
     <SortingAlgorithmWrapper>
       <div class="flex py-2 justify-center">
@@ -247,7 +247,7 @@ export default function QuickSort() {
       <div class="flex flex-row items-center m-1">
         <div class="flex-1" />
         <Show
-          when={!isSorting() && !isRunning()}
+          when={!isRunning()}
           fallback={
             <Button
               variant={"outline"}

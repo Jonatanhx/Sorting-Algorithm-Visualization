@@ -25,7 +25,7 @@ import SortingAlgorithmWrapper from "./SortingAlgorithmWrapper";
 
 export default function InsertionSort() {
   const { countries } = useContext(CountryDataContext);
-  const { isSorting, setIsSorting } = useContext(IsSortingContext);
+  const { setIsSorting } = useContext(IsSortingContext);
   const { setIsSorted } = useContext(IsSortedContext);
   const { speed } = useContext(SortingSpeedContext);
 
@@ -49,6 +49,7 @@ export default function InsertionSort() {
     if (countryData && countryData.length > 0) {
       setArray(countryData as country[]);
     }
+
     setIsRunning(false);
     setCurrentI(1);
     setCurrentJ(0);
@@ -69,7 +70,7 @@ export default function InsertionSort() {
     const sortInterval = setInterval(() => {
       const arr = [...array()];
 
-      if (currentI() >= arr.length) {
+      if (currentI() >= arr.length || !isRunning()) {
         setIsSorted(true);
         clearInterval(sortInterval);
         setIsRunning(false);
@@ -173,7 +174,7 @@ export default function InsertionSort() {
       <div class="flex flex-row items-center m-1">
         <div class="flex-1" />
         <Show
-          when={!isSorting() && !isRunning()}
+          when={!isRunning()}
           fallback={
             <Button
               variant={"outline"}
