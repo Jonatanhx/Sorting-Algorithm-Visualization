@@ -29,4 +29,15 @@ export async function seedAdmins() {
       image: "",
     },
   });
+
+  await db.user.upsert({
+    where: { email: "shadeae@hotmail.com" },
+    update: {},
+    create: {
+      name: "cypress-dummy-account",
+      email: "shadeae@hotmail.com",
+      isAdmin: true,
+      image: "",
+    },
+  });
 }
