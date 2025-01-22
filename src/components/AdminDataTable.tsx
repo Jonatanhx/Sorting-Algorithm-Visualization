@@ -2,6 +2,7 @@ import { useContext } from "solid-js";
 import { CountryDataContext } from "~/contexts/CountryDataContext";
 import AddDataDialog from "./dialogs/AddDataDialog";
 import ConfirmDeletionDialog from "./dialogs/ConfirmDeletionDialog";
+import EditDataDialog from "./dialogs/EditDataDialog";
 import {
   Table,
   TableBody,
@@ -17,7 +18,7 @@ export default function AdminDatatable() {
   return (
     <div class="flex flex-row justify-center flex-1 items-center">
       <div
-        class="text-white border-2 border-neutral-400 bg-[#1b1b1b] rounded-md md:p-12 md:min-w-[38rem]"
+        class="text-white border-2 border-neutral-400 bg-[#1b1b1b] rounded-md md:p-12 md:min-w-[50rem]"
         id="center-div"
       >
         <Table>
@@ -41,6 +42,9 @@ export default function AdminDatatable() {
                   </TableCell>
                   <TableCell>{country.populationSize}</TableCell>
                   <TableCell>{country.landArea}</TableCell>
+                  <TableCell>
+                    <EditDataDialog country={country} />
+                  </TableCell>
                   <TableCell>
                     <ConfirmDeletionDialog index={index} name={country.name} />
                   </TableCell>

@@ -1,9 +1,13 @@
 import type { Accessor, Resource, ResourceActions, Setter } from "solid-js";
 
 export interface country {
-  name: string;
+  name: string | null;
   populationSize: number;
   landArea: number;
+}
+
+export interface CountryWithId extends country {
+  id: string;
 }
 
 export interface SortingTimerProps {
@@ -35,7 +39,7 @@ export interface CountryDataContextValue {
   countries: Resource<
     {
       name: string | null;
-      id: number;
+      id: string;
       populationSize: number;
       landArea: number;
     }[]
@@ -51,7 +55,7 @@ export interface CountryDataContextValue {
     | Promise<
         | {
             name: string | null;
-            id: number;
+            id: string;
             populationSize: number;
             landArea: number;
           }[]

@@ -1,7 +1,7 @@
+import type { Prisma } from "@prisma/client";
 import { createEffect, createMemo, createSignal, useContext } from "solid-js";
 import { z } from "zod";
 import { CountryDataContext } from "~/contexts/CountryDataContext";
-import type { country } from "~/interfaces";
 import { addCountry } from "~/server/endpoints/country-endpoints";
 import { CountrySchema } from "~/zod/zodSchemas";
 import { Button } from "../ui/button";
@@ -76,7 +76,8 @@ export default function AddDataForm() {
 
     if (!isFormValid()) return;
 
-    const formData: country = {
+    const formData: Prisma.CountriesGetPayload<object> = {
+      id: "",
       name: name(),
       populationSize: populationSize(),
       landArea: landArea(),
