@@ -1,5 +1,11 @@
 import type { Prisma } from "@prisma/client";
-import { createEffect, createMemo, createSignal, useContext } from "solid-js";
+import {
+  createEffect,
+  createMemo,
+  createSignal,
+  Setter,
+  useContext,
+} from "solid-js";
 import { z } from "zod";
 import { CountryDataContext } from "~/contexts/CountryDataContext";
 import { addCountry } from "~/server/endpoints/country-endpoints";
@@ -15,7 +21,11 @@ import {
 } from "../ui/number-field";
 import { TextField, TextFieldLabel, TextFieldRoot } from "../ui/textfield";
 
-export default function AddDataForm() {
+interface AddDataFormProps {
+  props: Setter<boolean>;
+}
+
+export default function AddDataForm(openState: AddDataFormProps) {
   const { countries, refetch } = useContext(CountryDataContext);
   const [name, setName] = createSignal<string>("");
   const [populationSize, setPopulationSize] = createSignal<number>(0);
@@ -84,7 +94,8 @@ export default function AddDataForm() {
     };
 
     await addCountry(formData);
-    await refetch();
+    openState.props(false);
+    refetch();
 
     setName("");
     setPopulationSize(0);

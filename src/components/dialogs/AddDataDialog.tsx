@@ -1,4 +1,5 @@
 import { AiOutlinePlus } from "solid-icons/ai";
+import { createSignal } from "solid-js";
 import AddDataForm from "../forms/AddDataForm";
 import { Button } from "../ui/button";
 import {
@@ -11,8 +12,9 @@ import {
 } from "../ui/dialog";
 
 export default function AddDataDialog() {
+  const [open, setOpen] = createSignal(false);
   return (
-    <Dialog>
+    <Dialog open={open()} onOpenChange={setOpen}>
       <DialogTrigger>
         <Button
           variant="default"
@@ -25,7 +27,7 @@ export default function AddDataDialog() {
         <DialogHeader>
           <DialogTitle class="mb-8 ">Add a new entry to database</DialogTitle>
           <DialogDescription>
-            <AddDataForm />
+            <AddDataForm props={setOpen} />
           </DialogDescription>
         </DialogHeader>
       </DialogContent>

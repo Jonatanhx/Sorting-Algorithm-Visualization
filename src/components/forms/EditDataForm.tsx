@@ -21,7 +21,7 @@ interface EditDataFormProps {
 }
 
 export default function EditDataForm(props: EditDataFormProps) {
-  const { countries } = useContext(CountryDataContext);
+  const { countries, refetch } = useContext(CountryDataContext);
   const [name, setName] = createSignal<string>("");
   const [populationSize, setPopulationSize] = createSignal<number>(0);
   const [landArea, setLandArea] = createSignal<number>(0);
@@ -91,6 +91,7 @@ export default function EditDataForm(props: EditDataFormProps) {
       landArea: landArea(),
     };
     await updateCountry(formData);
+    refetch();
   }
 
   return (

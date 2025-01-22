@@ -23,12 +23,15 @@ export default function ConfirmDeletionDialog(
   const { countries, refetch } = useContext(CountryDataContext);
   const [open, setOpen] = createSignal(false);
 
-  function handleDeleteCountry(index: number) {
+  async function handleDeleteCountry(index: number) {
     const countryData = countries();
     if (countryData && countryData[index]) {
       const countryAtIndex = countryData[index];
 
-      deleteCountry({ ...countryAtIndex, id: countryAtIndex.id.toString() });
+      await deleteCountry({
+        ...countryAtIndex,
+        id: countryAtIndex.id.toString(),
+      });
       refetch();
     } else {
       console.error(`countryData object: ${countryData} threw exception`);
