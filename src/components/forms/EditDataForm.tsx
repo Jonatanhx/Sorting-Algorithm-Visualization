@@ -26,6 +26,7 @@ export default function EditDataForm(props: EditDataFormProps) {
   const [populationSize, setPopulationSize] = createSignal<number>(0);
   const [landArea, setLandArea] = createSignal<number>(0);
   const [errors, setErrors] = createSignal<Record<string, string>>({});
+  const [isFormValid, setIsFormValid] = createSignal<boolean>(false);
 
   const isNameUnique = createMemo(() => {
     const currentCountries = countries();
@@ -68,16 +69,17 @@ export default function EditDataForm(props: EditDataFormProps) {
     }
   };
 
-  const isFormValid = createMemo(() => {
-    return validateForm();
-  });
-
   createEffect(() => {
     if (props.country.name !== null) {
       setName(props.country.name);
     }
     setPopulationSize(props.country.populationSize);
     setLandArea(props.country.landArea);
+  });
+
+  createEffect(() => {
+    const isValid = validateForm();
+    setIsFormValid(isValid);
   });
 
   async function handleSubmit(event: Event) {
@@ -106,7 +108,7 @@ export default function EditDataForm(props: EditDataFormProps) {
           value={name()}
           onChange={(value: string) => setName(value)}
         >
-          <TextFieldLabel>Name</TextFieldLabel>
+          <TextFieldLabel class="text-neutral-800">Name</TextFieldLabel>
           <TextField required type="text" />
           {errors().name && <p class="text-red-700">{errors().name}</p>}
         </TextFieldRoot>
@@ -118,7 +120,9 @@ export default function EditDataForm(props: EditDataFormProps) {
           onRawValueChange={(value) => setPopulationSize(Number(value))}
           class="mb-4 min-h-[5rem]"
         >
-          <NumberFieldLabel>Population size</NumberFieldLabel>
+          <NumberFieldLabel class="text-neutral-800">
+            Population size
+          </NumberFieldLabel>
           <NumberFieldGroup>
             <NumberFieldDecrementTrigger aria-label="Decrement" />
             <NumberFieldInput placeholder="0" />
@@ -136,7 +140,9 @@ export default function EditDataForm(props: EditDataFormProps) {
           class="mb-4 min-h-[5rem]"
           onRawValueChange={(value) => setLandArea(Number(value))}
         >
-          <NumberFieldLabel>Land area in km2</NumberFieldLabel>
+          <NumberFieldLabel class="text-neutral-800">
+            Land area in km2
+          </NumberFieldLabel>
           <NumberFieldGroup>
             <NumberFieldDecrementTrigger aria-label="Decrement" />
             <NumberFieldInput placeholder="0" />

@@ -31,6 +31,7 @@ export default function AddDataForm(openState: AddDataFormProps) {
   const [populationSize, setPopulationSize] = createSignal<number>(0);
   const [landArea, setLandArea] = createSignal<number>(0);
   const [errors, setErrors] = createSignal<Record<string, string>>({});
+  const [isSubmitted, setIsSubmitted] = createSignal<boolean>(false);
 
   const isNameUnique = createMemo(() => {
     const currentCountries = countries();
@@ -43,7 +44,9 @@ export default function AddDataForm(openState: AddDataFormProps) {
   });
 
   createEffect(() => {
-    validateForm();
+    if (isSubmitted() === true) {
+      validateForm();
+    }
   });
 
   const validateForm = () => {
@@ -78,13 +81,18 @@ export default function AddDataForm(openState: AddDataFormProps) {
   };
 
   const isFormValid = createMemo(() => {
-    return validateForm();
+    if (isSubmitted() === true) {
+      return validateForm();
+    }
   });
 
   async function handleSubmit(event: Event) {
     event.preventDefault();
 
-    if (!isFormValid()) return;
+    if (!isFormValid()) {
+      setIsSubmitted(true);
+      return;
+    }
 
     const formData: Prisma.CountriesGetPayload<object> = {
       id: "",
@@ -112,8 +120,8 @@ export default function AddDataForm(openState: AddDataFormProps) {
         value={name()}
         onChange={(value: string) => setName(value)}
       >
-        <TextFieldLabel>Name</TextFieldLabel>
-        <TextField required type="text" />
+        <TextFieldLabel class="text-neutral-800">Name</TextFieldLabel>
+        <TextField type="text" placeholder="Example" />
         {errors().name && <p class="text-red-700">{errors().name}</p>}
       </TextFieldRoot>
 
@@ -121,9 +129,11 @@ export default function AddDataForm(openState: AddDataFormProps) {
         minValue={0}
         maxValue={1429000000}
         onRawValueChange={(value) => setPopulationSize(Number(value))}
-        class="mb-4 min-h-[5rem]"
+        class="mb-4 min-h-[5rem] "
       >
-        <NumberFieldLabel>Population size</NumberFieldLabel>
+        <NumberFieldLabel class="text-neutral-800">
+          Population size
+        </NumberFieldLabel>
         <NumberFieldGroup>
           <NumberFieldDecrementTrigger aria-label="Decrement" />
           <NumberFieldInput placeholder="0" />
@@ -140,7 +150,9 @@ export default function AddDataForm(openState: AddDataFormProps) {
         class="mb-4 min-h-[5rem]"
         onRawValueChange={(value) => setLandArea(Number(value))}
       >
-        <NumberFieldLabel>Land area in km2</NumberFieldLabel>
+        <NumberFieldLabel class="text-neutral-800">
+          Land area in km2
+        </NumberFieldLabel>
         <NumberFieldGroup>
           <NumberFieldDecrementTrigger aria-label="Decrement" />
           <NumberFieldInput placeholder="0" />
@@ -150,9 +162,7 @@ export default function AddDataForm(openState: AddDataFormProps) {
       </NumberField>
 
       <div class="flex flex-col-reverse">
-        <Button type="submit" disabled={!isFormValid()}>
-          Submit
-        </Button>
+        <Button type="submit">Submit</Button>
       </div>
     </form>
   );
