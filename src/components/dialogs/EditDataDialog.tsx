@@ -22,7 +22,7 @@ export default function EditDataDialog(props: EditDataDialogProps) {
   return (
     <Dialog open={open()} onOpenChange={setOpen}>
       <DialogTrigger>
-        <Button variant="ghost">
+        <Button variant="ghost" class="hover:bg-white">
           <BsPencil />
         </Button>
       </DialogTrigger>
