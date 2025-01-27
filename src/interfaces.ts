@@ -1,7 +1,7 @@
 import type { Accessor, Resource, ResourceActions, Setter } from "solid-js";
 
 export interface country {
-  name: string | null;
+  name: string;
   populationSize: number;
   landArea: number;
 }

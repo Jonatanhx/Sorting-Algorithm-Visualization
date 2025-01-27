@@ -40,7 +40,7 @@ export function Navbar() {
           <img
             class="lg:w-20 md:w-[8rem]"
             src={`${auth.session()?.user.image}`}
-            alt="User Github profile image"
+            alt="Github profile picture"
           />
         </Show>
       </div>
@@ -49,6 +49,7 @@ export function Navbar() {
         <Menubar>
           <MenubarMenu>
             <MenubarTrigger>
+              <p class="hidden">x</p>
               <AiOutlineMenu class="text-white cursor-pointer size-6" />
             </MenubarTrigger>
             <MenubarContent class="bg-[#1b1b1b]">
@@ -61,12 +62,14 @@ export function Navbar() {
                     )}
                   >
                     <MenubarItem>
-                      <a
-                        href="/Admin"
-                        class="flex items-center font-semibold border-bottom-effect text-white px-10"
-                      >
-                        Admin
-                      </a>
+                      <button>
+                        <a
+                          href="/Admin"
+                          class="flex items-center font-semibold border-bottom-effect text-white px-10"
+                        >
+                          Admin
+                        </a>
+                      </button>
                     </MenubarItem>
                   </Show>
                 </Match>

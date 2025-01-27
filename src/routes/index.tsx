@@ -14,9 +14,9 @@ export default function Home() {
       <div class="flex flex-col gap-20 items-center">
         <div class="flex flex-row min-w-full items-center">
           <Separator class="border-neutral-600 border-dotted" />
-          <p class="text-neutral-200 uppercase font-semibold px-20 text-3xl">
+          <h2 class="text-neutral-200 uppercase font-semibold px-20 text-3xl">
             Quadratic
-          </p>
+          </h2>
           <Separator class="border-neutral-600 border-dotted" />
         </div>
 
@@ -28,9 +28,9 @@ export default function Home() {
 
         <div class="flex flex-row min-w-full items-center">
           <Separator class="border-neutral-600 border-dotted" />
-          <p class="text-neutral-200 uppercase font-semibold px-20 text-3xl">
+          <h2 class="text-neutral-200 uppercase font-semibold px-20 text-3xl">
             Logarithmic
-          </p>
+          </h2>
           <Separator class="border-neutral-600 border-dotted" />
         </div>
 

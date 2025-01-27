@@ -8,7 +8,7 @@ export default function Footer() {
 
       <div class="bg-black h-[10rem] flex md:px-[4rem] text-white items-center justify-center px-4">
         <div class="flex flex-row">
-          <img class="w-[3rem]" src={logo} />
+          <img class="w-[3rem]" src={logo} alt="Company logo" />
           <h1 class="flex items-center lg:text-5xl md:text-4xl text-xl font-bold pl-6 md:pl-2">
             Sorting Visualizer
           </h1>
