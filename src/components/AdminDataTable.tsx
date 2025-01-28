@@ -16,9 +16,9 @@ export default function AdminDatatable() {
   const { countries } = useContext(CountryDataContext);
 
   return (
-    <div class="flex flex-row justify-center flex-1 items-center">
+    <div class="flex flex-row justify-center">
       <div
-        class="text-white border-2 border-neutral-400 bg-[#1b1b1b] rounded-md md:p-12 md:min-w-[50rem]"
+        class="text-white border-2 border-neutral-400 bg-[#1b1b1b] rounded-md md:p-12 md:min-w-[50rem] mt-4"
         id="center-div"
       >
         <Table>
