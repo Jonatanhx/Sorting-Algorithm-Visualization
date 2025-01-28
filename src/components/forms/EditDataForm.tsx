@@ -93,7 +93,7 @@ export default function EditDataForm(props: EditDataFormProps) {
           onChange={(value: string) => setName(value)}
         >
           <TextFieldLabel class="text-neutral-800">Name</TextFieldLabel>
-          <TextField required type="text" />
+          <TextField type="text" />
           {errors().name && <p class="text-red-700">{errors().name}</p>}
         </TextFieldRoot>
 
