@@ -24,9 +24,13 @@ export default function AdminDatatable() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead class="md:min-w-[10rem]">Population Size</TableHead>
-              <TableHead class="md:min-w-[10rem]">Land Area in km2</TableHead>
+              <TableHead class="text-white">Name</TableHead>
+              <TableHead class="md:min-w-[10rem] text-white">
+                Population Size
+              </TableHead>
+              <TableHead class="md:min-w-[10rem] text-white">
+                Land Area in km2
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

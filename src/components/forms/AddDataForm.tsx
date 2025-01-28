@@ -155,7 +155,9 @@ export default function AddDataForm(props: AddDataFormProps) {
       </NumberField>
 
       <div class="flex flex-col-reverse">
-        <Button type="submit">Submit</Button>
+        <Button type="submit" aria-label="Submit data button">
+          Submit
+        </Button>
       </div>
     </form>
   );

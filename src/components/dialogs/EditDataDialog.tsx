@@ -23,7 +23,7 @@ export default function EditDataDialog(props: EditDataDialogProps) {
     <Dialog open={open()} onOpenChange={setOpen}>
       <DialogTrigger>
         <Button variant="ghost" class="hover:bg-white">
-          <BsPencil />
+          <BsPencil aria-label="Edit data icon" />
         </Button>
       </DialogTrigger>
       <DialogContent>

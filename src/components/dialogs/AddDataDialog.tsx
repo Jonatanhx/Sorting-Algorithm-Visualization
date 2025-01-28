@@ -20,7 +20,7 @@ export default function AddDataDialog() {
           variant="default"
           class=" border border-white hover:bg-white text-white hover:text-black"
         >
-          <AiOutlinePlus />
+          <AiOutlinePlus aria-label="Add data icon" />
         </Button>
       </DialogTrigger>
       <DialogContent>

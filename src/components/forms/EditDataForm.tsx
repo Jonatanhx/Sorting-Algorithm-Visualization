@@ -135,7 +135,9 @@ export default function EditDataForm(props: EditDataFormProps) {
           {errors().landArea && <p class="text-red-700">{errors().landArea}</p>}
         </NumberField>
         <div class="flex flex-col-reverse">
-          <Button type="submit">Submit</Button>
+          <Button type="submit" aria-label="Submit edit data button">
+            Submit
+          </Button>
         </div>
       </form>
     </div>
