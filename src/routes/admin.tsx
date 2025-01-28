@@ -7,7 +7,7 @@ export default function Admin() {
   const { admins } = useContext(AdminDataContext);
   const auth = useAuth();
   return (
-    <main class="flex min-h-screen flex-col my-4">
+    <main class="flex min-h-screen flex-col">
       <Show
         when={admins()?.some(
           (admin) => admin.id === auth.session()?.user.id && admin.isAdmin

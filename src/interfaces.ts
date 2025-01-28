@@ -48,7 +48,7 @@ export interface CountryDataContextValue {
   refetch: (info?: unknown) =>
     | {
         name: string | null;
-        id: number;
+        id: string;
         populationSize: number;
         landArea: number;
       }[]

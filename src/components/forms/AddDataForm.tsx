@@ -22,10 +22,10 @@ import {
 import { TextField, TextFieldLabel, TextFieldRoot } from "../ui/textfield";
 
 interface AddDataFormProps {
-  props: Setter<boolean>;
+  setOpen: Setter<boolean>;
 }
 
-export default function AddDataForm(openState: AddDataFormProps) {
+export default function AddDataForm(props: AddDataFormProps) {
   const { countries, refetch } = useContext(CountryDataContext);
   const [name, setName] = createSignal<string>("");
   const [populationSize, setPopulationSize] = createSignal<number>(0);
@@ -41,12 +41,6 @@ export default function AddDataForm(openState: AddDataFormProps) {
       (country) =>
         country.name && country.name.toLowerCase() === name().toLowerCase()
     );
-  });
-
-  createEffect(() => {
-    if (isSubmitted() === true) {
-      validateForm();
-    }
   });
 
   const validateForm = () => {
@@ -80,16 +74,16 @@ export default function AddDataForm(openState: AddDataFormProps) {
     }
   };
 
-  const isFormValid = createMemo(() => {
+  createEffect(() => {
     if (isSubmitted() === true) {
-      return validateForm();
+      validateForm();
     }
   });
 
   async function handleSubmit(event: Event) {
     event.preventDefault();
-
-    if (!isFormValid()) {
+    const isValid = validateForm();
+    if (!isValid) {
       setIsSubmitted(true);
       return;
     }
@@ -101,13 +95,12 @@ export default function AddDataForm(openState: AddDataFormProps) {
       landArea: landArea(),
     };
 
-    await addCountry(formData);
-    openState.props(false);
-    refetch();
-
     setName("");
     setPopulationSize(0);
     setLandArea(0);
+    props.setOpen(false);
+    await addCountry(formData);
+    refetch();
   }
 
   return (

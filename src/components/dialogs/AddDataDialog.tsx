@@ -27,7 +27,7 @@ export default function AddDataDialog() {
         <DialogHeader>
           <DialogTitle class="mb-8 ">Add a new entry to database</DialogTitle>
           <DialogDescription>
-            <AddDataForm props={setOpen} />
+            <AddDataForm setOpen={setOpen} />
           </DialogDescription>
         </DialogHeader>
       </DialogContent>
