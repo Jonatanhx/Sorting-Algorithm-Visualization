@@ -1,5 +1,5 @@
 import type { Prisma } from "@prisma/client";
-import { createEffect, createMemo, createSignal, useContext } from "solid-js";
+import { createEffect, createSignal, useContext } from "solid-js";
 import { z } from "zod";
 import { CountryDataContext } from "~/contexts/CountryDataContext";
 import type { CountryWithId } from "~/interfaces";
@@ -21,22 +21,12 @@ interface EditDataFormProps {
 }
 
 export default function EditDataForm(props: EditDataFormProps) {
-  const { countries, refetch } = useContext(CountryDataContext);
+  const { refetch } = useContext(CountryDataContext);
   const [name, setName] = createSignal<string>("");
   const [populationSize, setPopulationSize] = createSignal<number>(0);
   const [landArea, setLandArea] = createSignal<number>(0);
   const [errors, setErrors] = createSignal<Record<string, string>>({});
   const [isFormValid, setIsFormValid] = createSignal<boolean>(false);
-
-  const isNameUnique = createMemo(() => {
-    const currentCountries = countries();
-    if (!currentCountries || !Array.isArray(currentCountries)) return true;
-
-    return !currentCountries.some(
-      (country) =>
-        country.name && country.name.toLowerCase() === name().toLowerCase()
-    );
-  });
 
   const validateForm = () => {
     const formData = {
@@ -47,9 +37,6 @@ export default function EditDataForm(props: EditDataFormProps) {
 
     try {
       CountrySchema.parse(formData);
-      if (!isNameUnique()) {
-        throw new Error("Name must be unique");
-      }
       setErrors({});
       return true;
     } catch (error) {
@@ -60,9 +47,6 @@ export default function EditDataForm(props: EditDataFormProps) {
             newErrors[err.path[0]] = err.message;
           }
         });
-        if (!isNameUnique()) {
-          newErrors.name = "Name must be unique";
-        }
         setErrors(newErrors);
       }
       return false;
