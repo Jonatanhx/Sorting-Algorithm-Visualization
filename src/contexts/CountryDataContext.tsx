@@ -10,7 +10,9 @@ export const CountryDataContext = createContext<CountryDataContextValue>(
 export function CountryDataProvider(props: ParentProps) {
   const [countries, { refetch }] = createResource(async () => {
     "use server";
-    const populationData = await db.countries.findMany({});
+    const populationData = await db.countries.findMany({
+      orderBy: { id: "desc" },
+    });
 
     return populationData;
   });

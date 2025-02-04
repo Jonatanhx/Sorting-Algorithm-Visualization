@@ -1,7 +1,13 @@
-import { createEffect, createMemo, createSignal, useContext } from "solid-js";
+import type { Prisma } from "@prisma/client";
+import {
+  createEffect,
+  createMemo,
+  createSignal,
+  Setter,
+  useContext,
+} from "solid-js";
 import { z } from "zod";
 import { CountryDataContext } from "~/contexts/CountryDataContext";
-import type { country } from "~/interfaces";
 import { addCountry } from "~/server/endpoints/country-endpoints";
 import { CountrySchema } from "~/zod/zodSchemas";
 import { Button } from "../ui/button";
@@ -15,12 +21,17 @@ import {
 } from "../ui/number-field";
 import { TextField, TextFieldLabel, TextFieldRoot } from "../ui/textfield";
 
-export default function AddDataForm() {
+interface AddDataFormProps {
+  setOpen: Setter<boolean>;
+}
+
+export default function AddDataForm(props: AddDataFormProps) {
   const { countries, refetch } = useContext(CountryDataContext);
   const [name, setName] = createSignal<string>("");
   const [populationSize, setPopulationSize] = createSignal<number>(0);
   const [landArea, setLandArea] = createSignal<number>(0);
   const [errors, setErrors] = createSignal<Record<string, string>>({});
+  const [isSubmitted, setIsSubmitted] = createSignal<boolean>(false);
 
   const isNameUnique = createMemo(() => {
     const currentCountries = countries();
@@ -30,10 +41,6 @@ export default function AddDataForm() {
       (country) =>
         country.name && country.name.toLowerCase() === name().toLowerCase()
     );
-  });
-
-  createEffect(() => {
-    validateForm();
   });
 
   const validateForm = () => {
@@ -67,27 +74,33 @@ export default function AddDataForm() {
     }
   };
 
-  const isFormValid = createMemo(() => {
-    return validateForm();
+  createEffect(() => {
+    if (isSubmitted() === true) {
+      validateForm();
+    }
   });
 
   async function handleSubmit(event: Event) {
     event.preventDefault();
+    const isValid = validateForm();
+    if (!isValid) {
+      setIsSubmitted(true);
+      return;
+    }
 
-    if (!isFormValid()) return;
-
-    const formData: country = {
+    const formData: Prisma.CountriesGetPayload<object> = {
+      id: "",
       name: name(),
       populationSize: populationSize(),
       landArea: landArea(),
     };
 
-    await addCountry(formData);
-    await refetch();
-
     setName("");
     setPopulationSize(0);
     setLandArea(0);
+    props.setOpen(false);
+    await addCountry(formData);
+    refetch();
   }
 
   return (
@@ -100,8 +113,8 @@ export default function AddDataForm() {
         value={name()}
         onChange={(value: string) => setName(value)}
       >
-        <TextFieldLabel>Name</TextFieldLabel>
-        <TextField required type="text" />
+        <TextFieldLabel class="text-neutral-800">Name</TextFieldLabel>
+        <TextField type="text" placeholder="Example" />
         {errors().name && <p class="text-red-700">{errors().name}</p>}
       </TextFieldRoot>
 
@@ -109,9 +122,11 @@ export default function AddDataForm() {
         minValue={0}
         maxValue={1429000000}
         onRawValueChange={(value) => setPopulationSize(Number(value))}
-        class="mb-4 min-h-[5rem]"
+        class="mb-4 min-h-[5rem] "
       >
-        <NumberFieldLabel>Population size</NumberFieldLabel>
+        <NumberFieldLabel class="text-neutral-800">
+          Population size
+        </NumberFieldLabel>
         <NumberFieldGroup>
           <NumberFieldDecrementTrigger aria-label="Decrement" />
           <NumberFieldInput placeholder="0" />
@@ -128,7 +143,9 @@ export default function AddDataForm() {
         class="mb-4 min-h-[5rem]"
         onRawValueChange={(value) => setLandArea(Number(value))}
       >
-        <NumberFieldLabel>Land area in km2</NumberFieldLabel>
+        <NumberFieldLabel class="text-neutral-800">
+          Land area in km2
+        </NumberFieldLabel>
         <NumberFieldGroup>
           <NumberFieldDecrementTrigger aria-label="Decrement" />
           <NumberFieldInput placeholder="0" />
@@ -138,7 +155,7 @@ export default function AddDataForm() {
       </NumberField>
 
       <div class="flex flex-col-reverse">
-        <Button type="submit" disabled={!isFormValid()}>
+        <Button type="submit" aria-label="Submit data button">
           Submit
         </Button>
       </div>

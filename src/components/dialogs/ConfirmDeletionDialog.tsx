@@ -23,12 +23,15 @@ export default function ConfirmDeletionDialog(
   const { countries, refetch } = useContext(CountryDataContext);
   const [open, setOpen] = createSignal(false);
 
-  function handleDeleteCountry(index: number) {
+  async function handleDeleteCountry(index: number) {
     const countryData = countries();
     if (countryData && countryData[index]) {
       const countryAtIndex = countryData[index];
 
-      deleteCountry({ ...countryAtIndex, id: countryAtIndex.id.toString() });
+      await deleteCountry({
+        ...countryAtIndex,
+        id: countryAtIndex.id.toString(),
+      });
       refetch();
     } else {
       console.error(`countryData object: ${countryData} threw exception`);
@@ -38,7 +41,9 @@ export default function ConfirmDeletionDialog(
   return (
     <Dialog open={open()} onOpenChange={setOpen}>
       <DialogTrigger>
-        <Button variant="ghost">X</Button>
+        <Button variant="ghost" aria-label="Remove data button">
+          X
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -53,10 +58,18 @@ export default function ConfirmDeletionDialog(
         </DialogHeader>
         <DialogFooter>
           <div class="flex justify-between flex-1">
-            <Button onClick={() => handleDeleteCountry(props.index)}>
+            <Button
+              onClick={() => handleDeleteCountry(props.index)}
+              aria-label="Confirm remove data button"
+            >
               Confirm
             </Button>
-            <Button onClick={() => setOpen(false)}>Cancel</Button>
+            <Button
+              onClick={() => setOpen(false)}
+              aria-label="Cancel remove data button"
+            >
+              Cancel
+            </Button>
           </div>
         </DialogFooter>
       </DialogContent>

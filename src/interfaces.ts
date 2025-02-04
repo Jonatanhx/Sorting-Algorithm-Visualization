@@ -6,6 +6,10 @@ export interface country {
   landArea: number;
 }
 
+export interface CountryWithId extends country {
+  id: string;
+}
+
 export interface SortingTimerProps {
   isRunning: boolean;
 }
@@ -35,7 +39,7 @@ export interface CountryDataContextValue {
   countries: Resource<
     {
       name: string | null;
-      id: number;
+      id: string;
       populationSize: number;
       landArea: number;
     }[]
@@ -44,14 +48,14 @@ export interface CountryDataContextValue {
   refetch: (info?: unknown) =>
     | {
         name: string | null;
-        id: number;
+        id: string;
         populationSize: number;
         landArea: number;
       }[]
     | Promise<
         | {
             name: string | null;
-            id: number;
+            id: string;
             populationSize: number;
             landArea: number;
           }[]
