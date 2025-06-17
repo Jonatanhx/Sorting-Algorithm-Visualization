@@ -11,8 +11,8 @@ export default function Hero() {
             Learn the strengths and weaknesses of each sorting algorithm with
             visual rendering of data sets in real time in a web environment.
             <br />
-            Boost your knowledge in the data science fundamentals to make your
-            software blazingly fast.
+            Boost your knowledge in computer science fundamentals to understand
+            what's happening under the hood.
           </p>
         </div>
       </div>
