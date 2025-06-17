@@ -1,4 +1,4 @@
-import Banner from "~/components/Banner";
+import Hero from "~/components/Hero";
 import BubbleSort from "~/components/sorting-algorithms/BubbleSort";
 import InsertionSort from "~/components/sorting-algorithms/InsertionSort";
 import MergeSort from "~/components/sorting-algorithms/MergeSort";
@@ -8,10 +8,10 @@ import { Separator } from "~/components/ui/separator";
 
 export default function Home() {
   return (
-    <main class="relative flex flex-col z-0 min-h-screen gap-20 mb-24">
-      <Banner />
+    <main class="relative flex flex-col min-h-screen bg-blueprint">
+      <Hero />
 
-      <div class="flex flex-col gap-20 items-center">
+      <section class="flex flex-col p-20 gap-20 items-center">
         <div class="flex flex-row min-w-full items-center">
           <Separator class="border-neutral-600 border-dotted" />
           <h2 class="text-neutral-200 uppercase font-semibold px-20 text-3xl">
@@ -37,7 +37,7 @@ export default function Home() {
         <QuickSort />
 
         <MergeSort />
-      </div>
+      </section>
     </main>
   );
 }

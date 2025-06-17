@@ -3,11 +3,8 @@ import { Navbar } from "./Navbar";
 
 export default function Header() {
   return (
-    <div
-      id="gradient-border"
-      class="bg-gradient-to-r from-[#1b1b1b] from-1% via-blue-500 via-50% to-[#1b1b1b] to-99% pb-[2px] sticky top-0 z-50"
-    >
-      <header class="flex bg-[#1b1b1b] flex-row justify-between">
+    <header class="flex flex-col bg-[#1b1b1b]">
+      <div class="flex flex-row justify-between">
         <a
           href="/"
           class="flex items-center lg:pl-6 pl-4 border-bottom-effect py-4"
@@ -17,9 +14,10 @@ export default function Header() {
             Sorting Visualizer
           </h1>
         </a>
-
         <Navbar />
-      </header>
-    </div>
+      </div>
+
+      <div class="gradient-border h-[2px]" />
+    </header>
   );
 }

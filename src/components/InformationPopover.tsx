@@ -15,7 +15,7 @@ export default function informationPopover(props: ParentProps) {
           />
         </PopoverTrigger>
       </div>
-      <PopoverContent class="max-w-[20rem] border border-neutral-400 bg-neutral-700">
+      <PopoverContent class="text-white max-w-[20rem] border p-6 border-neutral-400 bg-neutral-700">
         <div class="gap-2 flex flex-col text-sm text-white">
           {props.children}
         </div>
