@@ -1,7 +1,7 @@
 export default function Hero() {
   return (
     <section>
-      <div id="hero" class="h-full p-20">
+      <div class="h-[395px] flex justify-center items-center bg-[#1b1b1b] text-nowrap">
         <div class="flex flex-col text-white font-semibold text-center justify-center gap-2 font-[Montserrat]">
           <h1 class="lg:text-5xl md:text-4xl text-xl font-extrabold">
             Data sorting visualizer <br /> Learning data sorting algorithms made

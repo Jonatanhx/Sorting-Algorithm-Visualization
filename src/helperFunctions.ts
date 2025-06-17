@@ -1,5 +1,11 @@
-import type { country } from "./interfaces";
+import { country } from "./interfaces";
 
+export function scrambleData(data: number[]) {
+  for (let i = data.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [data[i], data[j]] = [data[j], data[i]];
+  }
+}
 export function calculateHeight(
   value: number,
   array: country[],

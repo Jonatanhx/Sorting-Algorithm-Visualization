@@ -1,98 +1,72 @@
-import type { DropdownMenuSubTriggerProps } from "@kobalte/core/dropdown-menu";
 import { createEffect, createSignal, For, Show, useContext } from "solid-js";
-import { CountryDataContext } from "~/contexts/CountryDataContext";
 import { IsSortedContext } from "~/contexts/IsSortedContext";
 import { IsSortingContext } from "~/contexts/IsSortingContext";
-import { calculateHeight } from "~/globalFunction";
-import type { country } from "~/interfaces";
+import { scrambleData } from "~/helperFunctions";
 import InformationPopover from "../InformationPopover";
 import SortingTimer from "../SortingTimer";
 import { Button } from "../ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuGroupLabel,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
 import SortingAlgorithmWrapper from "./SortingAlgorithmWrapper";
 
 export default function BubbleSort() {
-  const { countries } = useContext(CountryDataContext);
   const { setIsSorting } = useContext(IsSortingContext);
   const { setIsSorted } = useContext(IsSortedContext);
 
-  const [selectedDataTable, setSelectedDataTable] =
-    createSignal("populationSize");
-  const [isRunning, setIsRunning] = createSignal(false);
-  const [array, setArray] = createSignal<country[]>([]);
-  const [currentI, setCurrentI] = createSignal(0);
-  const [currentJ, setCurrentJ] = createSignal(0);
+  const [isRunning, setIsRunning] = createSignal<boolean>(false);
+  const [sortingData, setSortingData] = createSignal<number[]>([]);
 
   createEffect(() => {
-    const countryData = countries();
-    if (countryData && countryData.length > 0) {
-      setArray(countryData as country[]);
+    const data: number[] = [];
+    const dataSize = 1000;
+    for (let i = 1; i <= dataSize; i++) {
+      data.push(i);
     }
+    scrambleData(data);
+    setSortingData(data);
   });
 
   function resetArray() {
-    const countryData = countries();
-    if (countryData && countryData.length > 0) {
-      setArray(countryData as country[]);
-    }
-
     setIsRunning(false);
-    setCurrentI(0);
-    setCurrentJ(0);
     setIsSorting(false);
     setIsSorted(false);
   }
 
   function startSorting() {
-    resetArray();
+    scrambleData(sortingData());
 
     setIsRunning(true);
     setIsSorting(true);
     setIsSorted(false);
-    setCurrentI(0);
-    setCurrentJ(0);
+
+    const stepsPerTick = 1000;
+
+    let i = 0;
+    let j = 0;
+    const arr = [...sortingData()];
 
     const sortInterval = setInterval(() => {
-      const arr = [...array()];
+      let steps = 0;
+      while (i < arr.length - 1 && steps < stepsPerTick) {
+        if (j < arr.length - i - 1) {
+          if (arr[j] > arr[j + 1]) {
+            [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+          }
+          j++;
+        } else {
+          j = 0;
+          i++;
+        }
+        steps++;
+      }
+      setSortingData([...arr]);
 
-      if (currentI() >= arr.length - 1 || !isRunning()) {
+      if (i >= arr.length - 1 || !isRunning()) {
         setIsSorted(true);
         clearInterval(sortInterval);
         setIsRunning(false);
         setIsSorting(false);
-        return;
       }
-
-      if (currentJ() < arr.length - currentI() - 1) {
-        if (
-          arr[currentJ()][selectedDataTable() as keyof country] >
-          arr[currentJ() + 1][selectedDataTable() as keyof country]
-        ) {
-          const newArr = [...arr];
-          [newArr[currentJ()], newArr[currentJ() + 1]] = [
-            newArr[currentJ() + 1],
-            newArr[currentJ()],
-          ];
-          setArray(newArr);
-        }
-
-        setCurrentJ((j) => j + 1);
-      } else {
-        setCurrentJ(0);
-        setCurrentI((i) => i + 1);
-      }
-    }, 10);
+    }, 1);
   }
-
   return (
     <SortingAlgorithmWrapper>
       <div class="flex py-2 items-center">
@@ -124,45 +98,23 @@ export default function BubbleSort() {
               </InformationPopover>
             </div>
           </div>
-          <h2>
-            Currently sorting:{" "}
-            <Show
-              when={selectedDataTable() == "populationSize"}
-              fallback={"Land Area"}
-            >
-              Population Size
-            </Show>
-          </h2>
           <SortingTimer isRunning={isRunning()} />
         </div>
       </div>
-      <div class="flex flex-1 relative overflow-hidden">
-        <div class="mb-1 flex flex-1 h-64 bg-neutral-900 z-10 rotate-180 flex-row-reverse ">
-          <For each={array()}>
-            {(country, index) => (
+      <div class="flex flex-1">
+        <div class="mb-1 flex flex-1 h-64 z-10 rotate-180 flex-row-reverse">
+          <For each={sortingData()}>
+            {(value) => (
               <div
-                class={`flex-1 z-10 border border-black
-                    ${
-                      index() === currentI()
-                        ? "bg-red-600"
-                        : index() === currentJ() || index() === currentJ() + 1
-                        ? "bg-red-600"
-                        : "bg-white"
-                    }`}
-                style={{
-                  height: calculateHeight(
-                    country[selectedDataTable() as keyof country] as number,
-                    array(),
-                    selectedDataTable() as keyof country
-                  ),
-                }}
+                style={{ height: `${(value / 1000) * 100}%` }}
+                class={`flex-1 z-10 w-[0px] bg-green-500`}
               />
             )}
           </For>
         </div>
       </div>
 
-      <div class="flex flex-row items-center m-1">
+      <div class="flex h-[50px] w-[50px] flex-row items-center m-1">
         <div class="flex-1" />
         <Show
           when={!isRunning()}
@@ -186,39 +138,6 @@ export default function BubbleSort() {
             Start
           </Button>
         </Show>
-
-        <div class="flex justify-end flex-1">
-          <DropdownMenu placement="bottom">
-            <DropdownMenuTrigger
-              as={(props: DropdownMenuSubTriggerProps) => (
-                <Button
-                  variant="outline"
-                  {...props}
-                  disabled={isRunning() == true}
-                >
-                  Select dataset
-                </Button>
-              )}
-            />
-            <DropdownMenuContent class="w-56">
-              <DropdownMenuGroup>
-                <DropdownMenuGroupLabel>Select dataset</DropdownMenuGroupLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuRadioGroup
-                  value={selectedDataTable()}
-                  onChange={setSelectedDataTable}
-                >
-                  <DropdownMenuRadioItem value="populationSize">
-                    Population Size
-                  </DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="landArea">
-                    Land Area in km2
-                  </DropdownMenuRadioItem>
-                </DropdownMenuRadioGroup>
-              </DropdownMenuGroup>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
       </div>
     </SortingAlgorithmWrapper>
   );

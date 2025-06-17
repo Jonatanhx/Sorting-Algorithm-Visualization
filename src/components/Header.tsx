@@ -3,7 +3,7 @@ import { Navbar } from "./Navbar";
 
 export default function Header() {
   return (
-    <header class="flex flex-col bg-[#1b1b1b]">
+    <header class="flex flex-col bg-[#131313]">
       <div class="flex flex-row justify-between">
         <a
           href="/"

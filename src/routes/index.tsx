@@ -11,32 +11,34 @@ export default function Home() {
     <main class="relative flex flex-col min-h-screen bg-blueprint">
       <Hero />
 
-      <section class="flex flex-col p-20 gap-20 items-center">
-        <div class="flex flex-row min-w-full items-center">
+      <section class="flex flex-col items-center pb-[100px] px-20">
+        <div class="flex self-center h-[100px] flex-row min-w-full items-center">
           <Separator class="border-neutral-600 border-dotted" />
           <h2 class="text-neutral-200 uppercase font-semibold px-20 text-3xl">
             Quadratic
           </h2>
           <Separator class="border-neutral-600 border-dotted" />
         </div>
+        <div class="flex w-full flex-col gap-[100px]">
+          <BubbleSort />
 
-        <BubbleSort />
+          <InsertionSort />
 
-        <InsertionSort />
+          <SelectionSort />
+        </div>
 
-        <SelectionSort />
-
-        <div class="flex flex-row min-w-full items-center">
+        <div class="flex flex-row min-w-full h-[100px] items-center">
           <Separator class="border-neutral-600 border-dotted" />
           <h2 class="text-neutral-200 uppercase font-semibold px-20 text-3xl">
             Logarithmic
           </h2>
           <Separator class="border-neutral-600 border-dotted" />
         </div>
+        <div class="flex w-full flex-col gap-[100px]">
+          <QuickSort />
 
-        <QuickSort />
-
-        <MergeSort />
+          <MergeSort />
+        </div>
       </section>
     </main>
   );

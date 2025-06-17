@@ -3,7 +3,7 @@ import { createEffect, createSignal, For, Show, useContext } from "solid-js";
 import { CountryDataContext } from "~/contexts/CountryDataContext";
 import { IsSortedContext } from "~/contexts/IsSortedContext";
 import { IsSortingContext } from "~/contexts/IsSortingContext";
-import { calculateHeight } from "~/globalFunction";
+import { calculateHeight } from "~/helperFunctions";
 import type { country } from "~/interfaces";
 import InformationPopover from "../InformationPopover";
 import SortingTimer from "../SortingTimer";

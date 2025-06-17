@@ -4,7 +4,7 @@ import logo from "../assets/SortingVisualizerLogoAlt.png";
 export default function Footer() {
   return (
     <footer>
-      <div class="h-[1rem] bg-cyan-700" />
+      <div class="gradient-border h-[2px]" />
 
       <div class="bg-black h-[10rem] flex md:px-[4rem] text-white items-center justify-center px-4">
         <div class="flex flex-row">
