@@ -1,4 +1,4 @@
-import logo from "../assets/SortingVisualizerLogoAlt.png";
+import logo from "../public/assets/SortingVisualizerLogoAlt.png";
 import { Navbar } from "./Navbar";
 
 export default function Header() {

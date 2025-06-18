@@ -1,5 +1,5 @@
 import { AiFillGithub, AiFillLinkedin } from "solid-icons/ai";
-import logo from "../assets/SortingVisualizerLogoAlt.png";
+import logo from "../public/assets/SortingVisualizerLogoAlt.png";
 
 export default function Footer() {
   return (

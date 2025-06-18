@@ -1,13 +1,14 @@
-@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@property --a {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
+@font-face {
+  font-family: Geist;
+  src: url(Geist-Regular.ttf);
+}
+
+* {
+  font-family: Geist;
 }
 
 *:focus-visible {

@@ -34,6 +34,11 @@ export interface IsSortedContextValue {
   setIsSorted: Setter<boolean>;
 }
 
+export interface DataContextValue {
+  data: Accessor<number[]>;
+  setData: Setter<number[]>;
+}
+
 /* ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
 export interface CountryDataContextValue {
   countries: Resource<
