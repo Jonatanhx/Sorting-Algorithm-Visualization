@@ -56,6 +56,7 @@ export default function BubbleSort() {
       }
     }, 1);
   }
+
   return (
     <SortingAlgorithmWrapper>
       <InformationPopover>

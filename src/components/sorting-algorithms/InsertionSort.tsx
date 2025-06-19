@@ -49,7 +49,7 @@ export default function InsertionSort() {
       setData([...arr]);
       i++;
 
-      if (i >= arr.length - 2 || !isRunning()) {
+      if (i >= arr.length || !isRunning()) {
         setIsSorted(true);
         clearInterval(sortInterval);
         setIsRunning(false);
@@ -78,7 +78,7 @@ export default function InsertionSort() {
         </p>
       </InformationPopover>
       <div class="flex flex-col items-center h-full flex-1 text-black gap-2">
-        <h1 class="text-white text-4xl flex-1 mt-4">Insertion sort</h1>
+        <h1 class="text-white text-4xl">Insertion sort</h1>
         <div class="flex gap-2 p-6 flex-col">
           <Show
             when={!isRunning()}
