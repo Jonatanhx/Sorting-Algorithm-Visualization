@@ -1,7 +1,6 @@
-import { createSignal, For, Show, useContext } from "solid-js";
+import { createEffect, createSignal, For, Show, useContext } from "solid-js";
 import { DataContext } from "~/contexts/DataContext";
 import { IsSortedContext } from "~/contexts/IsSortedContext";
-import { IsSortingContext } from "~/contexts/IsSortingContext";
 import { scrambleData } from "~/helperFunctions";
 import InformationPopover from "../InformationPopover";
 import SortingTimer from "../SortingTimer";
@@ -9,23 +8,24 @@ import { Button } from "../ui/button";
 import SortingAlgorithmWrapper from "./SortingAlgorithmWrapper";
 
 export default function BubbleSort() {
-  const { data, setData } = useContext(DataContext);
-  const { setIsSorting } = useContext(IsSortingContext);
+  const { data } = useContext(DataContext);
   const { setIsSorted } = useContext(IsSortedContext);
   const [isRunning, setIsRunning] = createSignal<boolean>(false);
+  const [localData, setLocalData] = createSignal<number[]>([]);
+
+  createEffect(() => {
+    setLocalData([...data()]);
+  });
 
   function stopSorting() {
     setIsRunning(false);
-    setIsSorting(false);
     setIsSorted(false);
   }
 
   function bubbleSort() {
-    const arr = [...data()];
+    const arr = [...localData()];
     scrambleData(arr);
-
     setIsRunning(true);
-    setIsSorting(true);
     setIsSorted(true);
 
     const stepsPerTick = 1000;
@@ -35,6 +35,7 @@ export default function BubbleSort() {
     const sortInterval = setInterval(() => {
       let steps = 0;
       while (i < arr.length - 1 && steps < stepsPerTick) {
+        console.log(steps);
         if (j < arr.length - i - 1) {
           if (arr[j] > arr[j + 1]) {
             [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
@@ -46,13 +47,11 @@ export default function BubbleSort() {
         }
         steps++;
       }
-      setData([...arr]);
-
+      setLocalData([...arr]);
       if (i >= arr.length - 1 || !isRunning()) {
         setIsSorted(true);
         clearInterval(sortInterval);
         setIsRunning(false);
-        setIsSorting(false);
       }
     }, 1);
   }
@@ -80,7 +79,7 @@ export default function BubbleSort() {
         </p>
       </InformationPopover>
       <div class="flex flex-col items-center h-full flex-1 text-black gap-2">
-        <h1 class="text-white text-4xl">Bubble sort</h1>
+        <h1 class="sort-title">Bubble sort</h1>
         <div class="flex gap-2 p-6 flex-col">
           <Show
             when={!isRunning()}
@@ -112,7 +111,7 @@ export default function BubbleSort() {
       </div>
       <div class="flex">
         <div class="flex flex-1 h-64 z-10 rotate-180 flex-row-reverse">
-          <For each={data()}>
+          <For each={localData()}>
             {(value) => (
               <div
                 style={{ height: `${(value / 1000) * 100}%` }}

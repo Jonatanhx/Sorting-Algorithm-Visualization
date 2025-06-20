@@ -197,3 +197,9 @@ h1 {
   /* back to gray */
   --tw-gradient-to: #1b1b1b var(--tw-gradient-to-position);
 }
+
+.sort-title {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  color: white;
+}

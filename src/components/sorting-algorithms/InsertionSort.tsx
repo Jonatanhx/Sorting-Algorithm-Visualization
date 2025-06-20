@@ -1,7 +1,6 @@
-import { createSignal, For, Show, useContext } from "solid-js";
+import { createEffect, createSignal, For, Show, useContext } from "solid-js";
 import { DataContext } from "~/contexts/DataContext";
 import { IsSortedContext } from "~/contexts/IsSortedContext";
-import { IsSortingContext } from "~/contexts/IsSortingContext";
 import { scrambleData } from "~/helperFunctions";
 import InformationPopover from "../InformationPopover";
 import SortingTimer from "../SortingTimer";
@@ -9,22 +8,24 @@ import { Button } from "../ui/button";
 import SortingAlgorithmWrapper from "./SortingAlgorithmWrapper";
 
 export default function InsertionSort() {
-  const { data, setData } = useContext(DataContext);
-  const { setIsSorting } = useContext(IsSortingContext);
+  const { data } = useContext(DataContext);
   const { setIsSorted } = useContext(IsSortedContext);
   const [isRunning, setIsRunning] = createSignal(false);
+  const [localData, setLocalData] = createSignal<number[]>([]);
+
+  createEffect(() => {
+    setLocalData([...data()]);
+  });
 
   function stopSorting() {
     setIsRunning(false);
-    setIsSorting(false);
     setIsSorted(false);
   }
 
   function insertionSort() {
-    const arr = [...data()];
+    const arr = [...localData()];
     scrambleData(arr);
     setIsRunning(true);
-    setIsSorting(true);
     setIsSorted(true);
 
     let i = 1;
@@ -32,7 +33,6 @@ export default function InsertionSort() {
       if (i >= arr.length) {
         clearInterval(sortInterval);
         setIsRunning(false);
-        setIsSorting(false);
         setIsSorted(true);
         return;
       }
@@ -46,14 +46,13 @@ export default function InsertionSort() {
       }
       arr[j + 1] = key;
 
-      setData([...arr]);
+      setLocalData([...arr]);
       i++;
 
       if (i >= arr.length || !isRunning()) {
         setIsSorted(true);
         clearInterval(sortInterval);
         setIsRunning(false);
-        setIsSorting(false);
       }
     }, 1);
   }
@@ -78,7 +77,7 @@ export default function InsertionSort() {
         </p>
       </InformationPopover>
       <div class="flex flex-col items-center h-full flex-1 text-black gap-2">
-        <h1 class="text-white text-4xl">Insertion sort</h1>
+        <h1 class="sort-title">Insertion sort</h1>
         <div class="flex gap-2 p-6 flex-col">
           <Show
             when={!isRunning()}
@@ -110,7 +109,7 @@ export default function InsertionSort() {
       </div>
       <div class="flex">
         <div class="flex flex-1 h-64 z-10 rotate-180 flex-row-reverse">
-          <For each={data()}>
+          <For each={localData()}>
             {(value) => (
               <div
                 class={`flex-1 z-10 w-[0px] bg-fuchsia-500`}
