@@ -1,261 +1,143 @@
-import type { DropdownMenuSubTriggerProps } from "@kobalte/core/dropdown-menu";
 import { createEffect, createSignal, For, Show, useContext } from "solid-js";
-import { CountryDataContext } from "~/contexts/CountryDataContext";
-import { IsSortedContext } from "~/contexts/IsSortedContext";
-import { IsSortingContext } from "~/contexts/IsSortingContext";
-import { calculateHeight } from "~/helperFunctions";
-import type { country } from "~/interfaces";
+import { DataContext } from "~/contexts/DataContext";
+import { scrambleData } from "~/helperFunctions";
 import InformationPopover from "../InformationPopover";
 import SortingTimer from "../SortingTimer";
 import { Button } from "../ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuGroupLabel,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
 import SortingAlgorithmWrapper from "./SortingAlgorithmWrapper";
 
 export default function MergeSort() {
-  const { countries } = useContext(CountryDataContext);
-  const { setIsSorting } = useContext(IsSortingContext);
-  const { setIsSorted } = useContext(IsSortedContext);
+  const { data } = useContext(DataContext);
 
-  const [selectedDataTable, setSelectedDataTable] =
-    createSignal("populationSize");
+  const [localData, setLocalData] = createSignal<number[]>([]);
   const [isRunning, setIsRunning] = createSignal(false);
-  const [array, setArray] = createSignal<country[]>([]);
-  const [currentI, setCurrentI] = createSignal(0);
-  const [currentJ, setCurrentJ] = createSignal(0);
-  let initialArray: country[] = [];
 
   createEffect(() => {
-    const countryData = countries();
-    if (countryData && countryData.length > 0) {
-      setArray(
-        countryData.map((country) => ({
-          ...country,
-          name: country.name ?? "Unknown",
-        })) as country[]
-      );
-      initialArray = countryData.map((country) => ({
-        ...country,
-        name: country.name ?? "Unknown",
-      }));
-    }
+    setLocalData([...data()]);
   });
 
   function resetArray() {
-    const countryData = countries();
-    if (countryData && countryData.length > 0) {
-      setArray(countryData as country[]);
-    }
     setIsRunning(false);
-    setCurrentI(0);
-    setCurrentJ(0);
-    setIsSorting(false);
-    setIsSorted(false);
   }
 
-  async function startSorting() {
-    resetArray();
+  function mergeSort() {
+    const arr = [...localData()];
+    scrambleData(arr);
+    const steps = startSorting(arr);
+    let stepIndex = 0;
+    const stepsPerTick = 10;
     setIsRunning(true);
-    setIsSorting(true);
-    setIsSorted(false);
 
-    const delay = () => new Promise((resolve) => setTimeout(resolve, 10));
-
-    async function merge(
-      arr: country[],
-      start: number,
-      mid: number,
-      end: number
-    ) {
-      const temp = [...arr];
-      let i = start;
-      let j = mid + 1;
-      let k = start;
-      if (isRunning()) {
-        while (i <= mid && j <= end) {
-          setCurrentI(i);
-          setCurrentJ(j);
-          await delay();
-
-          if (
-            temp[i][selectedDataTable() as keyof country] <=
-            temp[j][selectedDataTable() as keyof country]
-          ) {
-            arr[k] = temp[i];
-            i++;
-          } else {
-            arr[k] = temp[j];
-            j++;
-          }
-          k++;
-          setArray([...arr]);
-        }
-
-        while (i <= mid) {
-          setCurrentI(i);
-          await delay();
-          arr[k] = temp[i];
-          i++;
-          k++;
-          setArray([...arr]);
-        }
-
-        while (j <= end) {
-          setCurrentJ(j);
-          await delay();
-          arr[k] = temp[j];
-          j++;
-          k++;
-          setArray([...arr]);
-        }
+    const interval = setInterval(() => {
+      for (let i = 0; i < stepsPerTick && stepIndex < steps.length; i++) {
+        setLocalData(steps[stepIndex]);
+        stepIndex++;
       }
-    }
+      if (stepIndex >= steps.length || !isRunning()) {
+        clearInterval(interval);
 
-    async function mergeSort(arr: country[], start: number, end: number) {
+        setIsRunning(false);
+      }
+    }, 1);
+  }
+
+  function startSorting(arr: number[]) {
+    const steps: number[][] = [];
+
+    function sort(array: number[], start: number, end: number) {
       if (start < end) {
         const mid = Math.floor((start + end) / 2);
-        await mergeSort(arr, start, mid);
-        await mergeSort(arr, mid + 1, end);
-        await merge(arr, start, mid, end);
+        sort(array, start, mid);
+        sort(array, mid + 1, end);
+        merge(array, start, mid, end);
       }
     }
 
-    const arr = [...array()];
-    await mergeSort(arr, 0, arr.length - 1);
+    function merge(array: number[], start: number, mid: number, end: number) {
+      const left = array.slice(start, mid + 1);
+      const right = array.slice(mid + 1, end + 1);
+      let i = 0,
+        j = 0,
+        k = start;
 
-    setIsSorted(true);
-    setIsRunning(false);
-    setIsSorting(false);
+      while (i < left.length && j < right.length) {
+        if (left[i] <= right[j]) {
+          array[k] = left[i++];
+        } else {
+          array[k] = right[j++];
+        }
+        steps.push([...array]);
+        k++;
+      }
+      while (i < left.length) {
+        array[k++] = left[i++];
+        steps.push([...array]);
+      }
+      while (j < right.length) {
+        array[k++] = right[j++];
+        steps.push([...array]);
+      }
+    }
+    sort([...arr], 0, arr.length - 1);
+    return steps;
   }
 
   return (
     <SortingAlgorithmWrapper>
-      <div class="flex py-2 items-center">
-        <div class="flex flex-col flex-1 text-white gap-2">
-          <div class="flex">
-            <div class="flex-1" />
-            <h1 class="text-white text-4xl flex-1 mt-4">Merge sort</h1>
-            <div class="flex-1">
-              <InformationPopover>
-                <p>
-                  Merge Sort is a sorting algorithm based on the Divide and
-                  Conqueor technique, like Quick Sort. It can be implemented
-                  iteratively or recursively, using the Top-Down and Bottom-Up
-                  algorithms respectively. We represented the first one.
-                </p>
-                <p>
-                  The algorithm divides the data structure recursively until the
-                  subsequences contain only one element. At this point, the
-                  subsequences get merged and ordered sequentially. To do so,
-                  the algorithm progressively builds the sorted sublist by
-                  adding each time the minimum element of the next two unsorted
-                  subsequences until there is only one sublist remaining. This
-                  will be the sorted data structure
-                </p>
-              </InformationPopover>
-            </div>
-          </div>
-          <h2>
-            Currently sorting:{" "}
-            <Show
-              when={selectedDataTable() == "populationSize"}
-              fallback={"Land Area"}
+      <InformationPopover>
+        <p>
+          Merge Sort is a sorting algorithm based on the Divide and Conqueor
+          technique, like Quick Sort. It can be implemented iteratively or
+          recursively, using the Top-Down and Bottom-Up algorithms respectively.
+          We represented the first one.
+        </p>
+        <p>
+          The algorithm divides the data structure recursively until the
+          subsequences contain only one element. At this point, the subsequences
+          get merged and ordered sequentially. To do so, the algorithm
+          progressively builds the sorted sublist by adding each time the
+          minimum element of the next two unsorted subsequences until there is
+          only one sublist remaining. This will be the sorted data structure
+        </p>
+      </InformationPopover>
+      <div class="flex flex-col items-center h-full flex-1 text-black gap-2">
+        <h1 class="sort-title">Merge sort</h1>
+        <div class="flex gap-2 p-6 flex-col">
+          <Show
+            when={!isRunning()}
+            fallback={
+              <Button
+                variant={"outline"}
+                onClick={() => {
+                  resetArray();
+                }}
+              >
+                Stop
+              </Button>
+            }
+          >
+            <Button
+              onClick={() => {
+                mergeSort();
+              }}
+              variant={"outline"}
             >
-              Population Size
-            </Show>
-          </h2>
+              Start
+            </Button>
+          </Show>
           <SortingTimer isRunning={isRunning()} />
         </div>
       </div>
-      <div class="flex flex-1 relative border-black overflow-hidden">
-        <div class="mb-1 flex flex-1 h-64 bg-neutral-900 z-10 rotate-180 flex-row-reverse">
-          <For each={array()}>
-            {(country, index) => (
+      <div class="flex">
+        <div class="flex flex-1 h-64 z-10 rotate-180 flex-row-reverse">
+          <For each={localData()}>
+            {(value) => (
               <div
-                class={`flex-1 z-10 border border-black ${
-                  index() === currentI()
-                    ? "bg-red-600"
-                    : index() === currentJ() || index() === currentJ() + 1
-                    ? "bg-red-600"
-                    : "bg-white"
-                }`}
-                style={{
-                  height: calculateHeight(
-                    country[selectedDataTable() as keyof country] as number,
-                    initialArray,
-                    selectedDataTable() as keyof country
-                  ),
-                }}
+                class={`flex-1 z-10 bg-yellow-400`}
+                style={{ height: `${(value / 1000) * 100}%` }}
               />
             )}
           </For>
-        </div>
-      </div>
-
-      <div class="flex flex-row items-center m-1">
-        <div class="flex-1" />
-        <Show
-          when={!isRunning()}
-          fallback={
-            <Button
-              variant={"outline"}
-              onClick={() => {
-                resetArray();
-              }}
-            >
-              Stop
-            </Button>
-          }
-        >
-          <Button
-            onClick={() => {
-              startSorting();
-            }}
-            variant={"outline"}
-          >
-            Start
-          </Button>
-        </Show>
-
-        <div class="flex justify-end flex-1">
-          <DropdownMenu placement="bottom">
-            <DropdownMenuTrigger
-              as={(props: DropdownMenuSubTriggerProps) => (
-                <Button
-                  variant="outline"
-                  {...props}
-                  disabled={isRunning() == true}
-                >
-                  Select dataset
-                </Button>
-              )}
-            />
-            <DropdownMenuContent class="w-56">
-              <DropdownMenuGroup>
-                <DropdownMenuGroupLabel>Select dataset</DropdownMenuGroupLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuRadioGroup
-                  value={selectedDataTable()}
-                  onChange={setSelectedDataTable}
-                >
-                  <DropdownMenuRadioItem value="populationSize">
-                    Population Size
-                  </DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="landArea">
-                    Land Area in km2
-                  </DropdownMenuRadioItem>
-                </DropdownMenuRadioGroup>
-              </DropdownMenuGroup>
-            </DropdownMenuContent>
-          </DropdownMenu>
         </div>
       </div>
     </SortingAlgorithmWrapper>

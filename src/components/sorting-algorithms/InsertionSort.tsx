@@ -1,6 +1,5 @@
 import { createEffect, createSignal, For, Show, useContext } from "solid-js";
 import { DataContext } from "~/contexts/DataContext";
-import { IsSortedContext } from "~/contexts/IsSortedContext";
 import { scrambleData } from "~/helperFunctions";
 import InformationPopover from "../InformationPopover";
 import SortingTimer from "../SortingTimer";
@@ -9,7 +8,7 @@ import SortingAlgorithmWrapper from "./SortingAlgorithmWrapper";
 
 export default function InsertionSort() {
   const { data } = useContext(DataContext);
-  const { setIsSorted } = useContext(IsSortedContext);
+
   const [isRunning, setIsRunning] = createSignal(false);
   const [localData, setLocalData] = createSignal<number[]>([]);
 
@@ -19,24 +18,15 @@ export default function InsertionSort() {
 
   function stopSorting() {
     setIsRunning(false);
-    setIsSorted(false);
   }
 
   function insertionSort() {
     const arr = [...localData()];
     scrambleData(arr);
     setIsRunning(true);
-    setIsSorted(true);
 
     let i = 1;
     const sortInterval = setInterval(() => {
-      if (i >= arr.length) {
-        clearInterval(sortInterval);
-        setIsRunning(false);
-        setIsSorted(true);
-        return;
-      }
-
       const key = arr[i];
       let j = i - 1;
 
@@ -50,7 +40,6 @@ export default function InsertionSort() {
       i++;
 
       if (i >= arr.length || !isRunning()) {
-        setIsSorted(true);
         clearInterval(sortInterval);
         setIsRunning(false);
       }

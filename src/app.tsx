@@ -7,14 +7,8 @@ import logo from "../src/public/assets/favicon.png";
 import "./app.css";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import { AdminDataProvider } from "./contexts/AdminDataContext";
-import { CountryDataProvider } from "./contexts/CountryDataContext";
 import { DataProvider } from "./contexts/DataContext";
-import { IsSortedProvider } from "./contexts/IsSortedContext";
-import { IsSortingProvider } from "./contexts/IsSortingContext";
-import { SelectedDataTableProvider } from "./contexts/SelectedDataTableContext";
 import Home from "./routes";
-import Admin from "./routes/admin";
 import NotFound from "./routes/NotFound";
 
 export default function App() {
@@ -23,32 +17,21 @@ export default function App() {
       base={import.meta.env.SERVER_BASE_URL}
       root={(props) => (
         <DataProvider>
-          <SelectedDataTableProvider>
-            <IsSortingProvider>
-              <IsSortedProvider>
-                <CountryDataProvider>
-                  <AdminDataProvider>
-                    <MetaProvider>
-                      <Title>Sorting Visualizer</Title>
-                      <Suspense>
-                        <link rel="icon" href={logo} />
-                        <SessionProvider>
-                          <Header />
-                          {props.children}
-                          <Footer />
-                        </SessionProvider>
-                      </Suspense>
-                    </MetaProvider>
-                  </AdminDataProvider>
-                </CountryDataProvider>
-              </IsSortedProvider>
-            </IsSortingProvider>
-          </SelectedDataTableProvider>
+          <MetaProvider>
+            <Title>Sorting Visualizer</Title>
+            <Suspense>
+              <link rel="icon" href={logo} />
+              <SessionProvider>
+                <Header />
+                {props.children}
+                <Footer />
+              </SessionProvider>
+            </Suspense>
+          </MetaProvider>
         </DataProvider>
       )}
     >
       <FileRoutes />
-      <Route path="/Admin" component={Admin} />
       <Route path="/" component={Home} />
       <Route path="*404" component={NotFound} />
     </Router>

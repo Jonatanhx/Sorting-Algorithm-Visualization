@@ -1,6 +1,5 @@
 import { createEffect, createSignal, For, Show, useContext } from "solid-js";
 import { DataContext } from "~/contexts/DataContext";
-import { IsSortedContext } from "~/contexts/IsSortedContext";
 import { scrambleData } from "~/helperFunctions";
 import InformationPopover from "../InformationPopover";
 import SortingTimer from "../SortingTimer";
@@ -9,7 +8,7 @@ import SortingAlgorithmWrapper from "./SortingAlgorithmWrapper";
 
 export default function BubbleSort() {
   const { data } = useContext(DataContext);
-  const { setIsSorted } = useContext(IsSortedContext);
+
   const [isRunning, setIsRunning] = createSignal<boolean>(false);
   const [localData, setLocalData] = createSignal<number[]>([]);
 
@@ -19,14 +18,12 @@ export default function BubbleSort() {
 
   function stopSorting() {
     setIsRunning(false);
-    setIsSorted(false);
   }
 
   function bubbleSort() {
     const arr = [...localData()];
     scrambleData(arr);
     setIsRunning(true);
-    setIsSorted(true);
 
     const stepsPerTick = 1000;
     let i = 0;
@@ -35,7 +32,6 @@ export default function BubbleSort() {
     const sortInterval = setInterval(() => {
       let steps = 0;
       while (i < arr.length - 1 && steps < stepsPerTick) {
-        console.log(steps);
         if (j < arr.length - i - 1) {
           if (arr[j] > arr[j + 1]) {
             [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
@@ -49,7 +45,6 @@ export default function BubbleSort() {
       }
       setLocalData([...arr]);
       if (i >= arr.length - 1 || !isRunning()) {
-        setIsSorted(true);
         clearInterval(sortInterval);
         setIsRunning(false);
       }

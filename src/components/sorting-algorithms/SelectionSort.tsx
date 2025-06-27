@@ -1,6 +1,5 @@
 import { createEffect, createSignal, For, Show, useContext } from "solid-js";
 import { DataContext } from "~/contexts/DataContext";
-import { IsSortedContext } from "~/contexts/IsSortedContext";
 import { scrambleData } from "~/helperFunctions";
 import InformationPopover from "../InformationPopover";
 import SortingAlgorithmWrapper from "../sorting-algorithms/SortingAlgorithmWrapper";
@@ -9,7 +8,7 @@ import { Button } from "../ui/button";
 
 export default function SelectionSort() {
   const { data } = useContext(DataContext);
-  const { setIsSorted } = useContext(IsSortedContext);
+
   const [isRunning, setIsRunning] = createSignal(false);
   const [localData, setLocalData] = createSignal<number[]>([]);
 
@@ -19,7 +18,6 @@ export default function SelectionSort() {
 
   function stopSorting() {
     setIsRunning(false);
-    setIsSorted(false);
   }
 
   function selectionSort() {
@@ -27,7 +25,6 @@ export default function SelectionSort() {
     scrambleData(arr);
 
     setIsRunning(true);
-    setIsSorted(false);
 
     const stepsPerTick = 1000;
     let i = 0;
@@ -45,7 +42,6 @@ export default function SelectionSort() {
       if (i >= arr.length - 1) {
         clearInterval(sortInterval);
         setIsRunning(false);
-        setIsSorted(true);
         return;
       }
 

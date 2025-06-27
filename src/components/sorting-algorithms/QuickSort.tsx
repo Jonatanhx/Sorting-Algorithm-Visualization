@@ -1,6 +1,5 @@
 import { createEffect, createSignal, For, Show, useContext } from "solid-js";
 import { DataContext } from "~/contexts/DataContext";
-import { IsSortedContext } from "~/contexts/IsSortedContext";
 import { scrambleData } from "~/helperFunctions";
 import InformationPopover from "../InformationPopover";
 import SortingAlgorithmWrapper from "../sorting-algorithms/SortingAlgorithmWrapper";
@@ -9,7 +8,6 @@ import { Button } from "../ui/button";
 
 export default function QuickSort() {
   const { data } = useContext(DataContext);
-  const { setIsSorted } = useContext(IsSortedContext);
 
   const [isRunning, setIsRunning] = createSignal(false);
   const [localData, setLocalData] = createSignal<number[]>([]);
@@ -20,13 +18,12 @@ export default function QuickSort() {
 
   function stopSorting() {
     setIsRunning(false);
-    setIsSorted(false);
   }
+
   function quickSort() {
     const arr = [...localData()];
     scrambleData(arr);
     setIsRunning(true);
-    setIsSorted(false);
 
     const stack = [[0, arr.length - 1]];
 
@@ -52,8 +49,8 @@ export default function QuickSort() {
 
       setLocalData([...arr]);
 
+      /* Completion condition */
       if (stack.length === 0 || !isRunning()) {
-        setIsSorted(true);
         clearInterval(sortInterval);
         setIsRunning(false);
       }
